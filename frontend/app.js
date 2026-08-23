@@ -23,15 +23,37 @@ async function initApp() {
     const height = networkData.dimensions?.height || 10528;
     bounds = [[0, 0], [height, width]];
 
+    const maxDim = Math.max(width, height);
+    const maxNativeZoom = Math.ceil(Math.log2(maxDim / 256)); // 6
+
     map = L.map("map", {
         crs: L.CRS.Simple,
-        minZoom: -4,
-        maxZoom: 3,
-        zoomSnap: 0.1,
-        zoomControl: !isMobile() // На телефонах убираем кнопки зума, оставляя нативный pinch-to-zoom
+        minZoom: 0,
+        maxZoom: maxNativeZoom + 2,
+        zoomSnap: 0.25,
+        zoomControl: !isMobile()
     });
 
-    L.imageOverlay("scheme.png", bounds).addTo(map);
+    // Тайловый слой для экономии 99% памяти телефона
+    L.TileLayer.Scheme = L.TileLayer.extend({
+        getTileUrl: function(coords) {
+            const z = coords.z;
+            const x = coords.x;
+            const y = coords.y;
+            return `tiles/${z}/${x}/${y}.jpg`;
+        }
+    });
+
+    new L.TileLayer.Scheme("tiles/{z}/{x}/{y}.jpg", {
+        minZoom: 0,
+        maxZoom: maxNativeZoom + 2,
+        maxNativeZoom: maxNativeZoom,
+        tileSize: 256,
+        noWrap: true,
+        bounds: bounds,
+        errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+    }).addTo(map);
+
     map.fitBounds(bounds);
 
     nodesLayer = L.layerGroup().addTo(map);
@@ -56,7 +78,7 @@ function fitMapBounds() {
 }
 
 function getNodeStyle(node) {
-    const scale = isMobile() ? 1.35 : 1.0; // Увеличенный размер для пальцев на смартфонах
+    const scale = isMobile() ? 1.4 : 1.0;
 
     if (node.type === "hydrant") {
         return { radius: 8 * scale, color: "#ff4d4f", fillColor: "#ff7875", fillOpacity: 0.9, weight: 2 };
@@ -138,10 +160,8 @@ function renderNetwork() {
 function setFilter(filterType, element) {
     currentFilter = filterType;
     document.querySelectorAll(".chip").forEach(c => c.classList.remove("active", "active-danger"));
-    
     if (filterType === "no_cheeks") element.classList.add("active-danger");
     else element.classList.add("active");
-
     renderNetwork();
 }
 
@@ -174,7 +194,7 @@ function focusOnNode(node) {
         showNodeEditor(node);
     }
 
-    map.flyTo([node.y, node.x], Math.max(map.getZoom(), 0.5), { duration: 0.6 });
+    map.flyTo([node.y, node.x], Math.max(map.getZoom(), 4.5), { duration: 0.6 });
 
     pulseLayer.clearLayers();
     const pulseIcon = L.divIcon({
