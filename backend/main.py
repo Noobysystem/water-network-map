@@ -24,14 +24,14 @@ DATA_DIR = "data"
 NETWORKS = {
     "drinking": {
         "id": "drinking",
-        "title": "💧 Питьевой водопровод (ХПВ)",
+        "title": "💧 ПВ",
         "image": "scheme.jpg",
         "dimensions": {"width": 14904, "height": 10528},
         "file": "drinking.json"
     },
     "tech_water": {
         "id": "tech_water",
-        "title": "⚙️ Технический водопровод (ТВ)",
+        "title": "⚙️ ТВ пром",
         "image": "scheme_tv.jpg",
         "dimensions": {"width": 7445, "height": 5266},
         "file": "tech_water.json"
@@ -42,7 +42,6 @@ def init_storage():
     os.makedirs(STORAGE_DIR, exist_ok=True)
     drinking_storage = os.path.join(STORAGE_DIR, "drinking.json")
     
-    # Если базы drinking.json еще нет или она пустая, восстанавливаем из data/network.json
     source_json = os.path.join(DATA_DIR, "network.json")
     if (not os.path.exists(drinking_storage) or os.path.getsize(drinking_storage) < 50) and os.path.exists(source_json):
         shutil.copyfile(source_json, drinking_storage)
@@ -51,7 +50,10 @@ def init_storage():
             json.dump({"nodes": [], "dimensions": NETWORKS["drinking"]["dimensions"]}, f, ensure_ascii=False, indent=2)
 
     tech_storage = os.path.join(STORAGE_DIR, "tech_water.json")
-    if not os.path.exists(tech_storage):
+    tech_source = os.path.join(DATA_DIR, "tech_water.json")
+    if (not os.path.exists(tech_storage) or os.path.getsize(tech_storage) < 50) and os.path.exists(tech_source):
+        shutil.copyfile(tech_source, tech_storage)
+    elif not os.path.exists(tech_storage):
         with open(tech_storage, "w", encoding="utf-8") as f:
             json.dump({"nodes": [], "dimensions": NETWORKS["tech_water"]["dimensions"]}, f, ensure_ascii=False, indent=2)
 
