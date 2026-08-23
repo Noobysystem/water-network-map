@@ -3,88 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интерактивная схема питьевого водопровода</title>
+    <title>Интерактивная схема запорной арматуры и гидрантов</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * { box-sizing: border-box; }
         html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; display: flex; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        #sidebar { width: 350px; height: 100vh; background: #18191f; color: #f0f0f5; padding: 16px; display: flex; flex-direction: column; gap: 12px; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 12px rgba(0,0,0,0.5); }
-        #map { width: calc(100vw - 350px); height: 100vh; background: #23242b; }
-        .panel-box { background: #262833; padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; }
+        #sidebar { width: 360px; height: 100vh; background: #16171d; color: #f0f0f5; padding: 16px; display: flex; flex-direction: column; gap: 12px; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 14px rgba(0,0,0,0.6); }
+        #map { width: calc(100vw - 360px); height: 100vh; background: #1f2027; }
+        .panel-box { background: #232530; padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e303d; }
         .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 4px 0; }
-        #inspector { background: #262833; padding: 14px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        #inspector { background: #232530; padding: 14px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; border: 1px solid #2e303d; }
         .input-group { display: flex; flex-direction: column; gap: 4px; }
         .input-group label { font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        .input-group input, .input-group select { background: #18191f; border: 1px solid #3c404b; color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 13px; outline: none; }
-        .input-group input:focus, .input-group select:focus { border-color: #3b82f6; }
-        .btn-group { display: flex; gap: 8px; margin-top: 4px; }
+        .input-group input, .input-group select, .input-group textarea { background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 13px; outline: none; font-family: inherit; }
+        .input-group textarea { resize: vertical; min-height: 65px; line-height: 1.4; }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #3b82f6; }
+        .btn-group { display: flex; gap: 8px; margin-top: 6px; }
         button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.15s; }
         .btn-primary { background: #3b82f6; color: #fff; flex-grow: 1; }
         .btn-primary:hover { background: #2563eb; }
         .btn-danger { background: #ef4444; color: #fff; }
         .btn-danger:hover { background: #dc2626; }
-        .btn-secondary { background: #4b5563; color: #fff; }
-        .btn-secondary:hover { background: #374151; }
-        #stats { font-size: 13px; color: #9aa0a6; border-top: 1px solid #3c404b; padding-top: 8px; display: flex; justify-content: space-between; }
-        .custom-label { font-size: 11px; font-weight: bold; background: rgba(20,20,30,0.85); color: #00e5ff; border: 1px solid #00e5ff; border-radius: 4px; padding: 1px 5px; }
-        .pipe-status-hint { font-size: 12px; color: #60a5fa; background: rgba(59, 130, 246, 0.15); padding: 8px; border-radius: 6px; border-left: 3px solid #3b82f6; }
+        #stats { font-size: 12.5px; color: #9aa0a6; border-top: 1px solid #2e303d; padding-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+        .stat-row { display: flex; justify-content: space-between; }
+        .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #c5c7d0; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
     </style>
 </head>
 <body>
     <div id="sidebar">
-        <h2 style="margin: 0; font-size: 19px; display: flex; align-items: center; justify-content: space-between;">
-            <span>Водопроводная сеть</span>
-        </h2>
+        <h2 style="margin: 0; font-size: 18px; color: #fff;">Запорная арматура и ПГ</h2>
         
         <div class="panel-box mode-selector">
-            <label><input type="radio" name="mode" value="view" checked onchange="onModeChange()"> 🔍 Просмотр / Инспектор</label>
-            <label><input type="radio" name="mode" value="add_pipe" onchange="onModeChange()"> 📏 Черчение труб (трассировка)</label>
-            <label><input type="radio" name="mode" value="add_valve" onchange="onModeChange()"> 🛑 + Задвижка / Арматура</label>
-            <label><input type="radio" name="mode" value="add_node" onchange="onModeChange()"> 🔵 + Колодец / Узел</label>
-            <label><input type="radio" name="mode" value="add_hydrant" onchange="onModeChange()"> 🔴 + Гидрант (ПГ)</label>
+            <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр / Выбор объекта</label>
+            <label><input type="radio" name="mode" value="add_valve"> 🛑 + Добавить задвижку</label>
+            <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + Добавить гидрант (ПГ)</label>
         </div>
 
-        <!-- Настройки черчения труб -->
-        <div id="pipe-settings-panel" class="panel-box" style="display: none;">
-            <div class="input-group">
-                <label>Диаметр трубы (Ду)</label>
-                <select id="default-pipe-diameter">
-                    <option value="50">Ду 50</option>
-                    <option value="100">Ду 100</option>
-                    <option value="150" selected>Ду 150</option>
-                    <option value="200">Ду 200</option>
-                    <option value="250">Ду 250</option>
-                    <option value="300">Ду 300</option>
-                    <option value="400">Ду 400</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>Материал</label>
-                <select id="default-pipe-material">
-                    <option value="чуг" selected>Чугун (чуг)</option>
-                    <option value="пэ">Полиэтилен (пэ)</option>
-                    <option value="ст">Сталь (ст)</option>
-                </select>
-            </div>
-            <div class="pipe-status-hint" id="pipe-hint">
-                Кликните по <b>первому узлу</b> начала трассы.
-            </div>
-            <button class="btn-secondary" onclick="resetPipeChain()" style="padding: 6px 10px; font-size: 12px;">Прервать нитку трассы</button>
-        </div>
-
-        <div class="panel-box" style="padding: 8px 12px;">
-            <label style="font-size: 12.5px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать номера на карте
+        <div class="panel-box" style="padding: 10px 12px;">
+            <label style="font-size: 12.5px; cursor: pointer; display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать номера на схеме
             </label>
+            <div style="font-size: 11px; color: #8e929b; text-transform: uppercase; font-weight: 700; margin-top: 4px;">Статусы арматуры:</div>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 3px; margin-top: 4px;">
+                <div class="legend-item"><span class="dot" style="background:#52c41a;"></span> В работе (Открыта)</div>
+                <div class="legend-item"><span class="dot" style="background:#fa8c16;"></span> Закрыта (Отсечена)</div>
+                <div class="legend-item"><span class="dot" style="background:#ff4d4f; border: 2px solid #fff;"></span> Нет щёк / Не перекрыть!</div>
+                <div class="legend-item"><span class="dot" style="background:#faad14;"></span> Плохо закрывается / Дефект</div>
+            </div>
         </div>
 
         <div id="inspector">
-            <p style="color: #9aa0a6; margin: 0;">Выберите объект на схеме для редактирования или переключитесь в режим трассировки.</p>
+            <p style="color: #9aa0a6; margin: 0;">Кликните по любой задвижке или гидранту на схеме для редактирования статуса и описания.</p>
         </div>
 
         <div id="stats">
-            <span>Объектов: <b id="count-nodes" style="color:#fff;">0</b></span>
-            <span>Трубопроводов: <b id="count-pipes" style="color:#fff;">0</b></span>
+            <div class="stat-row"><span>Всего объектов:</span> <b id="count-total" style="color:#fff;">0</b></div>
+            <div class="stat-row"><span>С дефектами/без щёк:</span> <b id="count-defects" style="color:#ff7875;">0</b></div>
         </div>
     </div>
     <div id="map"></div>
