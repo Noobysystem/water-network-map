@@ -12,7 +12,6 @@
         #app-container { display: flex; width: 100vw; height: 100vh; position: relative; }
         #map { flex-grow: 1; height: 100vh; background: #191a21; z-index: 1; }
 
-        /* Десктопная боковая панель */
         #sidebar { 
             width: 380px; 
             height: 100vh; 
@@ -30,7 +29,6 @@
 
         .panel-box { background: #22242f; padding: 12px 14px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; color: #f0f0f5; }
         
-        /* Поиск */
         .search-container { position: relative; display: flex; align-items: center; width: 100%; }
         .search-input { width: 100%; background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 10px 34px 10px 12px; border-radius: 8px; font-size: 14px; outline: none; }
         .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
@@ -41,7 +39,6 @@
         .search-item { padding: 10px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a38; font-size: 13.5px; color: #ffffff; }
         .search-item:hover, .search-item:active { background: #2b2e3e; }
 
-        /* Фильтры */
         .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
         .chip { background: #181922; border: 1px solid #3c404f; color: #e2e4ea; padding: 7px 11px; border-radius: 6px; font-size: 12.5px; cursor: pointer; transition: 0.15s; touch-action: manipulation; font-weight: 500; }
         .chip:hover { color: #ffffff; border-color: #5b6073; }
@@ -63,17 +60,14 @@
         .btn-primary:active { background: #1d4ed8; }
         .btn-danger { background: #ef4444; color: #ffffff; }
         .btn-danger:active { background: #b91c1c; }
+        .btn-tool { background: #282a38; color: #a0a5b5; border: 1px solid #3c404f; font-size: 12px; padding: 6px 10px; border-radius: 6px; }
+        .btn-tool:hover { color: #fff; border-color: #5b6073; }
         
         #stats { font-size: 12.5px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 8px; display: flex; flex-direction: column; gap: 4px; }
         .stat-row { display: flex; justify-content: space-between; }
         .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
 
-        /* Полная изоляция мобильных элементов на ПК */
-        .mobile-top-bar, 
-        .mobile-bottom-sheet, 
-        #mobile-menu-modal { 
-            display: none !important; 
-        }
+        .mobile-top-bar, .mobile-bottom-sheet, #mobile-menu-modal { display: none !important; }
 
         @keyframes pulse-ring {
             0% { transform: scale(0.6); opacity: 1; }
@@ -85,7 +79,6 @@
             animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
 
-        /* АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (ШИРИНА <= 768px) */
         @media (max-width: 768px) {
             #sidebar { display: none !important; }
             #map { width: 100vw; height: 100vh; }
@@ -151,9 +144,7 @@
                 color: #f0f0f5;
                 box-shadow: 0 -8px 28px rgba(0,0,0,0.8);
             }
-            .modal-content label, .modal-content span, .modal-content div {
-                color: #e5e7eb;
-            }
+            .modal-content label, .modal-content span, .modal-content div { color: #e5e7eb; }
 
             .mobile-bottom-sheet {
                 display: flex !important;
@@ -193,7 +184,7 @@
 </head>
 <body>
     <div id="app-container">
-        <!-- Десктопная панель слева -->
+        <!-- Боковая панель -->
         <div id="sidebar">
             <h2 style="margin: 0; font-size: 18px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
                 <span>Запорная арматура</span>
@@ -230,6 +221,15 @@
                 <p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для редактирования.</p>
             </div>
 
+            <div class="panel-box" style="padding: 10px 12px; gap: 6px;">
+                <div style="font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: bold;">Резервная копия базы:</div>
+                <div style="display: flex; gap: 6px;">
+                    <button class="btn-tool" onclick="downloadBackup()" style="flex-grow: 1;">💾 Скачать базу</button>
+                    <button class="btn-tool" onclick="document.getElementById('import-file-input').click()" style="flex-grow: 1;">📂 Загрузить</button>
+                    <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="uploadBackup(event)">
+                </div>
+            </div>
+
             <div id="stats">
                 <div class="stat-row"><span>Отображается:</span> <b id="count-visible" style="color:#fff;">0</b></div>
                 <div class="stat-row"><span>Всего в базе:</span> <b id="count-total" style="color:#fff;">0</b></div>
@@ -248,7 +248,6 @@
             <button class="btn-mobile-icon" onclick="fitMapBounds()" title="Вся схема">🗺️</button>
         </div>
 
-        <!-- Карта -->
         <div id="map"></div>
 
         <!-- Мобильная нижняя шторка инспектора -->
@@ -289,6 +288,11 @@
                     <label style="font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #ffffff;">
                         <input type="checkbox" id="mobile-toggle-labels" checked onchange="toggleLabels(this.checked)"> Показывать номера на схеме
                     </label>
+                </div>
+
+                <div class="panel-box" style="padding: 10px 12px; gap: 6px;">
+                    <div style="font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: bold;">Резервная копия:</div>
+                    <button class="btn-tool" onclick="downloadBackup()" style="width: 100%; padding: 10px;">💾 Скачать базу данных</button>
                 </div>
 
                 <button class="btn-primary" onclick="closeMobileMenu()" style="margin-top: 6px; padding: 12px; font-size: 14px;">Готово</button>

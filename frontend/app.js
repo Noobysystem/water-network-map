@@ -31,7 +31,6 @@ async function initApp() {
         zoomControl: !isMobile()
     });
 
-    // Загружаем оптимизированную подложку схемы
     L.imageOverlay("scheme.jpg", bounds).addTo(map);
     map.fitBounds(bounds);
 
@@ -317,6 +316,41 @@ async function deleteNode(nodeId) {
     renderNetwork();
 }
 
+// Функции экспорта и импорта базы
+function downloadBackup() {
+    window.location.href = `${API_URL}/export`;
+}
+
+async function uploadBackup(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!confirm(`Восстановить базу данных из файла "${file.name}"?`)) {
+        event.target.value = "";
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+        const res = await fetch(`${API_URL}/import`, {
+            method: "POST",
+            body: formData
+        });
+        if (res.ok) {
+            const data = await res.json();
+            alert(`База успешно обновлена! Загружено объектов: ${data.count}`);
+            window.location.reload();
+        } else {
+            alert("Ошибка при импорте базы данных.");
+        }
+    } catch (e) {
+        alert("Не удалось отправить файл на сервер.");
+    }
+    event.target.value = "";
+}
+
 function setupSearch() {
     const searchInput = document.getElementById("search-input");
     const searchClear = document.getElementById("search-clear");
@@ -398,7 +432,7 @@ function setupMobileSearch() {
             return;
         }
 
-        dropdownContent = matches.map(m => {
+        mDropdown.innerHTML = matches.map(m => {
             let badge = `<span style="color:#52c41a;">● В работе</span>`;
             if (m.type === "hydrant") badge = `<span style="color:#ff4d4f;">🚒 ПГ</span>`;
             else if (m.status === "no_cheeks") badge = `<span style="color:#ff4d4f; font-weight:bold;">⚠️ Без щёк</span>`;
@@ -415,7 +449,6 @@ function setupMobileSearch() {
                 </div>
             `;
         }).join("");
-        mDropdown.innerHTML = dropdownContent;
         mDropdown.style.display = "block";
     });
 

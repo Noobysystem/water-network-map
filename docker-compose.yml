@@ -4,6 +4,7 @@
     ports:
       - "8080:8000"
     volumes:
+      - ./storage:/app/storage
       - ./data:/app/data
       - ./frontend:/app/frontend
     restart: unless-stopped
