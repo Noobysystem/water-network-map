@@ -8,49 +8,83 @@
     <style>
         * { box-sizing: border-box; }
         html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; display: flex; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        #sidebar { width: 340px; height: 100vh; background: #18191f; color: #f0f0f5; padding: 18px; display: flex; flex-direction: column; gap: 14px; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 10px rgba(0,0,0,0.5); }
-        #map { width: calc(100vw - 340px); height: 100vh; background: #23242b; }
-        .mode-selector { display: flex; flex-direction: column; gap: 8px; background: #262833; padding: 12px; border-radius: 8px; }
-        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        #sidebar { width: 350px; height: 100vh; background: #18191f; color: #f0f0f5; padding: 16px; display: flex; flex-direction: column; gap: 12px; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 12px rgba(0,0,0,0.5); }
+        #map { width: calc(100vw - 350px); height: 100vh; background: #23242b; }
+        .panel-box { background: #262833; padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; }
+        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 4px 0; }
         #inspector { background: #262833; padding: 14px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .input-group { display: flex; flex-direction: column; gap: 4px; }
-        .input-group label { font-size: 12px; color: #9aa0a6; text-transform: uppercase; font-weight: 600; }
-        .input-group input, .input-group select { background: #18191f; border: 1px solid #3c404b; color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 14px; outline: none; }
+        .input-group label { font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .input-group input, .input-group select { background: #18191f; border: 1px solid #3c404b; color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 13px; outline: none; }
         .input-group input:focus, .input-group select:focus { border-color: #3b82f6; }
-        .btn-group { display: flex; gap: 8px; margin-top: 6px; }
-        button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.15s ease-in-out; }
+        .btn-group { display: flex; gap: 8px; margin-top: 4px; }
+        button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.15s; }
         .btn-primary { background: #3b82f6; color: #fff; flex-grow: 1; }
         .btn-primary:hover { background: #2563eb; }
         .btn-danger { background: #ef4444; color: #fff; }
         .btn-danger:hover { background: #dc2626; }
-        #stats { font-size: 13px; color: #9aa0a6; border-top: 1px solid #3c404b; padding-top: 10px; display: flex; justify-content: space-between; }
-        .leaflet-tooltip { font-size: 11px; font-weight: bold; background: rgba(20,20,30,0.85); color: #00e5ff; border: 1px solid #00e5ff; border-radius: 4px; padding: 2px 6px; }
+        .btn-secondary { background: #4b5563; color: #fff; }
+        .btn-secondary:hover { background: #374151; }
+        #stats { font-size: 13px; color: #9aa0a6; border-top: 1px solid #3c404b; padding-top: 8px; display: flex; justify-content: space-between; }
+        .custom-label { font-size: 11px; font-weight: bold; background: rgba(20,20,30,0.85); color: #00e5ff; border: 1px solid #00e5ff; border-radius: 4px; padding: 1px 5px; }
+        .pipe-status-hint { font-size: 12px; color: #60a5fa; background: rgba(59, 130, 246, 0.15); padding: 8px; border-radius: 6px; border-left: 3px solid #3b82f6; }
     </style>
 </head>
 <body>
     <div id="sidebar">
-        <h2 style="margin: 0; font-size: 20px;">Водопроводная сеть</h2>
-        <div class="mode-selector">
-            <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр / Выбор</label>
-            <label><input type="radio" name="mode" value="add_valve"> 🛑 + Задвижка / Арматура</label>
-            <label><input type="radio" name="mode" value="add_node"> 🔵 + Колодец / Узел</label>
-            <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + Гидрант (ПГ)</label>
-            <label><input type="radio" name="mode" value="add_pipe"> 📏 + Участок трубы</label>
+        <h2 style="margin: 0; font-size: 19px; display: flex; align-items: center; justify-content: space-between;">
+            <span>Водопроводная сеть</span>
+        </h2>
+        
+        <div class="panel-box mode-selector">
+            <label><input type="radio" name="mode" value="view" checked onchange="onModeChange()"> 🔍 Просмотр / Инспектор</label>
+            <label><input type="radio" name="mode" value="add_pipe" onchange="onModeChange()"> 📏 Черчение труб (трассировка)</label>
+            <label><input type="radio" name="mode" value="add_valve" onchange="onModeChange()"> 🛑 + Задвижка / Арматура</label>
+            <label><input type="radio" name="mode" value="add_node" onchange="onModeChange()"> 🔵 + Колодец / Узел</label>
+            <label><input type="radio" name="mode" value="add_hydrant" onchange="onModeChange()"> 🔴 + Гидрант (ПГ)</label>
         </div>
 
-        <div style="background: #262833; padding: 8px 12px; border-radius: 6px;">
-            <label style="font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+        <!-- Настройки черчения труб -->
+        <div id="pipe-settings-panel" class="panel-box" style="display: none;">
+            <div class="input-group">
+                <label>Диаметр трубы (Ду)</label>
+                <select id="default-pipe-diameter">
+                    <option value="50">Ду 50</option>
+                    <option value="100">Ду 100</option>
+                    <option value="150" selected>Ду 150</option>
+                    <option value="200">Ду 200</option>
+                    <option value="250">Ду 250</option>
+                    <option value="300">Ду 300</option>
+                    <option value="400">Ду 400</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Материал</label>
+                <select id="default-pipe-material">
+                    <option value="чуг" selected>Чугун (чуг)</option>
+                    <option value="пэ">Полиэтилен (пэ)</option>
+                    <option value="ст">Сталь (ст)</option>
+                </select>
+            </div>
+            <div class="pipe-status-hint" id="pipe-hint">
+                Кликните по <b>первому узлу</b> начала трассы.
+            </div>
+            <button class="btn-secondary" onclick="resetPipeChain()" style="padding: 6px 10px; font-size: 12px;">Прервать нитку трассы</button>
+        </div>
+
+        <div class="panel-box" style="padding: 8px 12px;">
+            <label style="font-size: 12.5px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
                 <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать номера на карте
             </label>
         </div>
 
         <div id="inspector">
-            <p style="color: #9aa0a6; margin: 0;">Кликните по любому узлу или задвижке на схеме для редактирования свойств.</p>
+            <p style="color: #9aa0a6; margin: 0;">Выберите объект на схеме для редактирования или переключитесь в режим трассировки.</p>
         </div>
 
         <div id="stats">
             <span>Объектов: <b id="count-nodes" style="color:#fff;">0</b></span>
-            <span>Труб: <b id="count-pipes" style="color:#fff;">0</b></span>
+            <span>Трубопроводов: <b id="count-pipes" style="color:#fff;">0</b></span>
         </div>
     </div>
     <div id="map"></div>

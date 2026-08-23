@@ -70,7 +70,6 @@ def update_node(node_id: str, updated_node: Node):
 def delete_node(node_id: str):
     data = read_data()
     data["nodes"] = [n for n in data.get("nodes", []) if n["id"] != node_id]
-    # Удаляем и связанные трубы
     data["pipes"] = [p for p in data.get("pipes", []) if p["from_node"] != node_id and p["to_node"] != node_id]
     write_data(data)
     return {"status": "ok"}
@@ -81,6 +80,23 @@ def add_pipe(pipe: Pipe):
     data.setdefault("pipes", []).append(pipe.dict())
     write_data(data)
     return {"status": "ok", "pipe": pipe}
+
+@app.put("/api/pipe/{pipe_id}")
+def update_pipe(pipe_id: str, updated_pipe: Pipe):
+    data = read_data()
+    for i, p in enumerate(data.get("pipes", [])):
+        if p["id"] == pipe_id:
+            data["pipes"][i] = updated_pipe.dict()
+            write_data(data)
+            return {"status": "ok", "pipe": updated_pipe}
+    raise HTTPException(status_code=404, detail="Pipe not found")
+
+@app.delete("/api/pipe/{pipe_id}")
+def delete_pipe(pipe_id: str):
+    data = read_data()
+    data["pipes"] = [p for p in data.get("pipes", []) if p["id"] != pipe_id]
+    write_data(data)
+    return {"status": "ok"}
 
 if os.path.exists("../frontend"):
     app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")

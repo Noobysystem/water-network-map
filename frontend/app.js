@@ -3,8 +3,8 @@
 let map;
 let networkData = { nodes: [], pipes: [], valves: [], dimensions: { width: 14904, height: 10528 } };
 let nodesLayer, pipesLayer;
-let pipeBuffer = [];
-let selectedNode = null;
+let lastNodeInChain = null;
+let selectedObject = null;
 
 async function initApp() {
     try {
@@ -40,12 +40,31 @@ async function initApp() {
 
     renderNetwork();
     map.on("click", handleMapClick);
+
+    // Горячая клавиша Escape для сброса цепочки
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") resetPipeChain();
+    });
 }
 
 function getNodeColor(node) {
     if (node.type === "hydrant") return "#ff4d4f";
     if (node.type === "valve") return node.status === "closed" ? "#fa8c16" : "#52c41a";
     return "#1890ff";
+}
+
+function getPipeColor(material) {
+    if (material === "пэ") return "#1890ff"; // синий
+    if (material === "чуг") return "#52c41a"; // зеленый
+    if (material === "ст") return "#fa8c16"; // оранжевый
+    return "#13c2c2";
+}
+
+function getPipeWeight(diameter) {
+    if (diameter >= 300) return 6;
+    if (diameter >= 200) return 5;
+    if (diameter >= 150) return 4;
+    return 3;
 }
 
 function renderNetwork() {
@@ -55,20 +74,29 @@ function renderNetwork() {
     const showLabels = document.getElementById("toggle-labels") ? document.getElementById("toggle-labels").checked : true;
 
     (networkData.pipes || []).forEach(pipe => {
+        const isSelected = selectedObject && selectedObject.id === pipe.id;
         const polyline = L.polyline(pipe.path, {
-            color: pipe.material === "пэ" ? "#1890ff" : "#52c41a",
-            weight: 4
+            color: isSelected ? "#ffff00" : getPipeColor(pipe.material),
+            weight: isSelected ? getPipeWeight(pipe.diameter) + 3 : getPipeWeight(pipe.diameter),
+            opacity: 0.85
         }).addTo(pipesLayer);
-        polyline.on("click", () => showPipeInfo(pipe));
+
+        polyline.on("click", (e) => {
+            L.DomEvent.stopPropagation(e);
+            showPipeEditor(pipe);
+        });
     });
 
     (networkData.nodes || []).forEach(node => {
+        const isChainActive = lastNodeInChain && lastNodeInChain.id === node.id;
+        const isSelected = selectedObject && selectedObject.id === node.id;
+
         const marker = L.circleMarker([node.y, node.x], {
             radius: node.type === "hydrant" ? 8 : (node.type === "valve" ? 6 : 5),
-            color: getNodeColor(node),
-            fillColor: getNodeColor(node),
-            fillOpacity: selectedNode && selectedNode.id === node.id ? 1.0 : 0.75,
-            weight: selectedNode && selectedNode.id === node.id ? 4 : 2
+            color: isChainActive ? "#ffff00" : (isSelected ? "#ffffff" : getNodeColor(node)),
+            fillColor: isChainActive ? "#ffff00" : getNodeColor(node),
+            fillOpacity: isChainActive || isSelected ? 1.0 : 0.75,
+            weight: isChainActive || isSelected ? 4 : 2
         }).addTo(nodesLayer);
 
         if (showLabels) {
@@ -93,16 +121,61 @@ function toggleLabels() {
     renderNetwork();
 }
 
-function handleNodeClick(node) {
+function onModeChange() {
     const mode = document.querySelector('input[name="mode"]:checked').value;
+    const pipePanel = document.getElementById("pipe-settings-panel");
+    pipePanel.style.display = (mode === "add_pipe") ? "flex" : "none";
+    resetPipeChain();
+}
+
+function resetPipeChain() {
+    lastNodeInChain = null;
+    const hint = document.getElementById("pipe-hint");
+    if (hint) hint.innerHTML = "Кликните по <b>первому узлу</b> начала трассы.";
+    renderNetwork();
+}
+
+async function handleNodeClick(node) {
+    const mode = document.querySelector('input[name="mode"]:checked').value;
+
     if (mode === "add_pipe") {
-        pipeBuffer.push(node);
-        if (pipeBuffer.length === 2) {
-            createPipe(pipeBuffer[0], pipeBuffer[1]);
-            pipeBuffer = [];
+        if (!lastNodeInChain) {
+            lastNodeInChain = node;
+            document.getElementById("pipe-hint").innerHTML = `Начало: <b>${node.name}</b>.<br>Теперь кликните по следующему узлу.`;
+            renderNetwork();
+        } else {
+            if (lastNodeInChain.id === node.id) {
+                resetPipeChain();
+                return;
+            }
+
+            const diameter = parseInt(document.getElementById("default-pipe-diameter").value) || 150;
+            const material = document.getElementById("default-pipe-material").value || "чуг";
+
+            const newPipe = {
+                id: "pipe_" + Date.now(),
+                from_node: lastNodeInChain.id,
+                to_node: node.id,
+                diameter: diameter,
+                material: material,
+                path: [[lastNodeInChain.y, lastNodeInChain.x], [node.y, node.x]]
+            };
+
+            await fetch(`${API_URL}/pipe`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newPipe)
+            });
+
+            networkData.pipes.push(newPipe);
+
+            // Продолжаем цепочку от только что соединенного узла
+            lastNodeInChain = node;
+            document.getElementById("pipe-hint").innerHTML = `Участок построен! Текущий узел: <b>${node.name}</b>.<br>Кликайте дальше для продолжения нитки.`;
+            renderNetwork();
         }
     } else {
-        selectedNode = node;
+        selectedObject = node;
         renderNetwork();
         showNodeEditor(node);
     }
@@ -114,12 +187,12 @@ function showNodeEditor(node) {
         <h3 style="margin: 0 0 4px 0; font-size: 16px; color: #fff;">Редактирование объекта</h3>
         <div class="input-group">
             <label>Номер / Название</label>
-            <input type="text" id="edit-node-name" value="${node.name}" autofocus>
+            <input type="text" id="edit-node-name" value="${node.name}">
         </div>
         <div class="input-group">
             <label>Тип объекта</label>
             <select id="edit-node-type">
-                <option value="valve" ${node.type === 'valve' || !node.type ? 'selected' : ''}>Запорная арматура (задвижка)</option>
+                <option value="valve" ${node.type === 'valve' ? 'selected' : ''}>Запорная арматура (задвижка)</option>
                 <option value="well" ${node.type === 'well' ? 'selected' : ''}>Колодец / Узел</option>
                 <option value="hydrant" ${node.type === 'hydrant' ? 'selected' : ''}>Пожарный гидрант (ПГ)</option>
             </select>
@@ -131,7 +204,6 @@ function showNodeEditor(node) {
                 <option value="closed" ${node.status === 'closed' ? 'selected' : ''}>Закрыта (отсечена)</option>
             </select>
         </div>
-        <div style="font-size: 12px; color: #9aa0a6;">Координаты: X=${node.x}, Y=${node.y}</div>
         <div class="btn-group">
             <button class="btn-primary" onclick="saveNodeEdit('${node.id}')">💾 Сохранить</button>
             <button class="btn-danger" onclick="deleteNode('${node.id}')">🗑 Удалить</button>
@@ -140,7 +212,6 @@ function showNodeEditor(node) {
 
     const nameInput = document.getElementById("edit-node-name");
     nameInput.focus();
-    nameInput.select();
     nameInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") saveNodeEdit(node.id);
     });
@@ -169,26 +240,87 @@ async function saveNodeEdit(nodeId) {
 }
 
 async function deleteNode(nodeId) {
-    if (!confirm("Удалить этот узел?")) return;
+    if (!confirm("Удалить этот узел и подключенные к нему трубы?")) return;
 
-    await fetch(`${API_URL}/node/${nodeId}`, {
-        method: "DELETE"
-    });
+    await fetch(`${API_URL}/node/${nodeId}`, { method: "DELETE" });
 
     networkData.nodes = networkData.nodes.filter(n => n.id !== nodeId);
-    selectedNode = null;
-    document.getElementById("inspector").innerHTML = '<p style="color: #9aa0a6; margin: 0;">Объект удален. Выберите следующий.</p>';
+    networkData.pipes = networkData.pipes.filter(p => p.from_node !== nodeId && p.to_node !== nodeId);
+    selectedObject = null;
+    document.getElementById("inspector").innerHTML = '<p style="color: #9aa0a6; margin: 0;">Узел удален.</p>';
     renderNetwork();
 }
 
-function showPipeInfo(pipe) {
+function showPipeEditor(pipe) {
+    selectedObject = pipe;
+    renderNetwork();
+
+    const fromNode = networkData.nodes.find(n => n.id === pipe.from_node)?.name || pipe.from_node;
+    const toNode = networkData.nodes.find(n => n.id === pipe.to_node)?.name || pipe.to_node;
+
     const inspector = document.getElementById("inspector");
     inspector.innerHTML = `
-        <h3 style="margin: 0 0 4px 0; font-size: 16px; color: #fff;">Участок трубопровода</h3>
-        <p style="margin: 4px 0;">Диаметр: <b>Ду ${pipe.diameter}</b></p>
-        <p style="margin: 4px 0;">Материал: <b>${pipe.material}</b></p>
-        <p style="margin: 4px 0;">Узлы: ${pipe.from_node} ➔ ${pipe.to_node}</p>
+        <h3 style="margin: 0 0 4px 0; font-size: 16px; color: #fff;">Участок трубы</h3>
+        <p style="margin: 2px 0; font-size: 13px; color: #9aa0a6;">Трасса: <b>${fromNode}</b> ➔ <b>${toNode}</b></p>
+        
+        <div class="input-group">
+            <label>Диаметр (Ду)</label>
+            <select id="edit-pipe-diameter">
+                <option value="50" ${pipe.diameter === 50 ? 'selected' : ''}>Ду 50</option>
+                <option value="100" ${pipe.diameter === 100 ? 'selected' : ''}>Ду 100</option>
+                <option value="150" ${pipe.diameter === 150 ? 'selected' : ''}>Ду 150</option>
+                <option value="200" ${pipe.diameter === 200 ? 'selected' : ''}>Ду 200</option>
+                <option value="250" ${pipe.diameter === 250 ? 'selected' : ''}>Ду 250</option>
+                <option value="300" ${pipe.diameter === 300 ? 'selected' : ''}>Ду 300</option>
+                <option value="400" ${pipe.diameter === 400 ? 'selected' : ''}>Ду 400</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Материал</label>
+            <select id="edit-pipe-material">
+                <option value="чуг" ${pipe.material === 'чуг' ? 'selected' : ''}>Чугун (чуг)</option>
+                <option value="пэ" ${pipe.material === 'пэ' ? 'selected' : ''}>Полиэтилен (пэ)</option>
+                <option value="ст" ${pipe.material === 'ст' ? 'selected' : ''}>Сталь (ст)</option>
+            </select>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-primary" onclick="savePipeEdit('${pipe.id}')">💾 Сохранить</button>
+            <button class="btn-danger" onclick="deletePipe('${pipe.id}')">🗑 Удалить</button>
+        </div>
     `;
+}
+
+async function savePipeEdit(pipeId) {
+    const newDiameter = parseInt(document.getElementById("edit-pipe-diameter").value) || 150;
+    const newMaterial = document.getElementById("edit-pipe-material").value;
+
+    const pipe = networkData.pipes.find(p => p.id === pipeId);
+    if (!pipe) return;
+
+    pipe.diameter = newDiameter;
+    pipe.material = newMaterial;
+
+    await fetch(`${API_URL}/pipe/${pipeId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pipe)
+    });
+
+    renderNetwork();
+    showPipeEditor(pipe);
+}
+
+async function deletePipe(pipeId) {
+    if (!confirm("Удалить этот участок трубы?")) return;
+
+    await fetch(`${API_URL}/pipe/${pipeId}`, { method: "DELETE" });
+
+    networkData.pipes = networkData.pipes.filter(p => p.id !== pipeId);
+    selectedObject = null;
+    document.getElementById("inspector").innerHTML = '<p style="color: #9aa0a6; margin: 0;">Участок трубы удален.</p>';
+    renderNetwork();
 }
 
 async function handleMapClick(e) {
@@ -230,32 +362,9 @@ async function handleMapClick(e) {
     });
 
     networkData.nodes.push(newNode);
-    selectedNode = newNode;
+    selectedObject = newNode;
     renderNetwork();
     showNodeEditor(newNode);
-}
-
-async function createPipe(nodeA, nodeB) {
-    const diameter = prompt("Диаметр трубы (Ду):", "200");
-    const material = prompt("Материал (чуг, ст, пэ):", "чуг");
-
-    const newPipe = {
-        id: "pipe_" + Date.now(),
-        from_node: nodeA.id,
-        to_node: nodeB.id,
-        diameter: parseInt(diameter) || 200,
-        material: material || "чуг",
-        path: [[nodeA.y, nodeA.x], [nodeB.y, nodeB.x]]
-    };
-
-    await fetch(`${API_URL}/pipe`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPipe)
-    });
-
-    networkData.pipes.push(newPipe);
-    renderNetwork();
 }
 
 initApp();
