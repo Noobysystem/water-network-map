@@ -79,7 +79,15 @@ def write_data(net_id: str, data: dict):
     backup = path.replace(".json", ".backup.json")
     if os.path.exists(path):
         shutil.copyfile(path, backup)
+        
+    # Сохраняем в активное хранилище storage/
     with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+    # Автоматически дублируем в папку data/ проекта
+    os.makedirs(DATA_DIR, exist_ok=True)
+    data_path = os.path.join(DATA_DIR, NETWORKS[net_id]["file"])
+    with open(data_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 class ValveNode(BaseModel):
