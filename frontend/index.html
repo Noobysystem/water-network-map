@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Схемы ЭНЦ</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #121318; color: #f0f0f5; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        
         #app-container { display: flex; width: 100vw; height: 100vh; position: relative; }
         #map { flex-grow: 1; height: 100vh; background: #191a21; z-index: 1; }
 
-        /* Десктопная боковая панель */
         #sidebar { 
             width: 380px; 
             height: 100vh; 
@@ -23,191 +20,79 @@
             padding: 16px; 
             display: flex; 
             flex-direction: column; 
-            gap: 12px; 
+            gap: 10px; 
             z-index: 1000; 
             flex-shrink: 0; 
             box-shadow: 2px 0 16px rgba(0,0,0,0.6); 
             overflow-y: auto;
         }
 
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 19px;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 0.3px;
-        }
-
-        .header-icon {
-            width: 30px;
-            height: 30px;
-            display: inline-block;
-            flex-shrink: 0;
-        }
-
-        .panel-box { background: #22242f; padding: 12px 14px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; color: #f0f0f5; }
+        .header-title { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; color: #ffffff; }
+        .header-icon { width: 28px; height: 28px; flex-shrink: 0; }
+        .panel-box { background: #22242f; padding: 10px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; color: #f0f0f5; }
         
-        /* Поиск */
-        .search-container { position: relative; display: flex; align-items: center; width: 100%; }
-        .search-input { width: 100%; background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 10px 34px 10px 12px; border-radius: 8px; font-size: 14px; outline: none; }
-        .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
-        .search-input::placeholder { color: #8e929b; }
-        .search-clear { position: absolute; right: 10px; cursor: pointer; color: #8e929b; font-size: 16px; display: none; padding: 4px; }
-        .search-clear:hover { color: #ffffff; }
-        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e28; border: 1px solid #3c404f; border-radius: 8px; max-height: 220px; overflow-y: auto; z-index: 2000; box-shadow: 0 6px 16px rgba(0,0,0,0.6); display: none; }
-        .search-item { padding: 10px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a38; font-size: 13.5px; color: #ffffff; }
-        .search-item:hover, .search-item:active { background: #2b2e3e; }
+        /* Вкладки переключения сетей */
+        .network-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #121318; padding: 4px; border-radius: 8px; border: 1px solid #2e3140; }
+        .net-tab { background: transparent; border: none; color: #9aa0a6; padding: 8px 6px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: 0.15s; text-align: center; }
+        .net-tab:hover { color: #fff; }
+        .net-tab.active { background: #2563eb; color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.4); }
 
-        /* Фильтры */
-        .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-        .chip { background: #181922; border: 1px solid #3c404f; color: #e2e4ea; padding: 7px 11px; border-radius: 6px; font-size: 12.5px; cursor: pointer; transition: 0.15s; touch-action: manipulation; font-weight: 500; }
+        .search-container { position: relative; display: flex; align-items: center; width: 100%; }
+        .search-input { width: 100%; background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 9px 34px 9px 12px; border-radius: 8px; font-size: 13.5px; outline: none; }
+        .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
+        .search-clear { position: absolute; right: 10px; cursor: pointer; color: #8e929b; font-size: 16px; display: none; padding: 4px; }
+        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e28; border: 1px solid #3c404f; border-radius: 8px; max-height: 220px; overflow-y: auto; z-index: 2000; box-shadow: 0 6px 16px rgba(0,0,0,0.6); display: none; }
+        .search-item { padding: 9px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a38; font-size: 13px; color: #ffffff; }
+        .search-item:hover { background: #2b2e3e; }
+
+        .filter-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+        .chip { background: #181922; border: 1px solid #3c404f; color: #e2e4ea; padding: 6px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.15s; font-weight: 500; }
         .chip:hover { color: #ffffff; border-color: #5b6073; }
         .chip.active { background: #2563eb; color: #ffffff; border-color: #3b82f6; font-weight: 600; }
         .chip.active-danger { background: #dc2626; color: #ffffff; border-color: #ef4444; font-weight: 600; }
 
-        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 4px 0; color: #e5e7eb; }
-        #inspector { background: #22242f; padding: 14px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; border: 1px solid #2e3140; color: #f0f0f5; }
+        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 3px 0; color: #e5e7eb; }
+        #inspector { background: #22242f; padding: 12px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; border: 1px solid #2e3140; color: #f0f0f5; }
         
         .input-group { display: flex; flex-direction: column; gap: 4px; }
-        .input-group label { font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        .input-group input, .input-group select, .input-group textarea { background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 9px 10px; border-radius: 6px; font-size: 14px; outline: none; font-family: inherit; }
-        .input-group textarea { resize: vertical; min-height: 60px; line-height: 1.35; color: #ffffff; }
-        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #3b82f6; }
+        .input-group label { font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: 700; }
+        .input-group input, .input-group select, .input-group textarea { background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 8px 10px; border-radius: 6px; font-size: 13.5px; outline: none; font-family: inherit; }
+        .input-group textarea { resize: vertical; min-height: 55px; color: #ffffff; }
         
-        .btn-group { display: flex; gap: 8px; margin-top: 6px; }
-        button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.15s; touch-action: manipulation; }
+        .btn-group { display: flex; gap: 8px; margin-top: 4px; }
+        button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; }
         .btn-primary { background: #3b82f6; color: #ffffff; flex-grow: 1; }
-        .btn-primary:active { background: #1d4ed8; }
         .btn-danger { background: #ef4444; color: #ffffff; }
-        .btn-danger:active { background: #b91c1c; }
         .btn-tool { background: #282a38; color: #a0a5b5; border: 1px solid #3c404f; font-size: 12px; padding: 6px 10px; border-radius: 6px; }
-        .btn-tool:hover { color: #fff; border-color: #5b6073; }
-        
-        #stats { font-size: 12.5px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+
+        #stats { font-size: 12px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 6px; display: flex; flex-direction: column; gap: 3px; }
         .stat-row { display: flex; justify-content: space-between; }
         .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
 
         .mobile-top-bar, .mobile-bottom-sheet, #mobile-menu-modal { display: none !important; }
 
-        @keyframes pulse-ring {
-            0% { transform: scale(0.6); opacity: 1; }
-            100% { transform: scale(2.5); opacity: 0; }
-        }
-        .search-target-pulse {
-            border: 3px solid #00f0ff;
-            border-radius: 50%;
-            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-        }
+        @keyframes pulse-ring { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+        .search-target-pulse { border: 3px solid #00f0ff; border-radius: 50%; animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
 
-        /* АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ */
         @media (max-width: 768px) {
             #sidebar { display: none !important; }
             #map { width: 100vw; height: 100vh; }
-
-            .mobile-top-bar {
-                display: flex !important;
-                position: absolute;
-                top: 10px;
-                left: 10px;
-                right: 10px;
-                z-index: 1000;
-                gap: 8px;
-                align-items: center;
-            }
+            .mobile-top-bar { display: flex !important; position: absolute; top: 10px; left: 10px; right: 10px; z-index: 1000; gap: 8px; align-items: center; }
             .mobile-top-bar .search-container { flex-grow: 1; }
-            .mobile-top-bar .search-input {
-                background: rgba(22, 23, 30, 0.95);
-                backdrop-filter: blur(10px);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-                height: 44px;
-                color: #ffffff;
-            }
-            .btn-mobile-icon {
-                width: 44px;
-                height: 44px;
-                background: rgba(34, 36, 47, 0.95);
-                backdrop-filter: blur(10px);
-                color: #ffffff;
-                border: 1px solid #3c404f;
-                border-radius: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 18px;
-                flex-shrink: 0;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            }
-
-            #mobile-menu-modal {
-                display: none !important;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: rgba(0,0,0,0.7);
-                z-index: 2500;
-                justify-content: center;
-                align-items: flex-end;
-                color: #f0f0f5;
-            }
+            .mobile-top-bar .search-input { background: rgba(22, 23, 30, 0.95); backdrop-filter: blur(10px); height: 44px; color: #ffffff; }
+            .btn-mobile-icon { width: 44px; height: 44px; background: rgba(34, 36, 47, 0.95); backdrop-filter: blur(10px); color: #ffffff; border: 1px solid #3c404f; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+            #mobile-menu-modal { display: none !important; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 2500; justify-content: center; align-items: flex-end; color: #f0f0f5; }
             #mobile-menu-modal.active { display: flex !important; }
-            .modal-content {
-                background: #181922;
-                width: 100%;
-                border-radius: 18px 18px 0 0;
-                padding: 18px 16px 24px 16px;
-                display: flex;
-                flex-direction: column;
-                gap: 14px;
-                max-height: 85vh;
-                overflow-y: auto;
-                color: #f0f0f5;
-                box-shadow: 0 -8px 28px rgba(0,0,0,0.8);
-            }
-            .modal-content label, .modal-content span, .modal-content div { color: #e5e7eb; }
-
-            .mobile-bottom-sheet {
-                display: flex !important;
-                flex-direction: column;
-                position: fixed;
-                bottom: -100%;
-                left: 0;
-                right: 0;
-                background: #181922;
-                border-top: 1px solid #3c404f;
-                border-radius: 18px 18px 0 0;
-                padding: 12px 16px 24px 16px;
-                z-index: 2000;
-                box-shadow: 0 -8px 28px rgba(0,0,0,0.8);
-                transition: bottom 0.28s cubic-bezier(0.1, 0.9, 0.2, 1);
-                max-height: 75vh;
-                overflow-y: auto;
-                color: #f0f0f5;
-            }
+            .modal-content { background: #181922; width: 100%; border-radius: 18px 18px 0 0; padding: 18px 16px 24px 16px; display: flex; flex-direction: column; gap: 12px; max-height: 85vh; overflow-y: auto; color: #f0f0f5; }
+            .mobile-bottom-sheet { display: flex !important; flex-direction: column; position: fixed; bottom: -100%; left: 0; right: 0; background: #181922; border-top: 1px solid #3c404f; border-radius: 18px 18px 0 0; padding: 12px 16px 24px 16px; z-index: 2000; transition: bottom 0.28s ease; max-height: 75vh; overflow-y: auto; color: #f0f0f5; }
             .mobile-bottom-sheet.open { bottom: 0; }
-            .sheet-handle {
-                width: 44px;
-                height: 5px;
-                background: #4b5568;
-                border-radius: 3px;
-                align-self: center;
-                margin-bottom: 10px;
-            }
-            .sheet-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 8px;
-            }
+            .sheet-handle { width: 44px; height: 5px; background: #4b5568; border-radius: 3px; align-self: center; margin-bottom: 10px; }
+            .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         }
     </style>
 </head>
 <body>
     <div id="app-container">
-        <!-- Боковая панель -->
         <div id="sidebar">
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div class="header-title">
@@ -216,9 +101,15 @@
                 </div>
                 <button onclick="fitMapBounds()" style="background:#282a38; color:#a0a5b5; font-size:11.5px; padding:5px 9px;">Вся схема</button>
             </div>
+
+            <!-- Вкладки сетей -->
+            <div class="network-tabs">
+                <button class="net-tab active" id="tab-drinking" onclick="switchNetwork('drinking')">💧 Питьевая (ХПВ)</button>
+                <button class="net-tab" id="tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ Техническая (ТВ)</button>
+            </div>
             
             <div class="search-container">
-                <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск по номеру (157, ПГ)..." autocomplete="off">
+                <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск (157, 78, ПГ)..." autocomplete="off">
                 <span id="search-clear" class="search-clear" onclick="clearSearch()">✕</span>
                 <div id="search-dropdown" class="search-dropdown"></div>
             </div>
@@ -233,11 +124,11 @@
 
             <div class="panel-box mode-selector">
                 <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр / Выбор объекта</label>
-                <label><input type="radio" name="mode" value="add_valve"> 🛑 + Добавить задвижку</label>
+                <label><input type="radio" name="mode" value="add_valve"> 🛑 + Добавить задвижку/узел</label>
                 <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + Добавить гидрант (ПГ)</label>
             </div>
 
-            <div class="panel-box" style="padding: 8px 12px;">
+            <div class="panel-box" style="padding: 7px 12px;">
                 <label style="font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #e5e7eb;">
                     <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать подписи на схеме
                 </label>
@@ -247,8 +138,8 @@
                 <p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для редактирования.</p>
             </div>
 
-            <div class="panel-box" style="padding: 10px 12px; gap: 6px;">
-                <div style="font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: bold;">Резервная копия базы:</div>
+            <div class="panel-box" style="padding: 8px 12px; gap: 6px;">
+                <div style="font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: bold;">Резервная копия текущей схемы:</div>
                 <div style="display: flex; gap: 6px;">
                     <button class="btn-tool" onclick="downloadBackup()" style="flex-grow: 1;">💾 Скачать базу</button>
                     <button class="btn-tool" onclick="document.getElementById('import-file-input').click()" style="flex-grow: 1;">📂 Загрузить</button>
@@ -266,11 +157,11 @@
         <!-- Мобильная верхняя панель -->
         <div class="mobile-top-bar">
             <div class="search-container">
-                <input type="text" id="mobile-search-input" class="search-input" placeholder="🔍 Поиск задвижки/ПГ..." autocomplete="off">
+                <input type="text" id="mobile-search-input" class="search-input" placeholder="🔍 Поиск арматуры/ПГ..." autocomplete="off">
                 <span id="mobile-search-clear" class="search-clear" onclick="clearMobileSearch()">✕</span>
                 <div id="mobile-search-dropdown" class="search-dropdown"></div>
             </div>
-            <button class="btn-mobile-icon" onclick="openMobileMenu()" title="Фильтры и режимы">⚙️</button>
+            <button class="btn-mobile-icon" onclick="openMobileMenu()" title="Фильтры и выбор схемы">⚙️</button>
             <button class="btn-mobile-icon" onclick="fitMapBounds()" title="Вся схема">🗺️</button>
         </div>
 
@@ -296,8 +187,14 @@
                     </div>
                     <button onclick="closeMobileMenu()" style="background:none; border:none; color:#a0a5b5; font-size:18px; padding:4px;">✕</button>
                 </div>
+
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold;">Выбор схемы сети:</div>
+                <div class="network-tabs">
+                    <button class="net-tab active m-net-tab" id="m-tab-drinking" onclick="switchNetwork('drinking')">💧 Питьевая</button>
+                    <button class="net-tab m-net-tab" id="m-tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ Техническая</button>
+                </div>
                 
-                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px;">Фильтры объектов:</div>
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Фильтры объектов:</div>
                 <div class="filter-chips">
                     <button class="chip active mobile-chip" data-filter="all" onclick="setMobileFilter('all', this)">Все</button>
                     <button class="chip mobile-chip" data-filter="no_cheeks" onclick="setMobileFilter('no_cheeks', this)">🔴 Без щёк</button>
@@ -306,10 +203,10 @@
                     <button class="chip mobile-chip" data-filter="hydrant" onclick="setMobileFilter('hydrant', this)">🚒 Гидранты</button>
                 </div>
 
-                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 4px;">Режим нажатия на карту:</div>
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Режим нажатия на карту:</div>
                 <div class="panel-box mode-selector">
                     <label><input type="radio" name="mobile-mode" value="view" checked onchange="syncMobileMode(this)"> 🔍 Просмотр / Выбор объекта</label>
-                    <label><input type="radio" name="mobile-mode" value="add_valve" onchange="syncMobileMode(this)"> 🛑 + Добавить задвижку</label>
+                    <label><input type="radio" name="mobile-mode" value="add_valve" onchange="syncMobileMode(this)"> 🛑 + Добавить задвижку/узел</label>
                     <label><input type="radio" name="mobile-mode" value="add_hydrant" onchange="syncMobileMode(this)"> 🔴 + Добавить гидрант (ПГ)</label>
                 </div>
 
@@ -321,15 +218,15 @@
 
                 <div class="panel-box" style="padding: 10px 12px; gap: 6px;">
                     <div style="font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: bold;">Резервная копия:</div>
-                    <button class="btn-tool" onclick="downloadBackup()" style="width: 100%; padding: 10px;">💾 Скачать базу данных</button>
+                    <button class="btn-tool" onclick="downloadBackup()" style="width: 100%; padding: 10px;">💾 Скачать базу текущей схемы</button>
                 </div>
 
-                <button class="btn-primary" onclick="closeMobileMenu()" style="margin-top: 6px; padding: 12px; font-size: 14px;">Готово</button>
+                <button class="btn-primary" onclick="closeMobileMenu()" style="margin-top: 4px; padding: 12px; font-size: 14px;">Готово</button>
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="app.js?v=2.0"></script>
+    <script src="app.js?v=3.0"></script>
 </body>
 </html>
