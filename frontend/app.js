@@ -1,48 +1,52 @@
 ﻿const API_URL = "/api";
 
-const map = L.map("map", {
-    crs: L.CRS.Simple,
-    minZoom: -4,
-    maxZoom: 3,
-    zoomSnap: 0.1
-});
-
-// Реальные размеры исходного чертежа
-const imgWidth = 4961;
-const imgHeight = 3508;
-const bounds = [[0, 0], [imgHeight, imgWidth]];
-
-const image = L.imageOverlay("scheme.png", bounds).addTo(map);
-map.fitBounds(bounds);
-
-setTimeout(() => {
-    map.invalidateSize();
-    map.fitBounds(bounds);
-}, 300);
-
-let networkData = { nodes: [], pipes: [], valves: [] };
+let map;
+let networkData = { nodes: [], pipes: [], valves: [], dimensions: { width: 4961, height: 3508 } };
+let nodesLayer, pipesLayer;
 let pipeBuffer = [];
 
-const nodesLayer = L.layerGroup().addTo(map);
-const pipesLayer = L.layerGroup().addTo(map);
-
-async function loadNetwork() {
+async function initApp() {
     try {
         const res = await fetch(`${API_URL}/network`);
         if (res.ok) {
             networkData = await res.json();
-            renderNetwork();
         }
     } catch (e) {
         console.error("Ошибка загрузки API:", e);
     }
+
+    const width = networkData.dimensions?.width || 4961;
+    const height = networkData.dimensions?.height || 3508;
+    const bounds = [[0, 0], [height, width]];
+
+    map = L.map("map", {
+        crs: L.CRS.Simple,
+        minZoom: -4,
+        maxZoom: 3,
+        zoomSnap: 0.1
+    });
+
+    L.imageOverlay("scheme.png", bounds).addTo(map);
+    map.fitBounds(bounds);
+
+    nodesLayer = L.layerGroup().addTo(map);
+    pipesLayer = L.layerGroup().addTo(map);
+
+    setTimeout(() => {
+        map.invalidateSize();
+        map.fitBounds(bounds);
+    }, 250);
+
+    renderNetwork();
+
+    map.on("click", handleMapClick);
 }
 
 function renderNetwork() {
     nodesLayer.clearLayers();
     pipesLayer.clearLayers();
 
-    networkData.pipes.forEach(pipe => {
+    (networkData.pipes || []).forEach(pipe => {
         const polyline = L.polyline(pipe.path, {
             color: pipe.material === "пэ" ? "#0077ff" : "#00aa55",
             weight: 4
@@ -50,11 +54,11 @@ function renderNetwork() {
         polyline.on("click", () => showInfo("Трубопровод", pipe));
     });
 
-    networkData.nodes.forEach(node => {
+    (networkData.nodes || []).forEach(node => {
         const marker = L.circleMarker([node.y, node.x], {
-            radius: node.type === "hydrant" ? 8 : 6,
-            color: node.type === "hydrant" ? "#ff3333" : "#3388ff",
-            fillColor: node.type === "hydrant" ? "#ff6666" : "#66aaff",
+            radius: node.type === "hydrant" ? 7 : 5,
+            color: node.type === "hydrant" ? "#ff3333" : "#0066ff",
+            fillColor: node.type === "hydrant" ? "#ff6666" : "#66b3ff",
             fillOpacity: 0.9,
             weight: 2
         }).addTo(nodesLayer);
@@ -66,8 +70,8 @@ function renderNetwork() {
         });
     });
 
-    document.getElementById("count-nodes").innerText = networkData.nodes.length;
-    document.getElementById("count-pipes").innerText = networkData.pipes.length;
+    document.getElementById("count-nodes").innerText = (networkData.nodes || []).length;
+    document.getElementById("count-pipes").innerText = (networkData.pipes || []).length;
 }
 
 function handleNodeClick(node) {
@@ -91,7 +95,7 @@ function showInfo(type, data) {
     `;
 }
 
-map.on("click", async (e) => {
+async function handleMapClick(e) {
     const mode = document.querySelector('input[name="mode"]:checked').value;
     const y = Math.round(e.latlng.lat);
     const x = Math.round(e.latlng.lng);
@@ -113,9 +117,11 @@ map.on("click", async (e) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newNode)
         });
-        loadNetwork();
+        
+        networkData.nodes.push(newNode);
+        renderNetwork();
     }
-});
+}
 
 async function createPipe(nodeA, nodeB) {
     const diameter = prompt("Диаметр трубы (Ду):", "200");
@@ -135,7 +141,9 @@ async function createPipe(nodeA, nodeB) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newPipe)
     });
-    loadNetwork();
+    
+    networkData.pipes.push(newPipe);
+    renderNetwork();
 }
 
-loadNetwork();
+initApp();
