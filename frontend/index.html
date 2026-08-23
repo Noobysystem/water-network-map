@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная схема питьевого водопровода</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Водопроводная сеть</h2>
+        <div class="mode-selector">
+            <label><input type="radio" name="mode" value="view" checked> Просмотр</label>
+            <label><input type="radio" name="mode" value="add_node"> + Колодец / Узел</label>
+            <label><input type="radio" name="mode" value="add_hydrant"> + Гидрант (ПГ)</label>
+            <label><input type="radio" name="mode" value="add_pipe"> + Участок трубы</label>
+        </div>
+        <hr>
+        <div id="inspector">
+            <p>Выберите объект на схеме для просмотра свойств.</p>
+        </div>
+        <div id="stats">
+            <p>Колодцев: <b id="count-nodes">0</b></p>
+            <p>Трубопроводов: <b id="count-pipes">0</b></p>
+        </div>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
