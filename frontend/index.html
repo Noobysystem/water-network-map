@@ -14,21 +14,21 @@
 
         /* Десктопная боковая панель */
         #sidebar { 
-            width: 370px; 
+            width: 380px; 
             height: 100vh; 
             background: #16171e; 
             color: #f0f0f5; 
-            padding: 14px; 
+            padding: 16px; 
             display: flex; 
             flex-direction: column; 
-            gap: 10px; 
+            gap: 12px; 
             z-index: 1000; 
             flex-shrink: 0; 
             box-shadow: 2px 0 16px rgba(0,0,0,0.6); 
             overflow-y: auto;
         }
 
-        .panel-box { background: #22242f; padding: 10px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; color: #f0f0f5; }
+        .panel-box { background: #22242f; padding: 12px 14px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; color: #f0f0f5; }
         
         /* Поиск */
         .search-container { position: relative; display: flex; align-items: center; width: 100%; }
@@ -49,12 +49,12 @@
         .chip.active-danger { background: #dc2626; color: #ffffff; border-color: #ef4444; font-weight: 600; }
 
         .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 4px 0; color: #e5e7eb; }
-        #inspector { background: #22242f; padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 9px; border: 1px solid #2e3140; color: #f0f0f5; }
+        #inspector { background: #22242f; padding: 14px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; border: 1px solid #2e3140; color: #f0f0f5; }
         
         .input-group { display: flex; flex-direction: column; gap: 4px; }
         .input-group label { font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
         .input-group input, .input-group select, .input-group textarea { background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 9px 10px; border-radius: 6px; font-size: 14px; outline: none; font-family: inherit; }
-        .input-group textarea { resize: vertical; min-height: 55px; line-height: 1.35; color: #ffffff; }
+        .input-group textarea { resize: vertical; min-height: 60px; line-height: 1.35; color: #ffffff; }
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #3b82f6; }
         
         .btn-group { display: flex; gap: 8px; margin-top: 6px; }
@@ -64,13 +64,16 @@
         .btn-danger { background: #ef4444; color: #ffffff; }
         .btn-danger:active { background: #b91c1c; }
         
-        #stats { font-size: 12px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 6px; display: flex; flex-direction: column; gap: 3px; }
+        #stats { font-size: 12.5px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 8px; display: flex; flex-direction: column; gap: 4px; }
         .stat-row { display: flex; justify-content: space-between; }
         .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
 
-        /* Плавающие элементы для мобильных */
-        .mobile-top-bar { display: none; }
-        .mobile-bottom-sheet { display: none; }
+        /* Полная изоляция мобильных элементов на ПК */
+        .mobile-top-bar, 
+        .mobile-bottom-sheet, 
+        #mobile-menu-modal { 
+            display: none !important; 
+        }
 
         @keyframes pulse-ring {
             0% { transform: scale(0.6); opacity: 1; }
@@ -82,13 +85,13 @@
             animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
 
-        /* АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ */
+        /* АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (ШИРИНА <= 768px) */
         @media (max-width: 768px) {
-            #sidebar { display: none; }
+            #sidebar { display: none !important; }
             #map { width: 100vw; height: 100vh; }
 
             .mobile-top-bar {
-                display: flex;
+                display: flex !important;
                 position: absolute;
                 top: 10px;
                 left: 10px;
@@ -122,7 +125,7 @@
             }
 
             #mobile-menu-modal {
-                display: none;
+                display: none !important;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -134,7 +137,7 @@
                 align-items: flex-end;
                 color: #f0f0f5;
             }
-            #mobile-menu-modal.active { display: flex; }
+            #mobile-menu-modal.active { display: flex !important; }
             .modal-content {
                 background: #181922;
                 width: 100%;
@@ -153,7 +156,7 @@
             }
 
             .mobile-bottom-sheet {
-                display: flex;
+                display: flex !important;
                 flex-direction: column;
                 position: fixed;
                 bottom: -100%;
@@ -190,11 +193,11 @@
 </head>
 <body>
     <div id="app-container">
-        <!-- Десктопная панель -->
+        <!-- Десктопная панель слева -->
         <div id="sidebar">
-            <h2 style="margin: 0; font-size: 17px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
+            <h2 style="margin: 0; font-size: 18px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
                 <span>Запорная арматура</span>
-                <button onclick="fitMapBounds()" style="background:#282a38; color:#a0a5b5; font-size:11px; padding:4px 7px;">Вся схема</button>
+                <button onclick="fitMapBounds()" style="background:#282a38; color:#a0a5b5; font-size:11.5px; padding:5px 9px;">Вся схема</button>
             </h2>
             
             <div class="search-container">
@@ -217,8 +220,8 @@
                 <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + Добавить гидрант (ПГ)</label>
             </div>
 
-            <div class="panel-box" style="padding: 7px 12px;">
-                <label style="font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #e5e7eb;">
+            <div class="panel-box" style="padding: 8px 12px;">
+                <label style="font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #e5e7eb;">
                     <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать подписи на схеме
                 </label>
             </div>
