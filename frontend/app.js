@@ -2,8 +2,10 @@
 
 let map;
 let networkData = { nodes: [], dimensions: { width: 14904, height: 10528 } };
-let nodesLayer;
+let bounds;
+let nodesLayer, pulseLayer;
 let selectedNode = null;
+let currentFilter = "all";
 
 async function initApp() {
     try {
@@ -17,7 +19,7 @@ async function initApp() {
 
     const width = networkData.dimensions?.width || 14904;
     const height = networkData.dimensions?.height || 10528;
-    const bounds = [[0, 0], [height, width]];
+    bounds = [[0, 0], [height, width]];
 
     map = L.map("map", {
         crs: L.CRS.Simple,
@@ -30,6 +32,7 @@ async function initApp() {
     map.fitBounds(bounds);
 
     nodesLayer = L.layerGroup().addTo(map);
+    pulseLayer = L.layerGroup().addTo(map);
 
     setTimeout(() => {
         map.invalidateSize();
@@ -38,49 +41,63 @@ async function initApp() {
 
     renderNetwork();
     map.on("click", handleMapClick);
+
+    setupSearch();
+}
+
+function fitMapBounds() {
+    if (bounds && map) {
+        map.flyToBounds(bounds, { duration: 0.8 });
+    }
 }
 
 function getNodeStyle(node) {
     if (node.type === "hydrant") {
-        return {
-            radius: 8,
-            color: "#ff4d4f",
-            fillColor: "#ff7875",
-            fillOpacity: 0.9,
-            weight: 2
-        };
+        return { radius: 8, color: "#ff4d4f", fillColor: "#ff7875", fillOpacity: 0.9, weight: 2 };
     }
 
-    // Стилизация запорной арматуры по состоянию
     switch (node.status) {
         case "no_cheeks":
-            return { radius: 7, color: "#ffffff", fillColor: "#ff4d4f", fillOpacity: 1.0, weight: 3 }; // Нет щёк (красный с белой окантовкой)
+            return { radius: 7.5, color: "#ffffff", fillColor: "#ff4d4f", fillOpacity: 1.0, weight: 3 };
         case "hard_turn":
-            return { radius: 6.5, color: "#d48806", fillColor: "#faad14", fillOpacity: 0.9, weight: 2.5 }; // Плохо закрывается / тугой ход (желтый)
+            return { radius: 6.5, color: "#d48806", fillColor: "#faad14", fillOpacity: 0.9, weight: 2.5 };
         case "closed":
-            return { radius: 6.5, color: "#d46b08", fillColor: "#fa8c16", fillOpacity: 0.9, weight: 2.5 }; // Закрыта (оранжевый)
+            return { radius: 6.5, color: "#d46b08", fillColor: "#fa8c16", fillOpacity: 0.9, weight: 2.5 };
         case "jammed_closed":
-            return { radius: 7, color: "#ffffff", fillColor: "#722ed1", fillOpacity: 1.0, weight: 3 }; // Заклинила в закрытом (фиолетовый)
+            return { radius: 7.5, color: "#ffffff", fillColor: "#722ed1", fillOpacity: 1.0, weight: 3 };
         default:
-            return { radius: 6, color: "#237804", fillColor: "#52c41a", fillOpacity: 0.85, weight: 2 }; // В работе / открыта (зеленый)
+            return { radius: 6, color: "#237804", fillColor: "#52c41a", fillOpacity: 0.85, weight: 2 };
     }
+}
+
+function getFilteredNodes() {
+    const nodes = networkData.nodes || [];
+    if (currentFilter === "all") return nodes;
+    if (currentFilter === "hydrant") return nodes.filter(n => n.type === "hydrant");
+    if (currentFilter === "no_cheeks") return nodes.filter(n => n.status === "no_cheeks");
+    if (currentFilter === "hard_turn") return nodes.filter(n => n.status === "hard_turn" || n.status === "jammed_closed");
+    if (currentFilter === "closed") return nodes.filter(n => n.status === "closed");
+    return nodes;
 }
 
 function renderNetwork() {
     nodesLayer.clearLayers();
     const showLabels = document.getElementById("toggle-labels") ? document.getElementById("toggle-labels").checked : true;
+    const filtered = getFilteredNodes();
     let defectCount = 0;
 
     (networkData.nodes || []).forEach(node => {
-        const isSelected = selectedNode && selectedNode.id === node.id;
-        const style = getNodeStyle(node);
-
         if (node.status === "no_cheeks" || node.status === "hard_turn" || node.status === "jammed_closed") {
             defectCount++;
         }
+    });
+
+    filtered.forEach(node => {
+        const isSelected = selectedNode && selectedNode.id === node.id;
+        const style = getNodeStyle(node);
 
         const marker = L.circleMarker([node.y, node.x], {
-            radius: isSelected ? style.radius + 2 : style.radius,
+            radius: isSelected ? style.radius + 3 : style.radius,
             color: isSelected ? "#00f0ff" : style.color,
             fillColor: style.fillColor,
             fillOpacity: isSelected ? 1.0 : style.fillOpacity,
@@ -90,7 +107,7 @@ function renderNetwork() {
         if (showLabels) {
             let labelText = node.name;
             if (node.status === "no_cheeks") labelText += " ⚠️(без щёк)";
-            else if (node.status === "closed") labelText += " 🔒(закр)";
+            else if (node.status === "closed") labelText += " 🔒";
 
             marker.bindTooltip(labelText, { 
                 permanent: true, 
@@ -101,18 +118,127 @@ function renderNetwork() {
 
         marker.on("click", (e) => {
             L.DomEvent.stopPropagation(e);
-            selectedNode = node;
-            renderNetwork();
-            showNodeEditor(node);
+            focusOnNode(node);
         });
     });
 
+    document.getElementById("count-visible").innerText = filtered.length;
     document.getElementById("count-total").innerText = (networkData.nodes || []).length;
     document.getElementById("count-defects").innerText = defectCount;
 }
 
+function setFilter(filterType, element) {
+    currentFilter = filterType;
+    document.querySelectorAll(".chip").forEach(c => c.classList.remove("active", "active-danger"));
+    
+    if (filterType === "no_cheeks") element.classList.add("active-danger");
+    else element.classList.add("active");
+
+    renderNetwork();
+}
+
 function toggleLabels() {
     renderNetwork();
+}
+
+function focusOnNode(node) {
+    selectedNode = node;
+    renderNetwork();
+    showNodeEditor(node);
+
+    // Плавное приближение и центрирование
+    map.flyTo([node.y, node.x], Math.max(map.getZoom(), 0.5), { duration: 0.6 });
+
+    // Эффект пульсирующего маркера на 3 секунды
+    pulseLayer.clearLayers();
+    const pulseIcon = L.divIcon({
+        className: 'search-target-pulse',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
+    });
+    const pulseMarker = L.marker([node.y, node.x], { icon: pulseIcon }).addTo(pulseLayer);
+    setTimeout(() => pulseLayer.removeLayer(pulseMarker), 3500);
+}
+
+function setupSearch() {
+    const searchInput = document.getElementById("search-input");
+    const searchClear = document.getElementById("search-clear");
+    const dropdown = document.getElementById("search-dropdown");
+
+    searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        searchClear.style.display = query.length > 0 ? "block" : "none";
+
+        if (!query) {
+            dropdown.style.display = "none";
+            return;
+        }
+
+        const matches = (networkData.nodes || []).filter(n => {
+            const nameMatch = (n.name || "").toLowerCase().includes(query);
+            const descMatch = (n.description || "").toLowerCase().includes(query);
+            return nameMatch || descMatch;
+        }).slice(0, 15);
+
+        if (matches.length === 0) {
+            dropdown.innerHTML = '<div style="padding: 10px; color: #8e929b; font-size: 12px; text-align: center;">Ничего не найдено</div>';
+            dropdown.style.display = "block";
+            return;
+        }
+
+        dropdown.innerHTML = matches.map(m => {
+            let badge = `<span style="color:#52c41a;">● В работе</span>`;
+            if (m.type === "hydrant") badge = `<span style="color:#ff4d4f;">🚒 ПГ</span>`;
+            else if (m.status === "no_cheeks") badge = `<span style="color:#ff4d4f; font-weight:bold;">⚠️ Без щёк</span>`;
+            else if (m.status === "closed") badge = `<span style="color:#fa8c16;">🔒 Закрыта</span>`;
+            else if (m.status === "hard_turn") badge = `<span style="color:#faad14;">🟡 Дефект</span>`;
+
+            return `
+                <div class="search-item" onclick="selectSearchResult('${m.id}')">
+                    <div>
+                        <b>${m.name}</b>
+                        ${m.description ? `<div style="font-size:11px; color:#8e929b;">${m.description}</div>` : ''}
+                    </div>
+                    <div style="font-size: 11.5px;">${badge}</div>
+                </div>
+            `;
+        }).join("");
+        dropdown.style.display = "block";
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const query = searchInput.value.trim().toLowerCase();
+            const first = (networkData.nodes || []).find(n => (n.name || "").toLowerCase().includes(query));
+            if (first) {
+                selectSearchResult(first.id);
+            }
+        }
+    });
+
+    // Закрытие выпадающего списка при клике вне него
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".search-container")) {
+            dropdown.style.display = "none";
+        }
+    });
+}
+
+function selectSearchResult(nodeId) {
+    const node = (networkData.nodes || []).find(n => n.id === nodeId);
+    if (node) {
+        document.getElementById("search-dropdown").style.display = "none";
+        document.getElementById("search-input").value = node.name;
+        document.getElementById("search-clear").style.display = "block";
+        focusOnNode(node);
+    }
+}
+
+function clearSearch() {
+    const searchInput = document.getElementById("search-input");
+    searchInput.value = "";
+    document.getElementById("search-clear").style.display = "none";
+    document.getElementById("search-dropdown").style.display = "none";
 }
 
 function showNodeEditor(node) {
@@ -124,7 +250,7 @@ function showNodeEditor(node) {
         
         <div class="input-group">
             <label>Номер / Маркировка</label>
-            <input type="text" id="edit-node-name" value="${node.name || ''}" placeholder="например, 157 или ПГ 12">
+            <input type="text" id="edit-node-name" value="${node.name || ''}" placeholder="например, 157">
         </div>
 
         <div class="input-group">
@@ -152,8 +278,8 @@ function showNodeEditor(node) {
         </div>
 
         <div class="input-group">
-            <label>Описание и примечания (дефекты)</label>
-            <textarea id="edit-node-desc" placeholder="например: плохо закрывается, обломан шток, колодец завален...">${node.description || ''}</textarea>
+            <label>Описание и дефекты</label>
+            <textarea id="edit-node-desc" placeholder="например: обломан шток, слизана резьба, колодец завален...">${node.description || ''}</textarea>
         </div>
 
         <div class="btn-group">
@@ -164,7 +290,6 @@ function showNodeEditor(node) {
 
     const nameInput = document.getElementById("edit-node-name");
     nameInput.focus();
-    nameInput.select();
     nameInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter" && !e.shiftKey) saveNodeEdit(node.id);
     });
@@ -203,7 +328,7 @@ async function deleteNode(nodeId) {
 
     networkData.nodes = networkData.nodes.filter(n => n.id !== nodeId);
     selectedNode = null;
-    document.getElementById("inspector").innerHTML = '<p style="color: #9aa0a6; margin: 0;">Объект удален. Выберите следующий.</p>';
+    document.getElementById("inspector").innerHTML = '<p style="color: #9aa0a6; margin: 0; font-size: 13px;">Объект удален. Выберите следующий.</p>';
     renderNetwork();
 }
 
@@ -243,9 +368,7 @@ async function handleMapClick(e) {
     });
 
     networkData.nodes.push(newNode);
-    selectedNode = newNode;
-    renderNetwork();
-    showNodeEditor(newNode);
+    focusOnNode(newNode);
 }
 
 initApp();

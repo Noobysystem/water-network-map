@@ -8,59 +8,104 @@
     <style>
         * { box-sizing: border-box; }
         html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; display: flex; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        #sidebar { width: 360px; height: 100vh; background: #16171d; color: #f0f0f5; padding: 16px; display: flex; flex-direction: column; gap: 12px; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 14px rgba(0,0,0,0.6); }
-        #map { width: calc(100vw - 360px); height: 100vh; background: #1f2027; }
-        .panel-box { background: #232530; padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e303d; }
-        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 4px 0; }
-        #inspector { background: #232530; padding: 14px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; border: 1px solid #2e303d; }
-        .input-group { display: flex; flex-direction: column; gap: 4px; }
-        .input-group label { font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        .input-group input, .input-group select, .input-group textarea { background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 13px; outline: none; font-family: inherit; }
-        .input-group textarea { resize: vertical; min-height: 65px; line-height: 1.4; }
+        #sidebar { width: 370px; height: 100vh; background: #16171d; color: #f0f0f5; padding: 14px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 16px rgba(0,0,0,0.6); }
+        #map { width: calc(100vw - 370px); height: 100vh; background: #1f2027; }
+        .panel-box { background: #232530; padding: 10px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e303d; }
+        
+        /* Поиск и фильтры */
+        .search-container { position: relative; display: flex; align-items: center; }
+        .search-input { width: 100%; background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 9px 32px 9px 12px; border-radius: 6px; font-size: 13.5px; outline: none; }
+        .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
+        .search-clear { position: absolute; right: 10px; cursor: pointer; color: #8e929b; font-size: 14px; display: none; }
+        .search-clear:hover { color: #fff; }
+        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e27; border: 1px solid #3c404b; border-radius: 6px; max-height: 220px; overflow-y: auto; z-index: 2000; box-shadow: 0 4px 12px rgba(0,0,0,0.5); display: none; }
+        .search-item { padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a36; font-size: 13px; }
+        .search-item:hover { background: #2b2e3d; }
+        
+        /* Фильтры */
+        .filter-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+        .chip { background: #181920; border: 1px solid #3c404b; color: #a6abb7; padding: 4px 8px; border-radius: 4px; font-size: 11.5px; cursor: pointer; transition: 0.15s; }
+        .chip:hover { color: #fff; border-color: #5b6070; }
+        .chip.active { background: #2563eb; color: #fff; border-color: #3b82f6; }
+        .chip.active-danger { background: #dc2626; color: #fff; border-color: #ef4444; }
+
+        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 2px 0; }
+        #inspector { background: #232530; padding: 12px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; border: 1px solid #2e303d; }
+        .input-group { display: flex; flex-direction: column; gap: 3px; }
+        .input-group label { font-size: 10.5px; color: #9aa0a6; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .input-group input, .input-group select, .input-group textarea { background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 7px 10px; border-radius: 6px; font-size: 13px; outline: none; font-family: inherit; }
+        .input-group textarea { resize: vertical; min-height: 55px; line-height: 1.35; }
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #3b82f6; }
-        .btn-group { display: flex; gap: 8px; margin-top: 6px; }
-        button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.15s; }
+        
+        .btn-group { display: flex; gap: 6px; margin-top: 4px; }
+        button { padding: 8px 10px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 12.5px; transition: 0.15s; }
         .btn-primary { background: #3b82f6; color: #fff; flex-grow: 1; }
         .btn-primary:hover { background: #2563eb; }
         .btn-danger { background: #ef4444; color: #fff; }
         .btn-danger:hover { background: #dc2626; }
-        #stats { font-size: 12.5px; color: #9aa0a6; border-top: 1px solid #2e303d; padding-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+        
+        #stats { font-size: 12px; color: #9aa0a6; border-top: 1px solid #2e303d; padding-top: 6px; display: flex; flex-direction: column; gap: 3px; }
         .stat-row { display: flex; justify-content: space-between; }
         .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
-        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #c5c7d0; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+        .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+        /* Анимация пульсации найденного узла */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.6); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .search-target-pulse {
+            border: 3px solid #00f0ff;
+            border-radius: 50%;
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
     </style>
 </head>
 <body>
     <div id="sidebar">
-        <h2 style="margin: 0; font-size: 18px; color: #fff;">Запорная арматура и ПГ</h2>
+        <h2 style="margin: 0; font-size: 17px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
+            <span>Запорная арматура</span>
+            <button onclick="fitMapBounds()" style="background:#282a36; color:#9aa0a6; font-size:11px; padding:4px 7px;">Вся схема</button>
+        </h2>
         
+        <!-- Поиск и навигация -->
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск по номеру (напр. 157, ПГ)..." autocomplete="off">
+            <span id="search-clear" class="search-clear" onclick="clearSearch()">✕</span>
+            <div id="search-dropdown" class="search-dropdown"></div>
+        </div>
+
+        <!-- Быстрые фильтры -->
+        <div class="filter-chips">
+            <button class="chip active" data-filter="all" onclick="setFilter('all', this)">Все</button>
+            <button class="chip" data-filter="no_cheeks" onclick="setFilter('no_cheeks', this)">🔴 Без щёк</button>
+            <button class="chip" data-filter="hard_turn" onclick="setFilter('hard_turn', this)">🟡 Дефект</button>
+            <button class="chip" data-filter="closed" onclick="setFilter('closed', this)">🔒 Закрытые</button>
+            <button class="chip" data-filter="hydrant" onclick="setFilter('hydrant', this)">🚒 Гидранты</button>
+        </div>
+
+        <!-- Режимы создания -->
         <div class="panel-box mode-selector">
             <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр / Выбор объекта</label>
             <label><input type="radio" name="mode" value="add_valve"> 🛑 + Добавить задвижку</label>
             <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + Добавить гидрант (ПГ)</label>
         </div>
 
-        <div class="panel-box" style="padding: 10px 12px;">
-            <label style="font-size: 12.5px; cursor: pointer; display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать номера на схеме
+        <div class="panel-box" style="padding: 7px 12px;">
+            <label style="font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать подписи на схеме
             </label>
-            <div style="font-size: 11px; color: #8e929b; text-transform: uppercase; font-weight: 700; margin-top: 4px;">Статусы арматуры:</div>
-            <div style="display: grid; grid-template-columns: 1fr; gap: 3px; margin-top: 4px;">
-                <div class="legend-item"><span class="dot" style="background:#52c41a;"></span> В работе (Открыта)</div>
-                <div class="legend-item"><span class="dot" style="background:#fa8c16;"></span> Закрыта (Отсечена)</div>
-                <div class="legend-item"><span class="dot" style="background:#ff4d4f; border: 2px solid #fff;"></span> Нет щёк / Не перекрыть!</div>
-                <div class="legend-item"><span class="dot" style="background:#faad14;"></span> Плохо закрывается / Дефект</div>
-            </div>
         </div>
 
+        <!-- Карточка редактирования -->
         <div id="inspector">
-            <p style="color: #9aa0a6; margin: 0;">Кликните по любой задвижке или гидранту на схеме для редактирования статуса и описания.</p>
+            <p style="color: #9aa0a6; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для просмотра и редактирования свойств.</p>
         </div>
 
         <div id="stats">
-            <div class="stat-row"><span>Всего объектов:</span> <b id="count-total" style="color:#fff;">0</b></div>
-            <div class="stat-row"><span>С дефектами/без щёк:</span> <b id="count-defects" style="color:#ff7875;">0</b></div>
+            <div class="stat-row"><span>Отображается:</span> <b id="count-visible" style="color:#fff;">0</b></div>
+            <div class="stat-row"><span>Всего в базе:</span> <b id="count-total" style="color:#fff;">0</b></div>
+            <div class="stat-row"><span>Без щёк / дефекты:</span> <b id="count-defects" style="color:#ff7875;">0</b></div>
         </div>
     </div>
     <div id="map"></div>
