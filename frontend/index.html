@@ -12,7 +12,6 @@
         #app-container { display: flex; width: 100vw; height: 100vh; position: relative; }
         #map { flex-grow: 1; height: 100vh; background: #191a21; z-index: 1; }
 
-        /* Боковая панель */
         #sidebar { 
             width: 380px; 
             height: 100vh; 
@@ -44,9 +43,9 @@
         }
         .btn-icon-top:hover { color: #fff; border-color: #3b82f6; }
 
-        /* Вкладки сетей */
-        .network-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #121318; padding: 3px; border-radius: 8px; border: 1px solid #2e3140; }
-        .net-tab { background: transparent; border: none; color: #9aa0a6; padding: 7px 6px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: 0.15s; text-align: center; }
+        /* 3 вкладки сетей */
+        .network-tabs { display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: 4px; background: #121318; padding: 3px; border-radius: 8px; border: 1px solid #2e3140; }
+        .net-tab { background: transparent; border: none; color: #9aa0a6; padding: 7px 4px; border-radius: 6px; font-size: 11.5px; font-weight: 600; cursor: pointer; transition: 0.15s; text-align: center; white-space: nowrap; }
         .net-tab:hover { color: #fff; }
         .net-tab.active { background: #2563eb; color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.4); }
 
@@ -67,7 +66,6 @@
         .panel-box { background: #22242f; padding: 8px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 6px; border: 1px solid #2e3140; color: #f0f0f5; }
         .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 2px 0; color: #e5e7eb; }
         
-        /* Главная рабочая карточка (инспектор) */
         #inspector { 
             background: #22242f; 
             padding: 12px 14px; 
@@ -144,14 +142,15 @@
                 </div>
             </div>
 
-            <!-- Вкладки сетей -->
+            <!-- Вкладки 3-х сетей -->
             <div class="network-tabs">
                 <button class="net-tab active" id="tab-drinking" onclick="switchNetwork('drinking')">💧 ПВ</button>
                 <button class="net-tab" id="tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ ТВ пром</button>
+                <button class="net-tab" id="tab-tech_water_out" onclick="switchNetwork('tech_water_out')">⚙️ ТВ внепром</button>
             </div>
             
             <div class="search-container">
-                <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск арматуры (157, 78, ПГ)..." autocomplete="off">
+                <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск арматуры (157, 55, ВК)..." autocomplete="off">
                 <span id="search-clear" class="search-clear" onclick="clearSearch()">✕</span>
                 <div id="search-dropdown" class="search-dropdown"></div>
             </div>
@@ -167,12 +166,11 @@
             <div class="panel-box mode-selector">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр</label>
-                    <label><input type="radio" name="mode" value="add_valve"> 🛑 + Задвижка</label>
+                    <label><input type="radio" name="mode" value="add_valve"> 🛑 + Задвижка/ВК</label>
                     <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + ПГ</label>
                 </div>
             </div>
 
-            <!-- Карточка инспектора без лишних скроллов -->
             <div id="inspector">
                 <p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по задвижке на схеме для редактирования параметров.</p>
             </div>
@@ -224,6 +222,7 @@
                 <div class="network-tabs">
                     <button class="net-tab active m-net-tab" id="m-tab-drinking" onclick="switchNetwork('drinking')">💧 ПВ</button>
                     <button class="net-tab m-net-tab" id="m-tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ ТВ пром</button>
+                    <button class="net-tab m-net-tab" id="m-tab-tech_water_out" onclick="switchNetwork('tech_water_out')">⚙️ ТВ внепром</button>
                 </div>
                 
                 <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Фильтры:</div>
@@ -238,7 +237,7 @@
                 <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Режим клика:</div>
                 <div class="panel-box mode-selector">
                     <label><input type="radio" name="mobile-mode" value="view" checked onchange="syncMobileMode(this)"> 🔍 Просмотр / Выбор объекта</label>
-                    <label><input type="radio" name="mobile-mode" value="add_valve" onchange="syncMobileMode(this)"> 🛑 + Добавить задвижку</label>
+                    <label><input type="radio" name="mobile-mode" value="add_valve" onchange="syncMobileMode(this)"> 🛑 + Задвижка / ВК</label>
                     <label><input type="radio" name="mobile-mode" value="add_hydrant" onchange="syncMobileMode(this)"> 🔴 + Добавить гидрант (ПГ)</label>
                 </div>
 
@@ -249,6 +248,6 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="app.js?v=5.0"></script>
+    <script src="app.js?v=7.0"></script>
 </body>
 </html>
