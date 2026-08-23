@@ -13,8 +13,9 @@ let currentFilter = "all";
 const isMobile = () => window.innerWidth <= 768;
 
 const NETWORKS_DEF = {
-    drinking: { image: "scheme.jpg", width: 14904, height: 10528 },
-    tech_water: { image: "scheme_tv.jpg", width: 7445, height: 5266 }
+    drinking: { image: "scheme.jpg?v=1", width: 14904, height: 10528 },
+    tech_water: { image: "scheme_tv.jpg?v=1", width: 7445, height: 5266 },
+    tech_water_out: { image: "scheme_tv_out.jpg?v=1", width: 7445, height: 10528 }
 };
 
 async function initApp() {
@@ -43,6 +44,7 @@ async function loadNetwork(netId) {
     clearSearch();
     clearMobileSearch();
 
+    // Обновляем состояние табов
     document.querySelectorAll(".net-tab").forEach(t => t.classList.remove("active"));
     const tabDesktop = document.getElementById(`tab-${netId}`);
     const tabMobile = document.getElementById(`m-tab-${netId}`);
@@ -72,6 +74,7 @@ async function loadNetwork(netId) {
         map.removeLayer(imageOverlay);
     }
 
+    // Загружаем правильный чертеж сети
     imageOverlay = L.imageOverlay(cfg.image, bounds).addTo(map);
     map.fitBounds(bounds);
 
@@ -226,7 +229,7 @@ function generateEditorHTML(node, prefix = "") {
     return `
         <div class="input-group">
             <label>Номер / Обозначение</label>
-            <input type="text" id="${prefix}edit-node-name" value="${node.name || ''}" placeholder="например, 50 или К 12">
+            <input type="text" id="${prefix}edit-node-name" value="${node.name || ''}" placeholder="например, 54, ВК 22, 19б">
         </div>
 
         <div class="input-group">
@@ -546,9 +549,9 @@ async function handleMapClick(e) {
     let defaultType = (mode === "add_hydrant") ? "hydrant" : "valve";
 
     if (mode === "add_valve") {
-        defaultName = prompt("Номер задвижки / колодца (например, 50 или К 12):", "");
+        defaultName = prompt("Номер задвижки / камеры (например, 54, ВК 22, 19б):", "");
     } else if (mode === "add_hydrant") {
-        defaultName = prompt("Номер гидранта (например, ПГ 28):", "ПГ ");
+        defaultName = prompt("Номер гидранта (например, ПГ 1):", "ПГ ");
     }
 
     if (!defaultName) return;
