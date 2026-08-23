@@ -1,0 +1,958 @@
+{
+  "nodes": [
+    {
+      "id": "node_1787519655931",
+      "name": "50",
+      "type": "valve",
+      "x": 1544.0,
+      "y": 407.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519850136",
+      "name": "25",
+      "type": "valve",
+      "x": 1686.0,
+      "y": 326.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519873812",
+      "name": "52с",
+      "type": "valve",
+      "x": 1611.0,
+      "y": 616.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519894450",
+      "name": "52",
+      "type": "valve",
+      "x": 1649.0,
+      "y": 757.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519899788",
+      "name": "53",
+      "type": "valve",
+      "x": 1787.0,
+      "y": 724.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519912508",
+      "name": "55",
+      "type": "valve",
+      "x": 1813.0,
+      "y": 842.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519918276",
+      "name": "54",
+      "type": "valve",
+      "x": 1708.0,
+      "y": 872.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519922838",
+      "name": "55с",
+      "type": "valve",
+      "x": 1943.0,
+      "y": 793.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519936132",
+      "name": "56в",
+      "type": "valve",
+      "x": 1186.0,
+      "y": 1344.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519940662",
+      "name": "56",
+      "type": "valve",
+      "x": 1330.0,
+      "y": 1340.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519944230",
+      "name": "57",
+      "type": "valve",
+      "x": 1474.0,
+      "y": 1295.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519948652",
+      "name": "58",
+      "type": "valve",
+      "x": 1489.0,
+      "y": 1425.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519956580",
+      "name": "62",
+      "type": "valve",
+      "x": 1578.0,
+      "y": 1312.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519972874",
+      "name": "Сад 40/8",
+      "type": "valve",
+      "x": 1636.0,
+      "y": 1401.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519980202",
+      "name": "Сад 64/6",
+      "type": "valve",
+      "x": 1686.0,
+      "y": 1430.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519988869",
+      "name": "64",
+      "type": "valve",
+      "x": 1986.0,
+      "y": 1567.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787519994936",
+      "name": "63",
+      "type": "valve",
+      "x": 1899.0,
+      "y": 1727.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520064938",
+      "name": "67",
+      "type": "valve",
+      "x": 1879.0,
+      "y": 2083.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520068962",
+      "name": "65",
+      "type": "valve",
+      "x": 1710.0,
+      "y": 2219.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520075196",
+      "name": "68",
+      "type": "valve",
+      "x": 1718.0,
+      "y": 2343.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520079402",
+      "name": "66 (Сад 36/4)",
+      "type": "valve",
+      "x": 1623.0,
+      "y": 2373.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520132840",
+      "name": "ПГ 15",
+      "type": "hydrant",
+      "x": 1889.0,
+      "y": 2466.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520149044",
+      "name": "69",
+      "type": "valve",
+      "x": 1593.0,
+      "y": 2858.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520159648",
+      "name": "ПГ 20",
+      "type": "hydrant",
+      "x": 1561.0,
+      "y": 3036.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520171386",
+      "name": "71 (Сад 42/9а)",
+      "type": "valve",
+      "x": 1524.0,
+      "y": 3223.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520176638",
+      "name": "70",
+      "type": "valve",
+      "x": 1335.0,
+      "y": 3325.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520227912",
+      "name": "ПГ 2",
+      "type": "hydrant",
+      "x": 1817.0,
+      "y": 3408.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520236816",
+      "name": "72",
+      "type": "valve",
+      "x": 1851.0,
+      "y": 3357.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520251758",
+      "name": "ПГ 28",
+      "type": "hydrant",
+      "x": 3369.0,
+      "y": 480.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520259052",
+      "name": "ПГ 29",
+      "type": "hydrant",
+      "x": 3369.0,
+      "y": 335.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520265072",
+      "name": "ПГ 30",
+      "type": "hydrant",
+      "x": 3540.0,
+      "y": 334.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520279622",
+      "name": "76",
+      "type": "valve",
+      "x": 3304.0,
+      "y": 740.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520294508",
+      "name": "55в",
+      "type": "valve",
+      "x": 2990.0,
+      "y": 1378.0,
+      "status": "closed",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520320478",
+      "name": "75 (Гусак)",
+      "type": "valve",
+      "x": 3164.0,
+      "y": 1587.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520329978",
+      "name": "74с",
+      "type": "valve",
+      "x": 3287.0,
+      "y": 1498.0,
+      "status": "closed",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520339388",
+      "name": "74",
+      "type": "valve",
+      "x": 3300.0,
+      "y": 1383.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520345866",
+      "name": "73",
+      "type": "valve",
+      "x": 3370.0,
+      "y": 1309.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520359836",
+      "name": "103",
+      "type": "valve",
+      "x": 4206.0,
+      "y": 1642.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520367828",
+      "name": "102",
+      "type": "valve",
+      "x": 4194.0,
+      "y": 1934.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520372396",
+      "name": "101",
+      "type": "valve",
+      "x": 4371.0,
+      "y": 1938.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520381052",
+      "name": "104",
+      "type": "valve",
+      "x": 4311.0,
+      "y": 2220.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520389750",
+      "name": "100",
+      "type": "valve",
+      "x": 4808.0,
+      "y": 1727.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520399018",
+      "name": "99",
+      "type": "valve",
+      "x": 5176.0,
+      "y": 2003.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520403656",
+      "name": "98",
+      "type": "valve",
+      "x": 5355.0,
+      "y": 2009.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520412552",
+      "name": "93",
+      "type": "valve",
+      "x": 5674.0,
+      "y": 2355.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520418302",
+      "name": "90",
+      "type": "valve",
+      "x": 5959.0,
+      "y": 2156.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520423586",
+      "name": "91",
+      "type": "valve",
+      "x": 6292.0,
+      "y": 2160.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520442342",
+      "name": "89 (Сад 17)",
+      "type": "valve",
+      "x": 5991.0,
+      "y": 1739.0,
+      "status": "closed",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520455238",
+      "name": "88",
+      "type": "valve",
+      "x": 5921.0,
+      "y": 1664.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520467166",
+      "name": "87",
+      "type": "valve",
+      "x": 5991.0,
+      "y": 1532.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520472470",
+      "name": "86",
+      "type": "valve",
+      "x": 5918.0,
+      "y": 1462.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520482420",
+      "name": "92",
+      "type": "valve",
+      "x": 6652.0,
+      "y": 2396.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520491416",
+      "name": "94",
+      "type": "valve",
+      "x": 5617.0,
+      "y": 2584.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520495570",
+      "name": "95",
+      "type": "valve",
+      "x": 5539.0,
+      "y": 2698.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520501058",
+      "name": "96",
+      "type": "valve",
+      "x": 5623.0,
+      "y": 2769.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520507782",
+      "name": "97",
+      "type": "valve",
+      "x": 5298.0,
+      "y": 2626.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520518762",
+      "name": "106",
+      "type": "valve",
+      "x": 4911.0,
+      "y": 2589.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520528212",
+      "name": "105",
+      "type": "valve",
+      "x": 4262.0,
+      "y": 2490.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520535316",
+      "name": "79",
+      "type": "valve",
+      "x": 3667.0,
+      "y": 2554.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520541890",
+      "name": "77",
+      "type": "valve",
+      "x": 3543.0,
+      "y": 2360.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520558420",
+      "name": "55а",
+      "type": "valve",
+      "x": 2946.0,
+      "y": 2138.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520566892",
+      "name": "81",
+      "type": "valve",
+      "x": 3200.0,
+      "y": 2656.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520572798",
+      "name": "78",
+      "type": "valve",
+      "x": 3545.0,
+      "y": 2630.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520578406",
+      "name": "80",
+      "type": "valve",
+      "x": 3497.0,
+      "y": 2768.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520593449",
+      "name": "ПГ 110",
+      "type": "hydrant",
+      "x": 3535.0,
+      "y": 2559.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520602144",
+      "name": "ПГ 111",
+      "type": "hydrant",
+      "x": 3907.0,
+      "y": 2562.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520611648",
+      "name": "ПГ 40",
+      "type": "hydrant",
+      "x": 4363.0,
+      "y": 2560.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520624468",
+      "name": "ПГ 106",
+      "type": "hydrant",
+      "x": 4629.0,
+      "y": 2693.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520632396",
+      "name": "ПГ 94",
+      "type": "hydrant",
+      "x": 4910.0,
+      "y": 2686.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520637890",
+      "name": "ПГ 89",
+      "type": "hydrant",
+      "x": 5153.0,
+      "y": 2688.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520644206",
+      "name": "ПГ 75",
+      "type": "hydrant",
+      "x": 5384.0,
+      "y": 2690.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520652674",
+      "name": "ПГ 103",
+      "type": "hydrant",
+      "x": 5617.0,
+      "y": 2689.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520669396",
+      "name": "ПГ 8",
+      "type": "hydrant",
+      "x": 3147.0,
+      "y": 3421.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520677426",
+      "name": "ПГ 77",
+      "type": "hydrant",
+      "x": 3652.0,
+      "y": 3438.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520684090",
+      "name": "ПГ 81",
+      "type": "hydrant",
+      "x": 4187.0,
+      "y": 3436.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520727246",
+      "name": "82",
+      "type": "valve",
+      "x": 3042.0,
+      "y": 2823.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520732566",
+      "name": "82с",
+      "type": "valve",
+      "x": 3004.0,
+      "y": 2879.0,
+      "status": "closed",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520748440",
+      "name": "83",
+      "type": "valve",
+      "x": 3479.0,
+      "y": 3018.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520756450",
+      "name": "84",
+      "type": "valve",
+      "x": 3480.0,
+      "y": 3123.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520779030",
+      "name": "85",
+      "type": "valve",
+      "x": 4837.0,
+      "y": 3437.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520787508",
+      "name": "107",
+      "type": "valve",
+      "x": 5620.0,
+      "y": 3348.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520792406",
+      "name": "108",
+      "type": "valve",
+      "x": 5532.0,
+      "y": 3438.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520803168",
+      "name": "109",
+      "type": "valve",
+      "x": 5381.0,
+      "y": 3600.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520812854",
+      "name": "110",
+      "type": "valve",
+      "x": 5705.0,
+      "y": 4140.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520820270",
+      "name": "111",
+      "type": "valve",
+      "x": 5371.0,
+      "y": 4785.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520833836",
+      "name": "112 (Подпитка)",
+      "type": "valve",
+      "x": 5333.0,
+      "y": 4938.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520852316",
+      "name": "113 (Сад 38/6)",
+      "type": "valve",
+      "x": 5403.0,
+      "y": 4984.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520861854",
+      "name": "114",
+      "type": "valve",
+      "x": 5143.0,
+      "y": 4542.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520868406",
+      "name": "119",
+      "type": "valve",
+      "x": 4679.0,
+      "y": 4477.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520872872",
+      "name": "115",
+      "type": "valve",
+      "x": 4591.0,
+      "y": 4389.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520876904",
+      "name": "116",
+      "type": "valve",
+      "x": 4474.0,
+      "y": 4387.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520881014",
+      "name": "117",
+      "type": "valve",
+      "x": 4298.0,
+      "y": 4388.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520885860",
+      "name": "118",
+      "type": "valve",
+      "x": 4388.0,
+      "y": 4475.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520900726",
+      "name": "120",
+      "type": "valve",
+      "x": 3031.0,
+      "y": 3773.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_1787520905766",
+      "name": "121",
+      "type": "valve",
+      "x": 2671.0,
+      "y": 3737.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    }
+  ],
+  "dimensions": {
+    "width": 7445,
+    "height": 5266
+  }
+}
