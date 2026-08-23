@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #16171d; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #121318; color: #f0f0f5; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         
         #app-container { display: flex; width: 100vw; height: 100vh; position: relative; }
-        #map { flex-grow: 1; height: 100vh; background: #1f2027; z-index: 1; }
+        #map { flex-grow: 1; height: 100vh; background: #191a21; z-index: 1; }
 
         /* Десктопная боковая панель */
         #sidebar { 
             width: 370px; 
             height: 100vh; 
-            background: #16171d; 
+            background: #16171e; 
             color: #f0f0f5; 
             padding: 14px; 
             display: flex; 
@@ -28,51 +28,50 @@
             overflow-y: auto;
         }
 
-        .panel-box { background: #232530; padding: 10px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e303d; }
+        .panel-box { background: #22242f; padding: 10px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; color: #f0f0f5; }
         
-        /* Поиск и автокомплит */
+        /* Поиск */
         .search-container { position: relative; display: flex; align-items: center; width: 100%; }
-        .search-input { width: 100%; background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 10px 34px 10px 12px; border-radius: 8px; font-size: 14px; outline: none; }
+        .search-input { width: 100%; background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 10px 34px 10px 12px; border-radius: 8px; font-size: 14px; outline: none; }
         .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
+        .search-input::placeholder { color: #8e929b; }
         .search-clear { position: absolute; right: 10px; cursor: pointer; color: #8e929b; font-size: 16px; display: none; padding: 4px; }
-        .search-clear:hover { color: #fff; }
-        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e27; border: 1px solid #3c404b; border-radius: 8px; max-height: 220px; overflow-y: auto; z-index: 2000; box-shadow: 0 6px 16px rgba(0,0,0,0.6); display: none; }
-        .search-item { padding: 10px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a36; font-size: 13.5px; }
-        .search-item:hover, .search-item:active { background: #2b2e3d; }
+        .search-clear:hover { color: #ffffff; }
+        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e28; border: 1px solid #3c404f; border-radius: 8px; max-height: 220px; overflow-y: auto; z-index: 2000; box-shadow: 0 6px 16px rgba(0,0,0,0.6); display: none; }
+        .search-item { padding: 10px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a38; font-size: 13.5px; color: #ffffff; }
+        .search-item:hover, .search-item:active { background: #2b2e3e; }
 
         /* Фильтры */
         .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-        .chip { background: #181920; border: 1px solid #3c404b; color: #a6abb7; padding: 6px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.15s; touch-action: manipulation; }
-        .chip:hover { color: #fff; border-color: #5b6070; }
-        .chip.active { background: #2563eb; color: #fff; border-color: #3b82f6; }
-        .chip.active-danger { background: #dc2626; color: #fff; border-color: #ef4444; }
+        .chip { background: #181922; border: 1px solid #3c404f; color: #e2e4ea; padding: 7px 11px; border-radius: 6px; font-size: 12.5px; cursor: pointer; transition: 0.15s; touch-action: manipulation; font-weight: 500; }
+        .chip:hover { color: #ffffff; border-color: #5b6073; }
+        .chip.active { background: #2563eb; color: #ffffff; border-color: #3b82f6; font-weight: 600; }
+        .chip.active-danger { background: #dc2626; color: #ffffff; border-color: #ef4444; font-weight: 600; }
 
-        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 3px 0; }
-        #inspector { background: #232530; padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 9px; border: 1px solid #2e303d; }
+        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 4px 0; color: #e5e7eb; }
+        #inspector { background: #22242f; padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 9px; border: 1px solid #2e3140; color: #f0f0f5; }
         
         .input-group { display: flex; flex-direction: column; gap: 4px; }
-        .input-group label { font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        .input-group input, .input-group select, .input-group textarea { background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 9px 10px; border-radius: 6px; font-size: 14px; outline: none; font-family: inherit; }
-        .input-group textarea { resize: vertical; min-height: 55px; line-height: 1.35; }
+        .input-group label { font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .input-group input, .input-group select, .input-group textarea { background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 9px 10px; border-radius: 6px; font-size: 14px; outline: none; font-family: inherit; }
+        .input-group textarea { resize: vertical; min-height: 55px; line-height: 1.35; color: #ffffff; }
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #3b82f6; }
         
         .btn-group { display: flex; gap: 8px; margin-top: 6px; }
         button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.15s; touch-action: manipulation; }
-        .btn-primary { background: #3b82f6; color: #fff; flex-grow: 1; }
+        .btn-primary { background: #3b82f6; color: #ffffff; flex-grow: 1; }
         .btn-primary:active { background: #1d4ed8; }
-        .btn-danger { background: #ef4444; color: #fff; }
+        .btn-danger { background: #ef4444; color: #ffffff; }
         .btn-danger:active { background: #b91c1c; }
         
-        #stats { font-size: 12px; color: #9aa0a6; border-top: 1px solid #2e303d; padding-top: 6px; display: flex; flex-direction: column; gap: 3px; }
+        #stats { font-size: 12px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 6px; display: flex; flex-direction: column; gap: 3px; }
         .stat-row { display: flex; justify-content: space-between; }
         .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
 
-        /* Плавающие элементы для мобильных устройств */
+        /* Плавающие элементы для мобильных */
         .mobile-top-bar { display: none; }
         .mobile-bottom-sheet { display: none; }
-        .mobile-fab-menu { display: none; }
 
-        /* Анимация пульсации найденного узла */
         @keyframes pulse-ring {
             0% { transform: scale(0.6); opacity: 1; }
             100% { transform: scale(2.5); opacity: 0; }
@@ -83,12 +82,11 @@
             animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
 
-        /* АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (ШИРИНА < 768px) */
+        /* АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ */
         @media (max-width: 768px) {
-            #sidebar { display: none; } /* Скрываем громоздкую боковую панель на смартфонах */
+            #sidebar { display: none; }
             #map { width: 100vw; height: 100vh; }
 
-            /* Плавающая верхняя поисковая панель */
             .mobile-top-bar {
                 display: flex;
                 position: absolute;
@@ -101,28 +99,28 @@
             }
             .mobile-top-bar .search-container { flex-grow: 1; }
             .mobile-top-bar .search-input {
-                background: rgba(22, 23, 29, 0.95);
-                backdrop-filter: blur(8px);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+                background: rgba(22, 23, 30, 0.95);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
                 height: 44px;
+                color: #ffffff;
             }
             .btn-mobile-icon {
                 width: 44px;
                 height: 44px;
-                background: rgba(35, 37, 48, 0.95);
-                backdrop-filter: blur(8px);
-                color: #fff;
-                border: 1px solid #3c404b;
+                background: rgba(34, 36, 47, 0.95);
+                backdrop-filter: blur(10px);
+                color: #ffffff;
+                border: 1px solid #3c404f;
                 border-radius: 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 18px;
                 flex-shrink: 0;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             }
 
-            /* Модальное окно фильтров и режимов для мобильных */
             #mobile-menu-modal {
                 display: none;
                 position: fixed;
@@ -130,25 +128,30 @@
                 left: 0;
                 width: 100vw;
                 height: 100vh;
-                background: rgba(0,0,0,0.65);
+                background: rgba(0,0,0,0.7);
                 z-index: 2500;
                 justify-content: center;
                 align-items: flex-end;
+                color: #f0f0f5;
             }
             #mobile-menu-modal.active { display: flex; }
             .modal-content {
-                background: #181920;
+                background: #181922;
                 width: 100%;
-                border-radius: 16px 16px 0 0;
-                padding: 16px;
+                border-radius: 18px 18px 0 0;
+                padding: 18px 16px 24px 16px;
                 display: flex;
                 flex-direction: column;
-                gap: 12px;
-                max-height: 80vh;
+                gap: 14px;
+                max-height: 85vh;
                 overflow-y: auto;
+                color: #f0f0f5;
+                box-shadow: 0 -8px 28px rgba(0,0,0,0.8);
+            }
+            .modal-content label, .modal-content span, .modal-content div {
+                color: #e5e7eb;
             }
 
-            /* Выдвижная нижняя шторка инспектора (Bottom Sheet) */
             .mobile-bottom-sheet {
                 display: flex;
                 flex-direction: column;
@@ -156,30 +159,31 @@
                 bottom: -100%;
                 left: 0;
                 right: 0;
-                background: #181920;
-                border-top: 1px solid #3c404b;
-                border-radius: 16px 16px 0 0;
-                padding: 14px 16px 20px 16px;
+                background: #181922;
+                border-top: 1px solid #3c404f;
+                border-radius: 18px 18px 0 0;
+                padding: 12px 16px 24px 16px;
                 z-index: 2000;
-                box-shadow: 0 -6px 24px rgba(0,0,0,0.7);
+                box-shadow: 0 -8px 28px rgba(0,0,0,0.8);
                 transition: bottom 0.28s cubic-bezier(0.1, 0.9, 0.2, 1);
                 max-height: 75vh;
                 overflow-y: auto;
+                color: #f0f0f5;
             }
             .mobile-bottom-sheet.open { bottom: 0; }
             .sheet-handle {
-                width: 40px;
-                height: 4px;
-                background: #4b5563;
-                border-radius: 2px;
+                width: 44px;
+                height: 5px;
+                background: #4b5568;
+                border-radius: 3px;
                 align-self: center;
-                margin-bottom: 8px;
+                margin-bottom: 10px;
             }
             .sheet-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 6px;
+                margin-bottom: 8px;
             }
         }
     </style>
@@ -190,7 +194,7 @@
         <div id="sidebar">
             <h2 style="margin: 0; font-size: 17px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
                 <span>Запорная арматура</span>
-                <button onclick="fitMapBounds()" style="background:#282a36; color:#9aa0a6; font-size:11px; padding:4px 7px;">Вся схема</button>
+                <button onclick="fitMapBounds()" style="background:#282a38; color:#a0a5b5; font-size:11px; padding:4px 7px;">Вся схема</button>
             </h2>
             
             <div class="search-container">
@@ -214,13 +218,13 @@
             </div>
 
             <div class="panel-box" style="padding: 7px 12px;">
-                <label style="font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <label style="font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #e5e7eb;">
                     <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать подписи на схеме
                 </label>
             </div>
 
             <div id="inspector">
-                <p style="color: #9aa0a6; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для редактирования.</p>
+                <p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для редактирования.</p>
             </div>
 
             <div id="stats">
@@ -244,12 +248,12 @@
         <!-- Карта -->
         <div id="map"></div>
 
-        <!-- Мобильная нижняя шторка инспектора (Bottom Sheet) -->
+        <!-- Мобильная нижняя шторка инспектора -->
         <div id="mobile-bottom-sheet" class="mobile-bottom-sheet">
             <div class="sheet-handle" onclick="closeBottomSheet()"></div>
             <div class="sheet-header">
                 <h3 id="sheet-title" style="margin: 0; font-size: 16px; color: #fff;">Свойства объекта</h3>
-                <button onclick="closeBottomSheet()" style="background:none; border:none; color:#9aa0a6; font-size:18px; padding:0 4px;">✕</button>
+                <button onclick="closeBottomSheet()" style="background:none; border:none; color:#a0a5b5; font-size:18px; padding:0 4px;">✕</button>
             </div>
             <div id="sheet-content"></div>
         </div>
@@ -258,10 +262,11 @@
         <div id="mobile-menu-modal" onclick="closeMobileMenu(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 style="margin:0; font-size:16px; color:#fff;">Фильтры и управление</h3>
-                    <button onclick="closeMobileMenu()" style="background:none; border:none; color:#9aa0a6; font-size:18px;">✕</button>
+                    <h3 style="margin:0; font-size:16px; color:#ffffff;">Фильтры и управление</h3>
+                    <button onclick="closeMobileMenu()" style="background:none; border:none; color:#a0a5b5; font-size:18px; padding:4px;">✕</button>
                 </div>
-                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold;">Фильтры объектов:</div>
+                
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px;">Фильтры объектов:</div>
                 <div class="filter-chips">
                     <button class="chip active mobile-chip" data-filter="all" onclick="setMobileFilter('all', this)">Все</button>
                     <button class="chip mobile-chip" data-filter="no_cheeks" onclick="setMobileFilter('no_cheeks', this)">🔴 Без щёк</button>
@@ -270,20 +275,20 @@
                     <button class="chip mobile-chip" data-filter="hydrant" onclick="setMobileFilter('hydrant', this)">🚒 Гидранты</button>
                 </div>
 
-                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Режим нажатия на карту:</div>
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; margin-top: 4px;">Режим нажатия на карту:</div>
                 <div class="panel-box mode-selector">
                     <label><input type="radio" name="mobile-mode" value="view" checked onchange="syncMobileMode(this)"> 🔍 Просмотр / Выбор объекта</label>
                     <label><input type="radio" name="mobile-mode" value="add_valve" onchange="syncMobileMode(this)"> 🛑 + Добавить задвижку</label>
                     <label><input type="radio" name="mobile-mode" value="add_hydrant" onchange="syncMobileMode(this)"> 🔴 + Добавить гидрант (ПГ)</label>
                 </div>
 
-                <div class="panel-box" style="padding: 10px;">
-                    <label style="font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <div class="panel-box" style="padding: 10px 12px;">
+                    <label style="font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #ffffff;">
                         <input type="checkbox" id="mobile-toggle-labels" checked onchange="toggleLabels(this.checked)"> Показывать номера на схеме
                     </label>
                 </div>
 
-                <button class="btn-primary" onclick="closeMobileMenu()" style="margin-top: 6px;">Готово</button>
+                <button class="btn-primary" onclick="closeMobileMenu()" style="margin-top: 6px; padding: 12px; font-size: 14px;">Готово</button>
             </div>
         </div>
     </div>
