@@ -7,6 +7,8 @@ let nodesLayer, pulseLayer;
 let selectedNode = null;
 let currentFilter = "all";
 
+const isMobile = () => window.innerWidth <= 768;
+
 async function initApp() {
     try {
         const res = await fetch(`${API_URL}/network`);
@@ -25,7 +27,8 @@ async function initApp() {
         crs: L.CRS.Simple,
         minZoom: -4,
         maxZoom: 3,
-        zoomSnap: 0.1
+        zoomSnap: 0.1,
+        zoomControl: !isMobile() // На телефонах убираем кнопки зума, оставляя нативный pinch-to-zoom
     });
 
     L.imageOverlay("scheme.png", bounds).addTo(map);
@@ -43,6 +46,7 @@ async function initApp() {
     map.on("click", handleMapClick);
 
     setupSearch();
+    setupMobileSearch();
 }
 
 function fitMapBounds() {
@@ -52,21 +56,23 @@ function fitMapBounds() {
 }
 
 function getNodeStyle(node) {
+    const scale = isMobile() ? 1.35 : 1.0; // Увеличенный размер для пальцев на смартфонах
+
     if (node.type === "hydrant") {
-        return { radius: 8, color: "#ff4d4f", fillColor: "#ff7875", fillOpacity: 0.9, weight: 2 };
+        return { radius: 8 * scale, color: "#ff4d4f", fillColor: "#ff7875", fillOpacity: 0.9, weight: 2 };
     }
 
     switch (node.status) {
         case "no_cheeks":
-            return { radius: 7.5, color: "#ffffff", fillColor: "#ff4d4f", fillOpacity: 1.0, weight: 3 };
+            return { radius: 7.5 * scale, color: "#ffffff", fillColor: "#ff4d4f", fillOpacity: 1.0, weight: 3 };
         case "hard_turn":
-            return { radius: 6.5, color: "#d48806", fillColor: "#faad14", fillOpacity: 0.9, weight: 2.5 };
+            return { radius: 6.5 * scale, color: "#d48806", fillColor: "#faad14", fillOpacity: 0.9, weight: 2.5 };
         case "closed":
-            return { radius: 6.5, color: "#d46b08", fillColor: "#fa8c16", fillOpacity: 0.9, weight: 2.5 };
+            return { radius: 6.5 * scale, color: "#d46b08", fillColor: "#fa8c16", fillOpacity: 0.9, weight: 2.5 };
         case "jammed_closed":
-            return { radius: 7.5, color: "#ffffff", fillColor: "#722ed1", fillOpacity: 1.0, weight: 3 };
+            return { radius: 7.5 * scale, color: "#ffffff", fillColor: "#722ed1", fillOpacity: 1.0, weight: 3 };
         default:
-            return { radius: 6, color: "#237804", fillColor: "#52c41a", fillOpacity: 0.85, weight: 2 };
+            return { radius: 6 * scale, color: "#237804", fillColor: "#52c41a", fillOpacity: 0.85, weight: 2 };
     }
 }
 
@@ -82,7 +88,7 @@ function getFilteredNodes() {
 
 function renderNetwork() {
     nodesLayer.clearLayers();
-    const showLabels = document.getElementById("toggle-labels") ? document.getElementById("toggle-labels").checked : true;
+    const showLabels = document.getElementById("toggle-labels")?.checked ?? true;
     const filtered = getFilteredNodes();
     let defectCount = 0;
 
@@ -122,9 +128,11 @@ function renderNetwork() {
         });
     });
 
-    document.getElementById("count-visible").innerText = filtered.length;
-    document.getElementById("count-total").innerText = (networkData.nodes || []).length;
-    document.getElementById("count-defects").innerText = defectCount;
+    if (document.getElementById("count-visible")) {
+        document.getElementById("count-visible").innerText = filtered.length;
+        document.getElementById("count-total").innerText = (networkData.nodes || []).length;
+        document.getElementById("count-defects").innerText = defectCount;
+    }
 }
 
 function setFilter(filterType, element) {
@@ -137,33 +145,185 @@ function setFilter(filterType, element) {
     renderNetwork();
 }
 
-function toggleLabels() {
+function setMobileFilter(filterType, element) {
+    currentFilter = filterType;
+    document.querySelectorAll(".mobile-chip").forEach(c => c.classList.remove("active", "active-danger"));
+    if (filterType === "no_cheeks") element.classList.add("active-danger");
+    else element.classList.add("active");
+    renderNetwork();
+    closeMobileMenu();
+}
+
+function toggleLabels(state) {
+    if (typeof state === "boolean") {
+        const dToggle = document.getElementById("toggle-labels");
+        const mToggle = document.getElementById("mobile-toggle-labels");
+        if (dToggle) dToggle.checked = state;
+        if (mToggle) mToggle.checked = state;
+    }
     renderNetwork();
 }
 
 function focusOnNode(node) {
     selectedNode = node;
     renderNetwork();
-    showNodeEditor(node);
 
-    // Плавное приближение и центрирование
+    if (isMobile()) {
+        showBottomSheet(node);
+    } else {
+        showNodeEditor(node);
+    }
+
     map.flyTo([node.y, node.x], Math.max(map.getZoom(), 0.5), { duration: 0.6 });
 
-    // Эффект пульсирующего маркера на 3 секунды
     pulseLayer.clearLayers();
     const pulseIcon = L.divIcon({
         className: 'search-target-pulse',
-        iconSize: [40, 40],
-        iconAnchor: [20, 20]
+        iconSize: [44, 44],
+        iconAnchor: [22, 22]
     });
     const pulseMarker = L.marker([node.y, node.x], { icon: pulseIcon }).addTo(pulseLayer);
     setTimeout(() => pulseLayer.removeLayer(pulseMarker), 3500);
+}
+
+function generateEditorHTML(node, prefix = "") {
+    return `
+        <div class="input-group">
+            <label>Номер / Маркировка</label>
+            <input type="text" id="${prefix}edit-node-name" value="${node.name || ''}" placeholder="например, 157">
+        </div>
+
+        <div class="input-group">
+            <label>Тип объекта</label>
+            <select id="${prefix}edit-node-type">
+                <option value="valve" ${node.type !== 'hydrant' ? 'selected' : ''}>Задвижка / Запорная арматура</option>
+                <option value="hydrant" ${node.type === 'hydrant' ? 'selected' : ''}>Пожарный гидрант (ПГ)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Состояние / Дефекты</label>
+            <select id="${prefix}edit-node-status">
+                <option value="open" ${node.status === 'open' || !node.status ? 'selected' : ''}>🟢 В работе (Открыта)</option>
+                <option value="closed" ${node.status === 'closed' ? 'selected' : ''}>🟠 Закрыта (Отсечена)</option>
+                <option value="no_cheeks" ${node.status === 'no_cheeks' ? 'selected' : ''}>🔴 Нет щёк (не перекрывается!)</option>
+                <option value="hard_turn" ${node.status === 'hard_turn' ? 'selected' : ''}>🟡 Плохо закрывается / тугой ход</option>
+                <option value="jammed_closed" ${node.status === 'jammed_closed' ? 'selected' : ''}>🟣 Заклинила в закрытом состоянии</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Диаметр (Ду)</label>
+            <input type="number" id="${prefix}edit-node-diameter" value="${node.diameter || 150}" step="25">
+        </div>
+
+        <div class="input-group">
+            <label>Описание и дефекты</label>
+            <textarea id="${prefix}edit-node-desc" placeholder="например: обломан шток, слизана резьба...">${node.description || ''}</textarea>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-primary" onclick="saveNodeEdit('${node.id}', '${prefix}')">💾 Сохранить</button>
+            <button class="btn-danger" onclick="deleteNode('${node.id}')">🗑 Удалить</button>
+        </div>
+    `;
+}
+
+function showNodeEditor(node) {
+    const inspector = document.getElementById("inspector");
+    if (!inspector) return;
+    inspector.innerHTML = `
+        <h3 style="margin: 0 0 2px 0; font-size: 16px; color: #fff;">
+            ${node.type === 'hydrant' ? '🚒 Пожарный гидрант' : '🛑 Запорная арматура'}
+        </h3>
+        ${generateEditorHTML(node, "")}
+    `;
+}
+
+function showBottomSheet(node) {
+    const sheet = document.getElementById("mobile-bottom-sheet");
+    const content = document.getElementById("sheet-content");
+    const title = document.getElementById("sheet-title");
+
+    title.innerText = node.type === 'hydrant' ? '🚒 Пожарный гидрант' : '🛑 Запорная арматура';
+    content.innerHTML = generateEditorHTML(node, "m_");
+    sheet.classList.add("open");
+}
+
+function closeBottomSheet() {
+    const sheet = document.getElementById("mobile-bottom-sheet");
+    sheet.classList.remove("open");
+}
+
+function openMobileMenu() {
+    document.getElementById("mobile-menu-modal").classList.add("active");
+}
+
+function closeMobileMenu(e) {
+    if (!e || e.target.id === "mobile-menu-modal" || e.type === "click") {
+        document.getElementById("mobile-menu-modal").classList.remove("active");
+    }
+}
+
+function syncMobileMode(radio) {
+    const dRadio = document.querySelector(`input[name="mode"][value="${radio.value}"]`);
+    if (dRadio) dRadio.checked = true;
+}
+
+function getActiveMode() {
+    if (isMobile()) {
+        return document.querySelector('input[name="mobile-mode"]:checked')?.value || "view";
+    }
+    return document.querySelector('input[name="mode"]:checked')?.value || "view";
+}
+
+async function saveNodeEdit(nodeId, prefix = "") {
+    const newName = document.getElementById(`${prefix}edit-node-name`).value.trim();
+    const newType = document.getElementById(`${prefix}edit-node-type`).value;
+    const newStatus = document.getElementById(`${prefix}edit-node-status`).value;
+    const newDiameter = parseInt(document.getElementById(`${prefix}edit-node-diameter`).value) || 150;
+    const newDesc = document.getElementById(`${prefix}edit-node-desc`).value.trim();
+
+    const node = networkData.nodes.find(n => n.id === nodeId);
+    if (!node) return;
+
+    node.name = newName;
+    node.type = newType;
+    node.status = newStatus;
+    node.diameter = newDiameter;
+    node.description = newDesc;
+
+    await fetch(`${API_URL}/node/${nodeId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(node)
+    });
+
+    renderNetwork();
+    if (isMobile()) closeBottomSheet();
+    else showNodeEditor(node);
+}
+
+async function deleteNode(nodeId) {
+    if (!confirm("Удалить этот объект со схемы?")) return;
+
+    await fetch(`${API_URL}/node/${nodeId}`, { method: "DELETE" });
+
+    networkData.nodes = networkData.nodes.filter(n => n.id !== nodeId);
+    selectedNode = null;
+    if (isMobile()) closeBottomSheet();
+    else {
+        document.getElementById("inspector").innerHTML = '<p style="color: #9aa0a6; margin: 0; font-size: 13px;">Объект удален. Выберите следующий.</p>';
+    }
+    renderNetwork();
 }
 
 function setupSearch() {
     const searchInput = document.getElementById("search-input");
     const searchClear = document.getElementById("search-clear");
     const dropdown = document.getElementById("search-dropdown");
+
+    if (!searchInput) return;
 
     searchInput.addEventListener("input", (e) => {
         const query = e.target.value.trim().toLowerCase();
@@ -206,21 +366,61 @@ function setupSearch() {
         dropdown.style.display = "block";
     });
 
-    searchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            const query = searchInput.value.trim().toLowerCase();
-            const first = (networkData.nodes || []).find(n => (n.name || "").toLowerCase().includes(query));
-            if (first) {
-                selectSearchResult(first.id);
-            }
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".search-container")) dropdown.style.display = "none";
+    });
+}
+
+function setupMobileSearch() {
+    const mInput = document.getElementById("mobile-search-input");
+    const mClear = document.getElementById("mobile-search-clear");
+    const mDropdown = document.getElementById("mobile-search-dropdown");
+
+    if (!mInput) return;
+
+    mInput.addEventListener("input", (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        mClear.style.display = query.length > 0 ? "block" : "none";
+
+        if (!query) {
+            mDropdown.style.display = "none";
+            return;
         }
+
+        const matches = (networkData.nodes || []).filter(n => {
+            const nameMatch = (n.name || "").toLowerCase().includes(query);
+            const descMatch = (n.description || "").toLowerCase().includes(query);
+            return nameMatch || descMatch;
+        }).slice(0, 15);
+
+        if (matches.length === 0) {
+            mDropdown.innerHTML = '<div style="padding: 10px; color: #8e929b; font-size: 12px; text-align: center;">Ничего не найдено</div>';
+            mDropdown.style.display = "block";
+            return;
+        }
+
+        mDropdown.innerHTML = matches.map(m => {
+            let badge = `<span style="color:#52c41a;">● В работе</span>`;
+            if (m.type === "hydrant") badge = `<span style="color:#ff4d4f;">🚒 ПГ</span>`;
+            else if (m.status === "no_cheeks") badge = `<span style="color:#ff4d4f; font-weight:bold;">⚠️ Без щёк</span>`;
+            else if (m.status === "closed") badge = `<span style="color:#fa8c16;">🔒 Закрыта</span>`;
+            else if (m.status === "hard_turn") badge = `<span style="color:#faad14;">🟡 Дефект</span>`;
+
+            return `
+                <div class="search-item" onclick="selectMobileSearchResult('${m.id}')">
+                    <div>
+                        <b>${m.name}</b>
+                        ${m.description ? `<div style="font-size:11px; color:#8e929b;">${m.description}</div>` : ''}
+                    </div>
+                    <div style="font-size: 11.5px;">${badge}</div>
+                </div>
+            `;
+        }).join("");
+        mDropdown.style.display = "block";
     });
 
-    // Закрытие выпадающего списка при клике вне него
     document.addEventListener("click", (e) => {
-        if (!e.target.closest(".search-container")) {
-            dropdown.style.display = "none";
-        }
+        if (!e.target.closest(".mobile-top-bar")) mDropdown.style.display = "none";
     });
 }
 
@@ -234,107 +434,36 @@ function selectSearchResult(nodeId) {
     }
 }
 
+function selectMobileSearchResult(nodeId) {
+    const node = (networkData.nodes || []).find(n => n.id === nodeId);
+    if (node) {
+        document.getElementById("mobile-search-dropdown").style.display = "none";
+        document.getElementById("mobile-search-input").value = node.name;
+        document.getElementById("mobile-search-clear").style.display = "block";
+        focusOnNode(node);
+    }
+}
+
 function clearSearch() {
-    const searchInput = document.getElementById("search-input");
-    searchInput.value = "";
+    const input = document.getElementById("search-input");
+    input.value = "";
     document.getElementById("search-clear").style.display = "none";
     document.getElementById("search-dropdown").style.display = "none";
 }
 
-function showNodeEditor(node) {
-    const inspector = document.getElementById("inspector");
-    inspector.innerHTML = `
-        <h3 style="margin: 0 0 2px 0; font-size: 16px; color: #fff;">
-            ${node.type === 'hydrant' ? '🚒 Пожарный гидрант' : '🛑 Запорная арматура'}
-        </h3>
-        
-        <div class="input-group">
-            <label>Номер / Маркировка</label>
-            <input type="text" id="edit-node-name" value="${node.name || ''}" placeholder="например, 157">
-        </div>
-
-        <div class="input-group">
-            <label>Тип объекта</label>
-            <select id="edit-node-type">
-                <option value="valve" ${node.type !== 'hydrant' ? 'selected' : ''}>Задвижка / Запорная арматура</option>
-                <option value="hydrant" ${node.type === 'hydrant' ? 'selected' : ''}>Пожарный гидрант (ПГ)</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Состояние / Дефекты</label>
-            <select id="edit-node-status">
-                <option value="open" ${node.status === 'open' || !node.status ? 'selected' : ''}>🟢 В работе (Открыта)</option>
-                <option value="closed" ${node.status === 'closed' ? 'selected' : ''}>🟠 Закрыта (Отсечена)</option>
-                <option value="no_cheeks" ${node.status === 'no_cheeks' ? 'selected' : ''}>🔴 Нет щёк (не перекрывается!)</option>
-                <option value="hard_turn" ${node.status === 'hard_turn' ? 'selected' : ''}>🟡 Плохо закрывается / тугой ход / пропуск</option>
-                <option value="jammed_closed" ${node.status === 'jammed_closed' ? 'selected' : ''}>🟣 Заклинила в закрытом состоянии</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Диаметр (Ду)</label>
-            <input type="number" id="edit-node-diameter" value="${node.diameter || 150}" step="25">
-        </div>
-
-        <div class="input-group">
-            <label>Описание и дефекты</label>
-            <textarea id="edit-node-desc" placeholder="например: обломан шток, слизана резьба, колодец завален...">${node.description || ''}</textarea>
-        </div>
-
-        <div class="btn-group">
-            <button class="btn-primary" onclick="saveNodeEdit('${node.id}')">💾 Сохранить</button>
-            <button class="btn-danger" onclick="deleteNode('${node.id}')">🗑 Удалить</button>
-        </div>
-    `;
-
-    const nameInput = document.getElementById("edit-node-name");
-    nameInput.focus();
-    nameInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && !e.shiftKey) saveNodeEdit(node.id);
-    });
-}
-
-async function saveNodeEdit(nodeId) {
-    const newName = document.getElementById("edit-node-name").value.trim();
-    const newType = document.getElementById("edit-node-type").value;
-    const newStatus = document.getElementById("edit-node-status").value;
-    const newDiameter = parseInt(document.getElementById("edit-node-diameter").value) || 150;
-    const newDesc = document.getElementById("edit-node-desc").value.trim();
-
-    const node = networkData.nodes.find(n => n.id === nodeId);
-    if (!node) return;
-
-    node.name = newName;
-    node.type = newType;
-    node.status = newStatus;
-    node.diameter = newDiameter;
-    node.description = newDesc;
-
-    await fetch(`${API_URL}/node/${nodeId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(node)
-    });
-
-    renderNetwork();
-    showNodeEditor(node);
-}
-
-async function deleteNode(nodeId) {
-    if (!confirm("Удалить этот объект со схемы?")) return;
-
-    await fetch(`${API_URL}/node/${nodeId}`, { method: "DELETE" });
-
-    networkData.nodes = networkData.nodes.filter(n => n.id !== nodeId);
-    selectedNode = null;
-    document.getElementById("inspector").innerHTML = '<p style="color: #9aa0a6; margin: 0; font-size: 13px;">Объект удален. Выберите следующий.</p>';
-    renderNetwork();
+function clearMobileSearch() {
+    const input = document.getElementById("mobile-search-input");
+    input.value = "";
+    document.getElementById("mobile-search-clear").style.display = "none";
+    document.getElementById("mobile-search-dropdown").style.display = "none";
 }
 
 async function handleMapClick(e) {
-    const mode = document.querySelector('input[name="mode"]:checked').value;
-    if (mode === "view") return;
+    const mode = getActiveMode();
+    if (mode === "view") {
+        if (isMobile()) closeBottomSheet();
+        return;
+    }
 
     const y = Math.round(e.latlng.lat);
     const x = Math.round(e.latlng.lng);

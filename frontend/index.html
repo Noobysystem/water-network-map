@@ -2,52 +2,75 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Интерактивная схема запорной арматуры и гидрантов</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        * { box-sizing: border-box; }
-        html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; display: flex; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        #sidebar { width: 370px; height: 100vh; background: #16171d; color: #f0f0f5; padding: 14px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 16px rgba(0,0,0,0.6); }
-        #map { width: calc(100vw - 370px); height: 100vh; background: #1f2027; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #16171d; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        #app-container { display: flex; width: 100vw; height: 100vh; position: relative; }
+        #map { flex-grow: 1; height: 100vh; background: #1f2027; z-index: 1; }
+
+        /* Десктопная боковая панель */
+        #sidebar { 
+            width: 370px; 
+            height: 100vh; 
+            background: #16171d; 
+            color: #f0f0f5; 
+            padding: 14px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            z-index: 1000; 
+            flex-shrink: 0; 
+            box-shadow: 2px 0 16px rgba(0,0,0,0.6); 
+            overflow-y: auto;
+        }
+
         .panel-box { background: #232530; padding: 10px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e303d; }
         
-        /* Поиск и фильтры */
-        .search-container { position: relative; display: flex; align-items: center; }
-        .search-input { width: 100%; background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 9px 32px 9px 12px; border-radius: 6px; font-size: 13.5px; outline: none; }
+        /* Поиск и автокомплит */
+        .search-container { position: relative; display: flex; align-items: center; width: 100%; }
+        .search-input { width: 100%; background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 10px 34px 10px 12px; border-radius: 8px; font-size: 14px; outline: none; }
         .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
-        .search-clear { position: absolute; right: 10px; cursor: pointer; color: #8e929b; font-size: 14px; display: none; }
+        .search-clear { position: absolute; right: 10px; cursor: pointer; color: #8e929b; font-size: 16px; display: none; padding: 4px; }
         .search-clear:hover { color: #fff; }
-        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e27; border: 1px solid #3c404b; border-radius: 6px; max-height: 220px; overflow-y: auto; z-index: 2000; box-shadow: 0 4px 12px rgba(0,0,0,0.5); display: none; }
-        .search-item { padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a36; font-size: 13px; }
-        .search-item:hover { background: #2b2e3d; }
-        
+        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e27; border: 1px solid #3c404b; border-radius: 8px; max-height: 220px; overflow-y: auto; z-index: 2000; box-shadow: 0 6px 16px rgba(0,0,0,0.6); display: none; }
+        .search-item { padding: 10px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a36; font-size: 13.5px; }
+        .search-item:hover, .search-item:active { background: #2b2e3d; }
+
         /* Фильтры */
-        .filter-chips { display: flex; flex-wrap: wrap; gap: 4px; }
-        .chip { background: #181920; border: 1px solid #3c404b; color: #a6abb7; padding: 4px 8px; border-radius: 4px; font-size: 11.5px; cursor: pointer; transition: 0.15s; }
+        .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+        .chip { background: #181920; border: 1px solid #3c404b; color: #a6abb7; padding: 6px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.15s; touch-action: manipulation; }
         .chip:hover { color: #fff; border-color: #5b6070; }
         .chip.active { background: #2563eb; color: #fff; border-color: #3b82f6; }
         .chip.active-danger { background: #dc2626; color: #fff; border-color: #ef4444; }
 
-        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 2px 0; }
-        #inspector { background: #232530; padding: 12px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; border: 1px solid #2e303d; }
-        .input-group { display: flex; flex-direction: column; gap: 3px; }
-        .input-group label { font-size: 10.5px; color: #9aa0a6; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        .input-group input, .input-group select, .input-group textarea { background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 7px 10px; border-radius: 6px; font-size: 13px; outline: none; font-family: inherit; }
+        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 3px 0; }
+        #inspector { background: #232530; padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 9px; border: 1px solid #2e303d; }
+        
+        .input-group { display: flex; flex-direction: column; gap: 4px; }
+        .input-group label { font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .input-group input, .input-group select, .input-group textarea { background: #16171d; border: 1px solid #3c404b; color: #fff; padding: 9px 10px; border-radius: 6px; font-size: 14px; outline: none; font-family: inherit; }
         .input-group textarea { resize: vertical; min-height: 55px; line-height: 1.35; }
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #3b82f6; }
         
-        .btn-group { display: flex; gap: 6px; margin-top: 4px; }
-        button { padding: 8px 10px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 12.5px; transition: 0.15s; }
+        .btn-group { display: flex; gap: 8px; margin-top: 6px; }
+        button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.15s; touch-action: manipulation; }
         .btn-primary { background: #3b82f6; color: #fff; flex-grow: 1; }
-        .btn-primary:hover { background: #2563eb; }
+        .btn-primary:active { background: #1d4ed8; }
         .btn-danger { background: #ef4444; color: #fff; }
-        .btn-danger:hover { background: #dc2626; }
+        .btn-danger:active { background: #b91c1c; }
         
         #stats { font-size: 12px; color: #9aa0a6; border-top: 1px solid #2e303d; padding-top: 6px; display: flex; flex-direction: column; gap: 3px; }
         .stat-row { display: flex; justify-content: space-between; }
         .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
-        .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+        /* Плавающие элементы для мобильных устройств */
+        .mobile-top-bar { display: none; }
+        .mobile-bottom-sheet { display: none; }
+        .mobile-fab-menu { display: none; }
 
         /* Анимация пульсации найденного узла */
         @keyframes pulse-ring {
@@ -59,56 +82,211 @@
             border-radius: 50%;
             animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
+
+        /* АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (ШИРИНА < 768px) */
+        @media (max-width: 768px) {
+            #sidebar { display: none; } /* Скрываем громоздкую боковую панель на смартфонах */
+            #map { width: 100vw; height: 100vh; }
+
+            /* Плавающая верхняя поисковая панель */
+            .mobile-top-bar {
+                display: flex;
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                z-index: 1000;
+                gap: 8px;
+                align-items: center;
+            }
+            .mobile-top-bar .search-container { flex-grow: 1; }
+            .mobile-top-bar .search-input {
+                background: rgba(22, 23, 29, 0.95);
+                backdrop-filter: blur(8px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+                height: 44px;
+            }
+            .btn-mobile-icon {
+                width: 44px;
+                height: 44px;
+                background: rgba(35, 37, 48, 0.95);
+                backdrop-filter: blur(8px);
+                color: #fff;
+                border: 1px solid #3c404b;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                flex-shrink: 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            }
+
+            /* Модальное окно фильтров и режимов для мобильных */
+            #mobile-menu-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0,0,0,0.65);
+                z-index: 2500;
+                justify-content: center;
+                align-items: flex-end;
+            }
+            #mobile-menu-modal.active { display: flex; }
+            .modal-content {
+                background: #181920;
+                width: 100%;
+                border-radius: 16px 16px 0 0;
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            /* Выдвижная нижняя шторка инспектора (Bottom Sheet) */
+            .mobile-bottom-sheet {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                bottom: -100%;
+                left: 0;
+                right: 0;
+                background: #181920;
+                border-top: 1px solid #3c404b;
+                border-radius: 16px 16px 0 0;
+                padding: 14px 16px 20px 16px;
+                z-index: 2000;
+                box-shadow: 0 -6px 24px rgba(0,0,0,0.7);
+                transition: bottom 0.28s cubic-bezier(0.1, 0.9, 0.2, 1);
+                max-height: 75vh;
+                overflow-y: auto;
+            }
+            .mobile-bottom-sheet.open { bottom: 0; }
+            .sheet-handle {
+                width: 40px;
+                height: 4px;
+                background: #4b5563;
+                border-radius: 2px;
+                align-self: center;
+                margin-bottom: 8px;
+            }
+            .sheet-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 6px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="sidebar">
-        <h2 style="margin: 0; font-size: 17px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
-            <span>Запорная арматура</span>
-            <button onclick="fitMapBounds()" style="background:#282a36; color:#9aa0a6; font-size:11px; padding:4px 7px;">Вся схема</button>
-        </h2>
-        
-        <!-- Поиск и навигация -->
-        <div class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск по номеру (напр. 157, ПГ)..." autocomplete="off">
-            <span id="search-clear" class="search-clear" onclick="clearSearch()">✕</span>
-            <div id="search-dropdown" class="search-dropdown"></div>
+    <div id="app-container">
+        <!-- Десктопная панель -->
+        <div id="sidebar">
+            <h2 style="margin: 0; font-size: 17px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
+                <span>Запорная арматура</span>
+                <button onclick="fitMapBounds()" style="background:#282a36; color:#9aa0a6; font-size:11px; padding:4px 7px;">Вся схема</button>
+            </h2>
+            
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск по номеру (157, ПГ)..." autocomplete="off">
+                <span id="search-clear" class="search-clear" onclick="clearSearch()">✕</span>
+                <div id="search-dropdown" class="search-dropdown"></div>
+            </div>
+
+            <div class="filter-chips">
+                <button class="chip active" data-filter="all" onclick="setFilter('all', this)">Все</button>
+                <button class="chip" data-filter="no_cheeks" onclick="setFilter('no_cheeks', this)">🔴 Без щёк</button>
+                <button class="chip" data-filter="hard_turn" onclick="setFilter('hard_turn', this)">🟡 Дефект</button>
+                <button class="chip" data-filter="closed" onclick="setFilter('closed', this)">🔒 Закрытые</button>
+                <button class="chip" data-filter="hydrant" onclick="setFilter('hydrant', this)">🚒 Гидранты</button>
+            </div>
+
+            <div class="panel-box mode-selector">
+                <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр / Выбор объекта</label>
+                <label><input type="radio" name="mode" value="add_valve"> 🛑 + Добавить задвижку</label>
+                <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + Добавить гидрант (ПГ)</label>
+            </div>
+
+            <div class="panel-box" style="padding: 7px 12px;">
+                <label style="font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать подписи на схеме
+                </label>
+            </div>
+
+            <div id="inspector">
+                <p style="color: #9aa0a6; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для редактирования.</p>
+            </div>
+
+            <div id="stats">
+                <div class="stat-row"><span>Отображается:</span> <b id="count-visible" style="color:#fff;">0</b></div>
+                <div class="stat-row"><span>Всего в базе:</span> <b id="count-total" style="color:#fff;">0</b></div>
+                <div class="stat-row"><span>Без щёк / дефекты:</span> <b id="count-defects" style="color:#ff7875;">0</b></div>
+            </div>
         </div>
 
-        <!-- Быстрые фильтры -->
-        <div class="filter-chips">
-            <button class="chip active" data-filter="all" onclick="setFilter('all', this)">Все</button>
-            <button class="chip" data-filter="no_cheeks" onclick="setFilter('no_cheeks', this)">🔴 Без щёк</button>
-            <button class="chip" data-filter="hard_turn" onclick="setFilter('hard_turn', this)">🟡 Дефект</button>
-            <button class="chip" data-filter="closed" onclick="setFilter('closed', this)">🔒 Закрытые</button>
-            <button class="chip" data-filter="hydrant" onclick="setFilter('hydrant', this)">🚒 Гидранты</button>
+        <!-- Мобильная верхняя панель -->
+        <div class="mobile-top-bar">
+            <div class="search-container">
+                <input type="text" id="mobile-search-input" class="search-input" placeholder="🔍 Поиск задвижки/ПГ..." autocomplete="off">
+                <span id="mobile-search-clear" class="search-clear" onclick="clearMobileSearch()">✕</span>
+                <div id="mobile-search-dropdown" class="search-dropdown"></div>
+            </div>
+            <button class="btn-mobile-icon" onclick="openMobileMenu()" title="Фильтры и режимы">⚙️</button>
+            <button class="btn-mobile-icon" onclick="fitMapBounds()" title="Вся схема">🗺️</button>
         </div>
 
-        <!-- Режимы создания -->
-        <div class="panel-box mode-selector">
-            <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр / Выбор объекта</label>
-            <label><input type="radio" name="mode" value="add_valve"> 🛑 + Добавить задвижку</label>
-            <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + Добавить гидрант (ПГ)</label>
+        <!-- Карта -->
+        <div id="map"></div>
+
+        <!-- Мобильная нижняя шторка инспектора (Bottom Sheet) -->
+        <div id="mobile-bottom-sheet" class="mobile-bottom-sheet">
+            <div class="sheet-handle" onclick="closeBottomSheet()"></div>
+            <div class="sheet-header">
+                <h3 id="sheet-title" style="margin: 0; font-size: 16px; color: #fff;">Свойства объекта</h3>
+                <button onclick="closeBottomSheet()" style="background:none; border:none; color:#9aa0a6; font-size:18px; padding:0 4px;">✕</button>
+            </div>
+            <div id="sheet-content"></div>
         </div>
 
-        <div class="panel-box" style="padding: 7px 12px;">
-            <label style="font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать подписи на схеме
-            </label>
-        </div>
+        <!-- Мобильное меню фильтров -->
+        <div id="mobile-menu-modal" onclick="closeMobileMenu(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3 style="margin:0; font-size:16px; color:#fff;">Фильтры и управление</h3>
+                    <button onclick="closeMobileMenu()" style="background:none; border:none; color:#9aa0a6; font-size:18px;">✕</button>
+                </div>
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold;">Фильтры объектов:</div>
+                <div class="filter-chips">
+                    <button class="chip active mobile-chip" data-filter="all" onclick="setMobileFilter('all', this)">Все</button>
+                    <button class="chip mobile-chip" data-filter="no_cheeks" onclick="setMobileFilter('no_cheeks', this)">🔴 Без щёк</button>
+                    <button class="chip mobile-chip" data-filter="hard_turn" onclick="setMobileFilter('hard_turn', this)">🟡 Дефект</button>
+                    <button class="chip mobile-chip" data-filter="closed" onclick="setMobileFilter('closed', this)">🔒 Закрытые</button>
+                    <button class="chip mobile-chip" data-filter="hydrant" onclick="setMobileFilter('hydrant', this)">🚒 Гидранты</button>
+                </div>
 
-        <!-- Карточка редактирования -->
-        <div id="inspector">
-            <p style="color: #9aa0a6; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для просмотра и редактирования свойств.</p>
-        </div>
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Режим нажатия на карту:</div>
+                <div class="panel-box mode-selector">
+                    <label><input type="radio" name="mobile-mode" value="view" checked onchange="syncMobileMode(this)"> 🔍 Просмотр / Выбор объекта</label>
+                    <label><input type="radio" name="mobile-mode" value="add_valve" onchange="syncMobileMode(this)"> 🛑 + Добавить задвижку</label>
+                    <label><input type="radio" name="mobile-mode" value="add_hydrant" onchange="syncMobileMode(this)"> 🔴 + Добавить гидрант (ПГ)</label>
+                </div>
 
-        <div id="stats">
-            <div class="stat-row"><span>Отображается:</span> <b id="count-visible" style="color:#fff;">0</b></div>
-            <div class="stat-row"><span>Всего в базе:</span> <b id="count-total" style="color:#fff;">0</b></div>
-            <div class="stat-row"><span>Без щёк / дефекты:</span> <b id="count-defects" style="color:#ff7875;">0</b></div>
+                <div class="panel-box" style="padding: 10px;">
+                    <label style="font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="mobile-toggle-labels" checked onchange="toggleLabels(this.checked)"> Показывать номера на схеме
+                    </label>
+                </div>
+
+                <button class="btn-primary" onclick="closeMobileMenu()" style="margin-top: 6px;">Готово</button>
+            </div>
         </div>
     </div>
-    <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="app.js"></script>
