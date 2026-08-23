@@ -7,4 +7,5 @@
       - ./storage:/app/storage
       - ./data:/app/data
       - ./frontend:/app/frontend
+      - ./backend:/app
     restart: unless-stopped
