@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Интерактивная схема запорной арматуры и гидрантов</title>
+    <title>Схемы ЭНЦ</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -12,6 +14,7 @@
         #app-container { display: flex; width: 100vw; height: 100vh; position: relative; }
         #map { flex-grow: 1; height: 100vh; background: #191a21; z-index: 1; }
 
+        /* Десктопная боковая панель */
         #sidebar { 
             width: 380px; 
             height: 100vh; 
@@ -27,8 +30,26 @@
             overflow-y: auto;
         }
 
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 19px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+        }
+
+        .header-icon {
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
         .panel-box { background: #22242f; padding: 12px 14px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; color: #f0f0f5; }
         
+        /* Поиск */
         .search-container { position: relative; display: flex; align-items: center; width: 100%; }
         .search-input { width: 100%; background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 10px 34px 10px 12px; border-radius: 8px; font-size: 14px; outline: none; }
         .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
@@ -39,6 +60,7 @@
         .search-item { padding: 10px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a38; font-size: 13.5px; color: #ffffff; }
         .search-item:hover, .search-item:active { background: #2b2e3e; }
 
+        /* Фильтры */
         .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
         .chip { background: #181922; border: 1px solid #3c404f; color: #e2e4ea; padding: 7px 11px; border-radius: 6px; font-size: 12.5px; cursor: pointer; transition: 0.15s; touch-action: manipulation; font-weight: 500; }
         .chip:hover { color: #ffffff; border-color: #5b6073; }
@@ -79,6 +101,7 @@
             animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
 
+        /* АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ */
         @media (max-width: 768px) {
             #sidebar { display: none !important; }
             #map { width: 100vw; height: 100vh; }
@@ -186,10 +209,13 @@
     <div id="app-container">
         <!-- Боковая панель -->
         <div id="sidebar">
-            <h2 style="margin: 0; font-size: 18px; color: #fff; display: flex; align-items: center; justify-content: space-between;">
-                <span>Запорная арматура</span>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="header-title">
+                    <img src="favicon.svg" alt="ЭНЦ" class="header-icon">
+                    <span>Схемы ЭНЦ</span>
+                </div>
                 <button onclick="fitMapBounds()" style="background:#282a38; color:#a0a5b5; font-size:11.5px; padding:5px 9px;">Вся схема</button>
-            </h2>
+            </div>
             
             <div class="search-container">
                 <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск по номеру (157, ПГ)..." autocomplete="off">
@@ -264,7 +290,10 @@
         <div id="mobile-menu-modal" onclick="closeMobileMenu(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3 style="margin:0; font-size:16px; color:#ffffff;">Фильтры и управление</h3>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="favicon.svg" alt="ЭНЦ" style="width:22px; height:22px;">
+                        <h3 style="margin:0; font-size:16px; color:#ffffff;">Схемы ЭНЦ</h3>
+                    </div>
                     <button onclick="closeMobileMenu()" style="background:none; border:none; color:#a0a5b5; font-size:18px; padding:4px;">✕</button>
                 </div>
                 
