@@ -1,10 +1,12 @@
 ﻿from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Dict, Any
+from pydantic import BaseModel
+from typing import List, Optional
 import json
 import os
 
-app = FastAPI(title="Water Network Management System")
+app = FastAPI(title="Water Network Interactive Map")
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,43 +16,54 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATA_FILE = "/data/network.json" if os.path.exists("/data") else "data/network.json"
+DATA_FILE = "data/network.json"
 
-def load_data() -> dict:
+def read_data():
     if not os.path.exists(DATA_FILE):
-        default_data = {"nodes": [], "valves": [], "pipes": []}
-        save_data(default_data)
-        return default_data
+        return {"nodes": [], "pipes": [], "valves": [], "dimensions": {"width": 14904, "height": 10528}}
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def save_data(data: dict):
+def write_data(data):
     os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
+class Node(BaseModel):
+    id: str
+    name: str
+    type: str
+    x: float
+    y: float
+
+class Pipe(BaseModel):
+    id: str
+    from_node: str
+    to_node: str
+    diameter: int
+    material: str
+    path: List[List[float]]
+
 @app.get("/api/network")
 def get_network():
-    return load_data()
+    return read_data()
 
 @app.post("/api/node")
-def add_node(node: Dict[str, Any]):
-    data = load_data()
-    data["nodes"].append(node)
-    save_data(data)
+def add_node(node: Node):
+    data = read_data()
+    data.setdefault("nodes", []).append(node.dict())
+    write_data(data)
     return {"status": "ok", "node": node}
 
 @app.post("/api/pipe")
-def add_pipe(pipe: Dict[str, Any]):
-    data = load_data()
-    data["pipes"].append(pipe)
-    save_data(data)
+def add_pipe(pipe: Pipe):
+    data = read_data()
+    data.setdefault("pipes", []).append(pipe.dict())
+    write_data(data)
     return {"status": "ok", "pipe": pipe}
 
-@app.delete("/api/node/{node_id}")
-def delete_node(node_id: str):
-    data = load_data()
-    data["nodes"] = [n for n in data["nodes"] if n.get("id") != node_id]
-    data["pipes"] = [p for p in data["pipes"] if p.get("from_node") != node_id and p.get("to_node") != node_id]
-    save_data(data)
-    return {"status": "ok"}
+# Монтируем отдачу статики (HTML, JS, Scheme.png)
+if os.path.exists("../frontend"):
+    app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
+elif os.path.exists("frontend"):
+    app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
