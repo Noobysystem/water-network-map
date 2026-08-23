@@ -1,4 +1,4 @@
-﻿from fastapi import FastAPI
+﻿from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -35,6 +35,7 @@ class Node(BaseModel):
     type: str
     x: float
     y: float
+    status: Optional[str] = "open"
 
 class Pipe(BaseModel):
     id: str
@@ -55,6 +56,25 @@ def add_node(node: Node):
     write_data(data)
     return {"status": "ok", "node": node}
 
+@app.put("/api/node/{node_id}")
+def update_node(node_id: str, updated_node: Node):
+    data = read_data()
+    for i, n in enumerate(data.get("nodes", [])):
+        if n["id"] == node_id:
+            data["nodes"][i] = updated_node.dict()
+            write_data(data)
+            return {"status": "ok", "node": updated_node}
+    raise HTTPException(status_code=404, detail="Node not found")
+
+@app.delete("/api/node/{node_id}")
+def delete_node(node_id: str):
+    data = read_data()
+    data["nodes"] = [n for n in data.get("nodes", []) if n["id"] != node_id]
+    # Удаляем и связанные трубы
+    data["pipes"] = [p for p in data.get("pipes", []) if p["from_node"] != node_id and p["to_node"] != node_id]
+    write_data(data)
+    return {"status": "ok"}
+
 @app.post("/api/pipe")
 def add_pipe(pipe: Pipe):
     data = read_data()
@@ -62,7 +82,6 @@ def add_pipe(pipe: Pipe):
     write_data(data)
     return {"status": "ok", "pipe": pipe}
 
-# Монтируем отдачу статики (HTML, JS, Scheme.png)
 if os.path.exists("../frontend"):
     app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
 elif os.path.exists("frontend"):
