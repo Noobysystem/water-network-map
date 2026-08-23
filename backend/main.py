@@ -35,27 +35,28 @@ NETWORKS = {
         "image": "scheme_tv.jpg",
         "dimensions": {"width": 7445, "height": 5266},
         "file": "tech_water.json"
+    },
+    "tech_water_out": {
+        "id": "tech_water_out",
+        "title": "⚙️ ТВ внепром",
+        "image": "scheme_tv_out.jpg",
+        "dimensions": {"width": 7445, "height": 10528},
+        "file": "tech_water_out.json"
     }
 }
 
 def init_storage():
     os.makedirs(STORAGE_DIR, exist_ok=True)
-    drinking_storage = os.path.join(STORAGE_DIR, "drinking.json")
-    
-    source_json = os.path.join(DATA_DIR, "network.json")
-    if (not os.path.exists(drinking_storage) or os.path.getsize(drinking_storage) < 50) and os.path.exists(source_json):
-        shutil.copyfile(source_json, drinking_storage)
-    elif not os.path.exists(drinking_storage):
-        with open(drinking_storage, "w", encoding="utf-8") as f:
-            json.dump({"nodes": [], "dimensions": NETWORKS["drinking"]["dimensions"]}, f, ensure_ascii=False, indent=2)
-
-    tech_storage = os.path.join(STORAGE_DIR, "tech_water.json")
-    tech_source = os.path.join(DATA_DIR, "tech_water.json")
-    if (not os.path.exists(tech_storage) or os.path.getsize(tech_storage) < 50) and os.path.exists(tech_source):
-        shutil.copyfile(tech_source, tech_storage)
-    elif not os.path.exists(tech_storage):
-        with open(tech_storage, "w", encoding="utf-8") as f:
-            json.dump({"nodes": [], "dimensions": NETWORKS["tech_water"]["dimensions"]}, f, ensure_ascii=False, indent=2)
+    os.makedirs(DATA_DIR, exist_ok=True)
+    for net_id, cfg in NETWORKS.items():
+        path = os.path.join(STORAGE_DIR, cfg["file"])
+        if not os.path.exists(path):
+            src = os.path.join(DATA_DIR, cfg["file"])
+            if os.path.exists(src):
+                shutil.copyfile(src, path)
+            else:
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump({"nodes": [], "dimensions": cfg["dimensions"]}, f, ensure_ascii=False, indent=2)
 
 init_storage()
 
