@@ -23,37 +23,16 @@ async function initApp() {
     const height = networkData.dimensions?.height || 10528;
     bounds = [[0, 0], [height, width]];
 
-    const maxDim = Math.max(width, height);
-    const maxNativeZoom = Math.ceil(Math.log2(maxDim / 256)); // 6
-
     map = L.map("map", {
         crs: L.CRS.Simple,
-        minZoom: 0,
-        maxZoom: maxNativeZoom + 2,
-        zoomSnap: 0.25,
+        minZoom: -3,
+        maxZoom: 2.5,
+        zoomSnap: 0.1,
         zoomControl: !isMobile()
     });
 
-    // Тайловый слой для экономии 99% памяти телефона
-    L.TileLayer.Scheme = L.TileLayer.extend({
-        getTileUrl: function(coords) {
-            const z = coords.z;
-            const x = coords.x;
-            const y = coords.y;
-            return `tiles/${z}/${x}/${y}.jpg`;
-        }
-    });
-
-    new L.TileLayer.Scheme("tiles/{z}/{x}/{y}.jpg", {
-        minZoom: 0,
-        maxZoom: maxNativeZoom + 2,
-        maxNativeZoom: maxNativeZoom,
-        tileSize: 256,
-        noWrap: true,
-        bounds: bounds,
-        errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-    }).addTo(map);
-
+    // Загружаем оптимизированную подложку схемы
+    L.imageOverlay("scheme.jpg", bounds).addTo(map);
     map.fitBounds(bounds);
 
     nodesLayer = L.layerGroup().addTo(map);
@@ -78,7 +57,7 @@ function fitMapBounds() {
 }
 
 function getNodeStyle(node) {
-    const scale = isMobile() ? 1.4 : 1.0;
+    const scale = isMobile() ? 1.35 : 1.0;
 
     if (node.type === "hydrant") {
         return { radius: 8 * scale, color: "#ff4d4f", fillColor: "#ff7875", fillOpacity: 0.9, weight: 2 };
@@ -134,7 +113,7 @@ function renderNetwork() {
 
         if (showLabels) {
             let labelText = node.name;
-            if (node.status === "no_cheeks") labelText += " ⚠️(без щёк)";
+            if (node.status === "no_cheeks") labelText += " ⚠️";
             else if (node.status === "closed") labelText += " 🔒";
 
             marker.bindTooltip(labelText, { 
@@ -194,7 +173,7 @@ function focusOnNode(node) {
         showNodeEditor(node);
     }
 
-    map.flyTo([node.y, node.x], Math.max(map.getZoom(), 4.5), { duration: 0.6 });
+    map.flyTo([node.y, node.x], Math.max(map.getZoom(), 0.5), { duration: 0.6 });
 
     pulseLayer.clearLayers();
     const pulseIcon = L.divIcon({
@@ -419,7 +398,7 @@ function setupMobileSearch() {
             return;
         }
 
-        mDropdown.innerHTML = matches.map(m => {
+        dropdownContent = matches.map(m => {
             let badge = `<span style="color:#52c41a;">● В работе</span>`;
             if (m.type === "hydrant") badge = `<span style="color:#ff4d4f;">🚒 ПГ</span>`;
             else if (m.status === "no_cheeks") badge = `<span style="color:#ff4d4f; font-weight:bold;">⚠️ Без щёк</span>`;
@@ -436,6 +415,7 @@ function setupMobileSearch() {
                 </div>
             `;
         }).join("");
+        mDropdown.innerHTML = dropdownContent;
         mDropdown.style.display = "block";
     });
 
