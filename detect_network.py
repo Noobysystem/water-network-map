@@ -7,33 +7,33 @@ import re
 
 IMAGE_PATH = "frontend/scheme.png"
 OUTPUT_JSON = "data/network.json"
+IMG_HEIGHT = 3508
 
 def detect_water_network():
     if not os.path.exists(IMAGE_PATH):
-        print(f"Ошибка: Файл {IMAGE_PATH} не найден.")
+        print(f"Файл {IMAGE_PATH} не найден.")
         return
 
-    print("1. Загрузка изображения схемы...")
+    print("1. Обработка изображения...")
     img = cv2.imread(IMAGE_PATH)
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # Выделение синего цвета (трубы, узлы, гидранты)
-    lower_blue = np.array([90, 50, 50])
-    upper_blue = np.array([135, 255, 255])
+    # Маска синего цвета
+    lower_blue = np.array([90, 40, 40])
+    upper_blue = np.array([140, 255, 255])
     blue_mask = cv2.inRange(hsv, lower_blue, upper_blue)
 
-    print("2. Поиск узлов и колодцев (Hough Circles)...")
-    # Поиск круглых узлов арматуры и колодцев
+    print("2. Детекция кругов (колодцы и арматура)...")
     circles = cv2.HoughCircles(
         blue_mask, 
         cv2.HOUGH_GRADIENT, 
         dp=1.2, 
-        minDist=20, 
-        param1=50, 
-        param2=12, 
-        minRadius=6, 
-        maxRadius=22
+        minDist=25, 
+        param1=40, 
+        param2=13, 
+        minRadius=5, 
+        maxRadius=25
     )
 
     detected_nodes = []
@@ -41,60 +41,55 @@ def detect_water_network():
         circles = np.uint16(np.around(circles))
         for i, c in enumerate(circles[0, :]):
             cx, cy, r = int(c[0]), int(c[1]), int(c[2])
+            # Leaflet CRS.Simple инвертирует ось Y
+            leaflet_y = IMG_HEIGHT - cy
             node_type = "hydrant" if r >= 13 else "well"
             detected_nodes.append({
                 "id": f"node_auto_{i+1}",
                 "name": f"{'ПГ' if node_type == 'hydrant' else 'к'}_{i+1}",
                 "type": node_type,
                 "x": cx,
-                "y": cy,
+                "y": leaflet_y,
+                "orig_y": cy,
                 "radius": r
             })
 
-    print(f"Обнаружено узлов: {len(detected_nodes)}")
+    print(f"Найдено узлов: {len(detected_nodes)}")
 
-    print("3. Распознавание подписей (OCR)...")
+    print("3. Считывание текста с чертежа (EasyOCR)...")
     reader = easyocr.Reader(['ru', 'en'], gpu=False)
-    # Считываем текст со схемы
     ocr_results = reader.readtext(gray, paragraph=False)
 
-    print("4. Сопоставление текстовых меток с ближайшими узлами...")
+    print("4. Привязка подписей...")
     for (bbox, text, prob) in ocr_results:
         clean_text = text.strip()
-        if prob < 0.4:
+        if prob < 0.35:
             continue
 
-        # Координаты центра распознанного текста
         (tl, tr, br, bl) = bbox
         tx_center = int((tl[0] + br[0]) / 2)
         ty_center = int((tl[1] + br[1]) / 2)
 
-        # Ищем совпадения по маскам: к12, ПГ 101, номер арматуры
+        # Проверяем метки номеров колодцев и гидрантов
         if re.search(r'^(к|k|K)\s*\d+', clean_text, re.IGNORECASE) or re.search(r'^(пг|п|г|pg)\s*\d+', clean_text, re.IGNORECASE):
             for node in detected_nodes:
-                dist = np.hypot(node["x"] - tx_center, node["y"] - ty_center)
-                if dist < 65:  # Текст находится рядом с узлом
+                dist = np.hypot(node["x"] - tx_center, node["orig_y"] - ty_center)
+                if dist < 70:
                     node["name"] = clean_text.replace(" ", "")
                     break
 
-    # Формируем итоговый JSON
-    os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
-    
-    # Сохраняем существующие трубы, если были
-    existing_data = {"nodes": [], "valves": [], "pipes": []}
-    if os.path.exists(OUTPUT_JSON):
-        try:
-            with open(OUTPUT_JSON, "r", encoding="utf-8") as f:
-                existing_data = json.load(f)
-        except:
-            pass
+    # Очистка служебных полей
+    for n in detected_nodes:
+        n.pop("orig_y", None)
+        n.pop("radius", None)
 
-    existing_data["nodes"] = detected_nodes
+    os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
+    payload = {"nodes": detected_nodes, "pipes": [], "valves": []}
 
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
-        json.dump(existing_data, f, ensure_ascii=False, indent=2)
+        json.dump(payload, f, ensure_ascii=False, indent=2)
 
-    print(f"Готово! Данные сохранены в {OUTPUT_JSON}")
+    print(f"Готово! Сохранено {len(detected_nodes)} узлов в {OUTPUT_JSON}")
 
 if __name__ == "__main__":
     detect_water_network()
