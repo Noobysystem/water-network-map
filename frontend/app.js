@@ -43,7 +43,6 @@ async function loadNetwork(netId) {
     clearSearch();
     clearMobileSearch();
 
-    // Обновление активных кнопок
     document.querySelectorAll(".net-tab").forEach(t => t.classList.remove("active"));
     const tabDesktop = document.getElementById(`tab-${netId}`);
     const tabMobile = document.getElementById(`m-tab-${netId}`);
@@ -51,18 +50,16 @@ async function loadNetwork(netId) {
     if (tabMobile) tabMobile.classList.add("active");
 
     const inspector = document.getElementById("inspector");
-    if (inspector) inspector.innerHTML = '<p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для редактирования.</p>';
+    if (inspector) inspector.innerHTML = '<p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по задвижке на схеме для редактирования параметров.</p>';
 
     try {
         const res = await fetch(`${API_URL}/${netId}/network`);
         if (res.ok) {
             networkData = await res.json();
         } else {
-            console.error("Ошибка HTTP:", res.status);
             networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] };
         }
     } catch (e) {
-        console.error("Ошибка загрузки схемы:", e);
         networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] };
     }
 
@@ -172,10 +169,8 @@ function renderNetwork() {
         });
     });
 
-    const vElem = document.getElementById("count-visible");
     const tElem = document.getElementById("count-total");
     const dElem = document.getElementById("count-defects");
-    if (vElem) vElem.innerText = filtered.length;
     if (tElem) tElem.innerText = (networkData.nodes || []).length;
     if (dElem) dElem.innerText = defectCount;
 }
@@ -200,9 +195,7 @@ function setMobileFilter(filterType, element) {
 function toggleLabels(state) {
     if (typeof state === "boolean") {
         const dToggle = document.getElementById("toggle-labels");
-        const mToggle = document.getElementById("mobile-toggle-labels");
         if (dToggle) dToggle.checked = state;
-        if (mToggle) mToggle.checked = state;
     }
     renderNetwork();
 }
@@ -232,26 +225,18 @@ function focusOnNode(node) {
 function generateEditorHTML(node, prefix = "") {
     return `
         <div class="input-group">
-            <label>Номер / Маркировка</label>
-            <input type="text" id="${prefix}edit-node-name" value="${node.name || ''}" placeholder="например, 157 или К 12">
+            <label>Номер / Обозначение</label>
+            <input type="text" id="${prefix}edit-node-name" value="${node.name || ''}" placeholder="например, 50 или К 12">
         </div>
 
         <div class="input-group">
-            <label>Тип объекта</label>
-            <select id="${prefix}edit-node-type">
-                <option value="valve" ${node.type !== 'hydrant' ? 'selected' : ''}>Задвижка / Запорная арматура</option>
-                <option value="hydrant" ${node.type === 'hydrant' ? 'selected' : ''}>Пожарный гидрант (ПГ)</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Состояние / Дефекты</label>
+            <label>Состояние / Дефект</label>
             <select id="${prefix}edit-node-status">
                 <option value="open" ${node.status === 'open' || !node.status ? 'selected' : ''}>🟢 В работе (Открыта)</option>
                 <option value="closed" ${node.status === 'closed' ? 'selected' : ''}>🟠 Закрыта (Отсечена)</option>
-                <option value="no_cheeks" ${node.status === 'no_cheeks' ? 'selected' : ''}>🔴 Нет щёк (не перекрывается!)</option>
-                <option value="hard_turn" ${node.status === 'hard_turn' ? 'selected' : ''}>🟡 Плохо закрывается / тугой ход</option>
-                <option value="jammed_closed" ${node.status === 'jammed_closed' ? 'selected' : ''}>🟣 Заклинила в закрытом состоянии</option>
+                <option value="no_cheeks" ${node.status === 'no_cheeks' ? 'selected' : ''}>🔴 Нет щёк (не перекрыть!)</option>
+                <option value="hard_turn" ${node.status === 'hard_turn' ? 'selected' : ''}>🟡 Дефект / тугой ход / пропуск</option>
+                <option value="jammed_closed" ${node.status === 'jammed_closed' ? 'selected' : ''}>🟣 Заклинила в закрытом</option>
             </select>
         </div>
 
@@ -261,13 +246,13 @@ function generateEditorHTML(node, prefix = "") {
         </div>
 
         <div class="input-group">
-            <label>Описание и дефекты</label>
-            <textarea id="${prefix}edit-node-desc" placeholder="например: обломан шток, слизана резьба...">${node.description || ''}</textarea>
+            <label>Примечания / Описание дефекта</label>
+            <textarea id="${prefix}edit-node-desc" placeholder="например: сломан шток, колодец затоплен...">${node.description || ''}</textarea>
         </div>
 
         <div class="btn-group">
             <button class="btn-primary" onclick="saveNodeEdit('${node.id}', '${prefix}')">💾 Сохранить</button>
-            <button class="btn-danger" onclick="deleteNode('${node.id}')">🗑 Удалить</button>
+            <button class="btn-danger" onclick="deleteNode('${node.id}')">🗑</button>
         </div>
     `;
 }
@@ -276,11 +261,20 @@ function showNodeEditor(node) {
     const inspector = document.getElementById("inspector");
     if (!inspector) return;
     inspector.innerHTML = `
-        <h3 style="margin: 0 0 2px 0; font-size: 16px; color: #fff;">
-            ${node.type === 'hydrant' ? '🚒 Пожарный гидрант' : '🛑 Запорная арматура'}
-        </h3>
+        <div style="font-weight:700; font-size:14.5px; color:#fff; display:flex; justify-content:space-between; align-items:center;">
+            <span>${node.type === 'hydrant' ? '🚒 Пожарный гидрант' : '🛑 Задвижка / Арматура'}</span>
+            <span style="font-size:11px; color:#60a5fa; font-weight:normal;">ID: ${node.id.split('_').pop()}</span>
+        </div>
         ${generateEditorHTML(node, "")}
     `;
+
+    const inputName = document.getElementById("edit-node-name");
+    if (inputName) {
+        inputName.focus();
+        inputName.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") saveNodeEdit(node.id, "");
+        });
+    }
 }
 
 function showBottomSheet(node) {
@@ -322,7 +316,6 @@ function getActiveMode() {
 
 async function saveNodeEdit(nodeId, prefix = "") {
     const newName = document.getElementById(`${prefix}edit-node-name`).value.trim();
-    const newType = document.getElementById(`${prefix}edit-node-type`).value;
     const newStatus = document.getElementById(`${prefix}edit-node-status`).value;
     const newDiameter = parseInt(document.getElementById(`${prefix}edit-node-diameter`).value) || 150;
     const newDesc = document.getElementById(`${prefix}edit-node-desc`).value.trim();
@@ -331,7 +324,6 @@ async function saveNodeEdit(nodeId, prefix = "") {
     if (!node) return;
 
     node.name = newName;
-    node.type = newType;
     node.status = newStatus;
     node.diameter = newDiameter;
     node.description = newDesc;
@@ -554,7 +546,7 @@ async function handleMapClick(e) {
     let defaultType = (mode === "add_hydrant") ? "hydrant" : "valve";
 
     if (mode === "add_valve") {
-        defaultName = prompt("Номер задвижки / колодца (например, 78 или К 12):", "");
+        defaultName = prompt("Номер задвижки / колодца (например, 50 или К 12):", "");
     } else if (mode === "add_hydrant") {
         defaultName = prompt("Номер гидранта (например, ПГ 28):", "ПГ ");
     }

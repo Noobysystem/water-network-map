@@ -12,61 +12,98 @@
         #app-container { display: flex; width: 100vw; height: 100vh; position: relative; }
         #map { flex-grow: 1; height: 100vh; background: #191a21; z-index: 1; }
 
+        /* Боковая панель */
         #sidebar { 
             width: 380px; 
             height: 100vh; 
             background: #16171e; 
             color: #f0f0f5; 
-            padding: 16px; 
+            padding: 14px 16px; 
             display: flex; 
             flex-direction: column; 
             gap: 10px; 
             z-index: 1000; 
             flex-shrink: 0; 
             box-shadow: 2px 0 16px rgba(0,0,0,0.6); 
-            overflow-y: auto;
         }
 
-        .header-title { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; color: #ffffff; }
-        .header-icon { width: 28px; height: 28px; flex-shrink: 0; }
-        .panel-box { background: #22242f; padding: 10px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; color: #f0f0f5; }
+        .header-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .header-title { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; color: #ffffff; }
+        .header-icon { width: 26px; height: 26px; flex-shrink: 0; }
+        .header-actions { display: flex; gap: 4px; }
         
-        /* Вкладки переключения сетей */
-        .network-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #121318; padding: 4px; border-radius: 8px; border: 1px solid #2e3140; }
-        .net-tab { background: transparent; border: none; color: #9aa0a6; padding: 8px 6px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: 0.15s; text-align: center; }
+        .btn-icon-top { 
+            background: #22242f; 
+            color: #a0a5b5; 
+            border: 1px solid #2e3140; 
+            font-size: 11.5px; 
+            padding: 5px 8px; 
+            border-radius: 6px; 
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-icon-top:hover { color: #fff; border-color: #3b82f6; }
+
+        /* Вкладки сетей */
+        .network-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #121318; padding: 3px; border-radius: 8px; border: 1px solid #2e3140; }
+        .net-tab { background: transparent; border: none; color: #9aa0a6; padding: 7px 6px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: 0.15s; text-align: center; }
         .net-tab:hover { color: #fff; }
         .net-tab.active { background: #2563eb; color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.4); }
 
         .search-container { position: relative; display: flex; align-items: center; width: 100%; }
-        .search-input { width: 100%; background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 9px 34px 9px 12px; border-radius: 8px; font-size: 13.5px; outline: none; }
+        .search-input { width: 100%; background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 8px 32px 8px 11px; border-radius: 7px; font-size: 13px; outline: none; }
         .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
-        .search-clear { position: absolute; right: 10px; cursor: pointer; color: #8e929b; font-size: 16px; display: none; padding: 4px; }
-        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e28; border: 1px solid #3c404f; border-radius: 8px; max-height: 220px; overflow-y: auto; z-index: 2000; box-shadow: 0 6px 16px rgba(0,0,0,0.6); display: none; }
-        .search-item { padding: 9px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a38; font-size: 13px; color: #ffffff; }
+        .search-clear { position: absolute; right: 8px; cursor: pointer; color: #8e929b; font-size: 15px; display: none; padding: 2px; }
+        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e28; border: 1px solid #3c404f; border-radius: 8px; max-height: 200px; overflow-y: auto; z-index: 2000; box-shadow: 0 6px 16px rgba(0,0,0,0.6); display: none; }
+        .search-item { padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a38; font-size: 13px; color: #ffffff; }
         .search-item:hover { background: #2b2e3e; }
 
         .filter-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-        .chip { background: #181922; border: 1px solid #3c404f; color: #e2e4ea; padding: 6px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.15s; font-weight: 500; }
+        .chip { background: #181922; border: 1px solid #3c404f; color: #e2e4ea; padding: 5px 9px; border-radius: 6px; font-size: 11.5px; cursor: pointer; transition: 0.15s; font-weight: 500; }
         .chip:hover { color: #ffffff; border-color: #5b6073; }
         .chip.active { background: #2563eb; color: #ffffff; border-color: #3b82f6; font-weight: 600; }
         .chip.active-danger { background: #dc2626; color: #ffffff; border-color: #ef4444; font-weight: 600; }
 
-        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 3px 0; color: #e5e7eb; }
-        #inspector { background: #22242f; padding: 12px; border-radius: 8px; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; border: 1px solid #2e3140; color: #f0f0f5; }
+        .panel-box { background: #22242f; padding: 8px 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 6px; border: 1px solid #2e3140; color: #f0f0f5; }
+        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 2px 0; color: #e5e7eb; }
         
-        .input-group { display: flex; flex-direction: column; gap: 4px; }
-        .input-group label { font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: 700; }
-        .input-group input, .input-group select, .input-group textarea { background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 8px 10px; border-radius: 6px; font-size: 13.5px; outline: none; font-family: inherit; }
-        .input-group textarea { resize: vertical; min-height: 55px; color: #ffffff; }
+        /* Главная рабочая карточка (инспектор) */
+        #inspector { 
+            background: #22242f; 
+            padding: 12px 14px; 
+            border-radius: 8px; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            border: 1px solid #2e3140; 
+            color: #f0f0f5;
+            overflow-y: auto;
+        }
+        
+        .input-group { display: flex; flex-direction: column; gap: 3px; }
+        .input-group label { font-size: 10.5px; color: #a0a5b5; text-transform: uppercase; font-weight: 700; letter-spacing: 0.4px; }
+        .input-group input, .input-group select, .input-group textarea { 
+            background: #16171e; 
+            border: 1px solid #3c404f; 
+            color: #ffffff; 
+            padding: 7px 10px; 
+            border-radius: 6px; 
+            font-size: 13px; 
+            outline: none; 
+            font-family: inherit; 
+        }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #3b82f6; }
+        .input-group textarea { resize: vertical; min-height: 50px; font-size: 12.5px; }
         
         .btn-group { display: flex; gap: 8px; margin-top: 4px; }
-        button { padding: 9px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; }
+        button { padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; }
         .btn-primary { background: #3b82f6; color: #ffffff; flex-grow: 1; }
+        .btn-primary:hover { background: #2563eb; }
         .btn-danger { background: #ef4444; color: #ffffff; }
-        .btn-tool { background: #282a38; color: #a0a5b5; border: 1px solid #3c404f; font-size: 12px; padding: 6px 10px; border-radius: 6px; }
+        .btn-danger:hover { background: #dc2626; }
 
-        #stats { font-size: 12px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 6px; display: flex; flex-direction: column; gap: 3px; }
-        .stat-row { display: flex; justify-content: space-between; }
+        #stats { font-size: 11.5px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 6px; display: flex; justify-content: space-between; align-items: center; }
         .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
 
         .mobile-top-bar, .mobile-bottom-sheet, #mobile-menu-modal { display: none !important; }
@@ -94,12 +131,17 @@
 <body>
     <div id="app-container">
         <div id="sidebar">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="header-row">
                 <div class="header-title">
                     <img src="favicon.svg" alt="ЭНЦ" class="header-icon">
                     <span>Схемы ЭНЦ</span>
                 </div>
-                <button onclick="fitMapBounds()" style="background:#282a38; color:#a0a5b5; font-size:11.5px; padding:5px 9px;">Вся схема</button>
+                <div class="header-actions">
+                    <button class="btn-icon-top" onclick="downloadBackup()" title="Скачать резервную копию базы">💾</button>
+                    <button class="btn-icon-top" onclick="document.getElementById('import-file-input').click()" title="Загрузить базу">📂</button>
+                    <button class="btn-icon-top" onclick="fitMapBounds()" title="Вся схема">🗺️</button>
+                    <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="uploadBackup(event)">
+                </div>
             </div>
 
             <!-- Вкладки сетей -->
@@ -109,7 +151,7 @@
             </div>
             
             <div class="search-container">
-                <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск (157, 78, ПГ)..." autocomplete="off">
+                <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск арматуры (157, 78, ПГ)..." autocomplete="off">
                 <span id="search-clear" class="search-clear" onclick="clearSearch()">✕</span>
                 <div id="search-dropdown" class="search-dropdown"></div>
             </div>
@@ -123,34 +165,24 @@
             </div>
 
             <div class="panel-box mode-selector">
-                <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр / Выбор объекта</label>
-                <label><input type="radio" name="mode" value="add_valve"> 🛑 + Добавить задвижку/узел</label>
-                <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + Добавить гидрант (ПГ)</label>
-            </div>
-
-            <div class="panel-box" style="padding: 7px 12px;">
-                <label style="font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #e5e7eb;">
-                    <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Показывать подписи на схеме
-                </label>
-            </div>
-
-            <div id="inspector">
-                <p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для редактирования.</p>
-            </div>
-
-            <div class="panel-box" style="padding: 8px 12px; gap: 6px;">
-                <div style="font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: bold;">Резервная копия текущей схемы:</div>
-                <div style="display: flex; gap: 6px;">
-                    <button class="btn-tool" onclick="downloadBackup()" style="flex-grow: 1;">💾 Скачать базу</button>
-                    <button class="btn-tool" onclick="document.getElementById('import-file-input').click()" style="flex-grow: 1;">📂 Загрузить</button>
-                    <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="uploadBackup(event)">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр</label>
+                    <label><input type="radio" name="mode" value="add_valve"> 🛑 + Задвижка</label>
+                    <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + ПГ</label>
                 </div>
             </div>
 
+            <!-- Карточка инспектора без лишних скроллов -->
+            <div id="inspector">
+                <p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по задвижке на схеме для редактирования параметров.</p>
+            </div>
+
             <div id="stats">
-                <div class="stat-row"><span>Отображается:</span> <b id="count-visible" style="color:#fff;">0</b></div>
-                <div class="stat-row"><span>Всего в базе:</span> <b id="count-total" style="color:#fff;">0</b></div>
-                <div class="stat-row"><span>Без щёк / дефекты:</span> <b id="count-defects" style="color:#ff7875;">0</b></div>
+                <span>Объектов: <b id="count-total" style="color:#fff;">0</b></span>
+                <span>Без щёк/дефекты: <b id="count-defects" style="color:#ff7875;">0</b></span>
+                <label style="font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 4px; color: #a0a5b5;">
+                    <input type="checkbox" id="toggle-labels" checked onchange="toggleLabels()"> Номера
+                </label>
             </div>
         </div>
 
@@ -161,7 +193,7 @@
                 <span id="mobile-search-clear" class="search-clear" onclick="clearMobileSearch()">✕</span>
                 <div id="mobile-search-dropdown" class="search-dropdown"></div>
             </div>
-            <button class="btn-mobile-icon" onclick="openMobileMenu()" title="Фильтры и выбор схемы">⚙️</button>
+            <button class="btn-mobile-icon" onclick="openMobileMenu()" title="Меню">⚙️</button>
             <button class="btn-mobile-icon" onclick="fitMapBounds()" title="Вся схема">🗺️</button>
         </div>
 
@@ -177,7 +209,7 @@
             <div id="sheet-content"></div>
         </div>
 
-        <!-- Мобильное меню фильтров -->
+        <!-- Мобильное меню -->
         <div id="mobile-menu-modal" onclick="closeMobileMenu(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -188,13 +220,13 @@
                     <button onclick="closeMobileMenu()" style="background:none; border:none; color:#a0a5b5; font-size:18px; padding:4px;">✕</button>
                 </div>
 
-                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold;">Выбор схемы сети:</div>
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold;">Выбор схемы:</div>
                 <div class="network-tabs">
                     <button class="net-tab active m-net-tab" id="m-tab-drinking" onclick="switchNetwork('drinking')">💧 Питьевая</button>
                     <button class="net-tab m-net-tab" id="m-tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ Техническая</button>
                 </div>
                 
-                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Фильтры объектов:</div>
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Фильтры:</div>
                 <div class="filter-chips">
                     <button class="chip active mobile-chip" data-filter="all" onclick="setMobileFilter('all', this)">Все</button>
                     <button class="chip mobile-chip" data-filter="no_cheeks" onclick="setMobileFilter('no_cheeks', this)">🔴 Без щёк</button>
@@ -203,30 +235,20 @@
                     <button class="chip mobile-chip" data-filter="hydrant" onclick="setMobileFilter('hydrant', this)">🚒 Гидранты</button>
                 </div>
 
-                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Режим нажатия на карту:</div>
+                <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Режим клика:</div>
                 <div class="panel-box mode-selector">
                     <label><input type="radio" name="mobile-mode" value="view" checked onchange="syncMobileMode(this)"> 🔍 Просмотр / Выбор объекта</label>
-                    <label><input type="radio" name="mobile-mode" value="add_valve" onchange="syncMobileMode(this)"> 🛑 + Добавить задвижку/узел</label>
+                    <label><input type="radio" name="mobile-mode" value="add_valve" onchange="syncMobileMode(this)"> 🛑 + Добавить задвижку</label>
                     <label><input type="radio" name="mobile-mode" value="add_hydrant" onchange="syncMobileMode(this)"> 🔴 + Добавить гидрант (ПГ)</label>
                 </div>
 
-                <div class="panel-box" style="padding: 10px 12px;">
-                    <label style="font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #ffffff;">
-                        <input type="checkbox" id="mobile-toggle-labels" checked onchange="toggleLabels(this.checked)"> Показывать номера на схеме
-                    </label>
-                </div>
-
-                <div class="panel-box" style="padding: 10px 12px; gap: 6px;">
-                    <div style="font-size: 11px; color: #a0a5b5; text-transform: uppercase; font-weight: bold;">Резервная копия:</div>
-                    <button class="btn-tool" onclick="downloadBackup()" style="width: 100%; padding: 10px;">💾 Скачать базу текущей схемы</button>
-                </div>
-
-                <button class="btn-primary" onclick="closeMobileMenu()" style="margin-top: 4px; padding: 12px; font-size: 14px;">Готово</button>
+                <button class="btn-primary" onclick="downloadBackup()" style="margin-top: 4px;">💾 Скачать копию базы</button>
+                <button class="btn-primary" onclick="closeMobileMenu()" style="background:#22242f; border:1px solid #3c404f;">Готово</button>
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="app.js?v=3.0"></script>
+    <script src="app.js?v=4.0"></script>
 </body>
 </html>
