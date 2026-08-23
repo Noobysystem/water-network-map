@@ -8,7 +8,7 @@ import json
 import os
 import shutil
 
-app = FastAPI(title="Water Valves Manager")
+app = FastAPI(title="Схемы ЭНЦ - Информационная система")
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,32 +18,66 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Хранилище вне зоны действия git
 STORAGE_DIR = "storage"
-DATA_FILE = os.path.join(STORAGE_DIR, "network.json")
-BACKUP_FILE = os.path.join(STORAGE_DIR, "network.backup.json")
-INIT_FILE = "data/network.json"
+NETWORKS_CONFIG = {
+    "drinking": {
+        "id": "drinking",
+        "title": "💧 Питьевой водопровод (ХПВ)",
+        "image": "scheme.jpg",
+        "dimensions": {"width": 14904, "height": 10528},
+        "file": "drinking.json"
+    },
+    "tech_water": {
+        "id": "tech_water",
+        "title": "⚙️ Технический водопровод (ТВ)",
+        "image": "scheme_tv.jpg",
+        "dimensions": {"width": 7445, "height": 5266},
+        "file": "tech_water.json"
+    }
+}
 
-def get_data_path():
+def migrate_legacy_storage():
     os.makedirs(STORAGE_DIR, exist_ok=True)
-    if not os.path.exists(DATA_FILE):
-        if os.path.exists(INIT_FILE):
-            shutil.copyfile(INIT_FILE, DATA_FILE)
+    old_file = os.path.join(STORAGE_DIR, "network.json")
+    drinking_file = os.path.join(STORAGE_DIR, "drinking.json")
+    
+    if os.path.exists(old_file) and not os.path.exists(drinking_file):
+        shutil.copyfile(old_file, drinking_file)
+    elif not os.path.exists(drinking_file):
+        init_file = "data/network.json"
+        if os.path.exists(init_file):
+            shutil.copyfile(init_file, drinking_file)
         else:
-            with open(DATA_FILE, "w", encoding="utf-8") as f:
-                json.dump({"nodes": [], "dimensions": {"width": 14904, "height": 10528}}, f, ensure_ascii=False, indent=2)
-    return DATA_FILE
+            with open(drinking_file, "w", encoding="utf-8") as f:
+                json.dump({"nodes": [], "dimensions": NETWORKS_CONFIG["drinking"]["dimensions"]}, f, ensure_ascii=False, indent=2)
 
-def read_data():
-    path = get_data_path()
+migrate_legacy_storage()
+
+def get_network_path(net_id: str):
+    if net_id not in NETWORKS_CONFIG:
+        raise HTTPException(status_code=404, detail="Схема не найдена")
+    
+    os.makedirs(STORAGE_DIR, exist_ok=True)
+    filename = NETWORKS_CONFIG[net_id]["file"]
+    filepath = os.path.join(STORAGE_DIR, filename)
+
+    if not os.path.exists(filepath):
+        dims = NETWORKS_CONFIG[net_id]["dimensions"]
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump({"nodes": [], "dimensions": dims}, f, ensure_ascii=False, indent=2)
+            
+    return filepath
+
+def read_network_data(net_id: str):
+    path = get_network_path(net_id)
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def write_data(data):
-    path = get_data_path()
-    # Создаем резервную копию перед записью
+def write_network_data(net_id: str, data: dict):
+    path = get_network_path(net_id)
+    backup = path.replace(".json", ".backup.json")
     if os.path.exists(path):
-        shutil.copyfile(path, BACKUP_FILE)
+        shutil.copyfile(path, backup)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -57,46 +91,48 @@ class ValveNode(BaseModel):
     description: Optional[str] = ""
     diameter: Optional[int] = 150
 
-@app.get("/api/network")
-def get_network():
-    return read_data()
+@app.get("/api/networks")
+def list_networks():
+    return list(NETWORKS_CONFIG.values())
 
-@app.post("/api/node")
-def add_node(node: ValveNode):
-    data = read_data()
+@app.get("/api/{net_id}/network")
+def get_network(net_id: str):
+    return read_network_data(net_id)
+
+@app.post("/api/{net_id}/node")
+def add_node(net_id: str, node: ValveNode):
+    data = read_network_data(net_id)
     data.setdefault("nodes", []).append(node.dict())
-    write_data(data)
+    write_network_data(net_id, data)
     return {"status": "ok", "node": node}
 
-@app.put("/api/node/{node_id}")
-def update_node(node_id: str, updated_node: ValveNode):
-    data = read_data()
+@app.put("/api/{net_id}/node/{node_id}")
+def update_node(net_id: str, node_id: str, updated_node: ValveNode):
+    data = read_network_data(net_id)
     for i, n in enumerate(data.get("nodes", [])):
         if n["id"] == node_id:
             data["nodes"][i] = updated_node.dict()
-            write_data(data)
+            write_network_data(net_id, data)
             return {"status": "ok", "node": updated_node}
     raise HTTPException(status_code=404, detail="Объект не найден")
 
-@app.delete("/api/node/{node_id}")
-def delete_node(node_id: str):
-    data = read_data()
+@app.delete("/api/{net_id}/node/{node_id}")
+def delete_node(net_id: str, node_id: str):
+    data = read_network_data(net_id)
     data["nodes"] = [n for n in data.get("nodes", []) if n["id"] != node_id]
-    write_data(data)
+    write_network_data(net_id, data)
     return {"status": "ok"}
 
-# Скачивание файла базы данных
-@app.get("/api/export")
-def export_database():
-    path = get_data_path()
-    return FileResponse(path, media_type="application/json", filename="valves_backup.json")
+@app.get("/api/{net_id}/export")
+def export_database(net_id: str):
+    path = get_network_path(net_id)
+    return FileResponse(path, media_type="application/json", filename=f"{net_id}_valves_backup.json")
 
-# Загрузка резервной копии из браузера
-@app.post("/api/import")
-async def import_database(file: UploadFile = File(...)):
+@app.post("/api/{net_id}/import")
+async def import_database(net_id: str, file: UploadFile = File(...)):
     content = await file.read()
     data = json.loads(content.decode("utf-8"))
-    write_data(data)
+    write_network_data(net_id, data)
     return {"status": "ok", "count": len(data.get("nodes", []))}
 
 if os.path.exists("../frontend"):
