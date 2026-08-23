@@ -1,28 +1,23 @@
 ﻿const API_URL = "/api";
 
-let map;
+let currentNetworkId = "drinking";
+let map = null;
+let imageOverlay = null;
 let networkData = { nodes: [], dimensions: { width: 14904, height: 10528 } };
-let bounds;
-let nodesLayer, pulseLayer;
+let bounds = [[0, 0], [10528, 14904]];
+let nodesLayer = null;
+let pulseLayer = null;
 let selectedNode = null;
 let currentFilter = "all";
 
 const isMobile = () => window.innerWidth <= 768;
 
+const NETWORKS_DEF = {
+    drinking: { image: "scheme.jpg", width: 14904, height: 10528 },
+    tech_water: { image: "scheme_tv.jpg", width: 7445, height: 5266 }
+};
+
 async function initApp() {
-    try {
-        const res = await fetch(`${API_URL}/network`);
-        if (res.ok) {
-            networkData = await res.json();
-        }
-    } catch (e) {
-        console.error("Ошибка загрузки данных:", e);
-    }
-
-    const width = networkData.dimensions?.width || 14904;
-    const height = networkData.dimensions?.height || 10528;
-    bounds = [[0, 0], [height, width]];
-
     map = L.map("map", {
         crs: L.CRS.Simple,
         minZoom: -3,
@@ -31,22 +26,69 @@ async function initApp() {
         zoomControl: !isMobile()
     });
 
-    L.imageOverlay("scheme.jpg", bounds).addTo(map);
-    map.fitBounds(bounds);
-
     nodesLayer = L.layerGroup().addTo(map);
     pulseLayer = L.layerGroup().addTo(map);
 
-    setTimeout(() => {
-        map.invalidateSize();
-        map.fitBounds(bounds);
-    }, 200);
-
-    renderNetwork();
     map.on("click", handleMapClick);
 
     setupSearch();
     setupMobileSearch();
+
+    await loadNetwork("drinking");
+}
+
+async function loadNetwork(netId) {
+    currentNetworkId = netId;
+    selectedNode = null;
+    clearSearch();
+    clearMobileSearch();
+
+    // Обновление активных кнопок
+    document.querySelectorAll(".net-tab").forEach(t => t.classList.remove("active"));
+    const tabDesktop = document.getElementById(`tab-${netId}`);
+    const tabMobile = document.getElementById(`m-tab-${netId}`);
+    if (tabDesktop) tabDesktop.classList.add("active");
+    if (tabMobile) tabMobile.classList.add("active");
+
+    const inspector = document.getElementById("inspector");
+    if (inspector) inspector.innerHTML = '<p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по любой задвижке или найдите её через поиск для редактирования.</p>';
+
+    try {
+        const res = await fetch(`${API_URL}/${netId}/network`);
+        if (res.ok) {
+            networkData = await res.json();
+        } else {
+            console.error("Ошибка HTTP:", res.status);
+            networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] };
+        }
+    } catch (e) {
+        console.error("Ошибка загрузки схемы:", e);
+        networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] };
+    }
+
+    const cfg = NETWORKS_DEF[netId] || NETWORKS_DEF.drinking;
+    const width = networkData.dimensions?.width || cfg.width;
+    const height = networkData.dimensions?.height || cfg.height;
+    bounds = [[0, 0], [height, width]];
+
+    if (imageOverlay) {
+        map.removeLayer(imageOverlay);
+    }
+
+    imageOverlay = L.imageOverlay(cfg.image, bounds).addTo(map);
+    map.fitBounds(bounds);
+
+    setTimeout(() => {
+        map.invalidateSize();
+        map.fitBounds(bounds);
+    }, 150);
+
+    renderNetwork();
+}
+
+function switchNetwork(netId) {
+    loadNetwork(netId);
+    if (isMobile()) closeMobileMenu();
 }
 
 function fitMapBounds() {
@@ -87,7 +129,9 @@ function getFilteredNodes() {
 }
 
 function renderNetwork() {
+    if (!nodesLayer) return;
     nodesLayer.clearLayers();
+
     const showLabels = document.getElementById("toggle-labels")?.checked ?? true;
     const filtered = getFilteredNodes();
     let defectCount = 0;
@@ -128,11 +172,12 @@ function renderNetwork() {
         });
     });
 
-    if (document.getElementById("count-visible")) {
-        document.getElementById("count-visible").innerText = filtered.length;
-        document.getElementById("count-total").innerText = (networkData.nodes || []).length;
-        document.getElementById("count-defects").innerText = defectCount;
-    }
+    const vElem = document.getElementById("count-visible");
+    const tElem = document.getElementById("count-total");
+    const dElem = document.getElementById("count-defects");
+    if (vElem) vElem.innerText = filtered.length;
+    if (tElem) tElem.innerText = (networkData.nodes || []).length;
+    if (dElem) dElem.innerText = defectCount;
 }
 
 function setFilter(filterType, element) {
@@ -188,7 +233,7 @@ function generateEditorHTML(node, prefix = "") {
     return `
         <div class="input-group">
             <label>Номер / Маркировка</label>
-            <input type="text" id="${prefix}edit-node-name" value="${node.name || ''}" placeholder="например, 157">
+            <input type="text" id="${prefix}edit-node-name" value="${node.name || ''}" placeholder="например, 157 или К 12">
         </div>
 
         <div class="input-group">
@@ -250,7 +295,7 @@ function showBottomSheet(node) {
 
 function closeBottomSheet() {
     const sheet = document.getElementById("mobile-bottom-sheet");
-    sheet.classList.remove("open");
+    if (sheet) sheet.classList.remove("open");
 }
 
 function openMobileMenu() {
@@ -291,7 +336,7 @@ async function saveNodeEdit(nodeId, prefix = "") {
     node.diameter = newDiameter;
     node.description = newDesc;
 
-    await fetch(`${API_URL}/node/${nodeId}`, {
+    await fetch(`${API_URL}/${currentNetworkId}/node/${nodeId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(node)
@@ -305,27 +350,26 @@ async function saveNodeEdit(nodeId, prefix = "") {
 async function deleteNode(nodeId) {
     if (!confirm("Удалить этот объект со схемы?")) return;
 
-    await fetch(`${API_URL}/node/${nodeId}`, { method: "DELETE" });
+    await fetch(`${API_URL}/${currentNetworkId}/node/${nodeId}`, { method: "DELETE" });
 
     networkData.nodes = networkData.nodes.filter(n => n.id !== nodeId);
     selectedNode = null;
     if (isMobile()) closeBottomSheet();
     else {
-        document.getElementById("inspector").innerHTML = '<p style="color: #9aa0a6; margin: 0; font-size: 13px;">Объект удален. Выберите следующий.</p>';
+        document.getElementById("inspector").innerHTML = '<p style="color: #a0a5b5; margin: 0; font-size: 13px;">Объект удален. Выберите следующий.</p>';
     }
     renderNetwork();
 }
 
-// Функции экспорта и импорта базы
 function downloadBackup() {
-    window.location.href = `${API_URL}/export`;
+    window.location.href = `${API_URL}/${currentNetworkId}/export`;
 }
 
 async function uploadBackup(event) {
     const file = event.target.files[0];
     if (!file) return;
 
-    if (!confirm(`Восстановить базу данных из файла "${file.name}"?`)) {
+    if (!confirm(`Восстановить базу данных для текущей схемы из "${file.name}"?`)) {
         event.target.value = "";
         return;
     }
@@ -334,14 +378,14 @@ async function uploadBackup(event) {
     formData.append("file", file);
 
     try {
-        const res = await fetch(`${API_URL}/import`, {
+        const res = await fetch(`${API_URL}/${currentNetworkId}/import`, {
             method: "POST",
             body: formData
         });
         if (res.ok) {
             const data = await res.json();
             alert(`База успешно обновлена! Загружено объектов: ${data.count}`);
-            window.location.reload();
+            loadNetwork(currentNetworkId);
         } else {
             alert("Ошибка при импорте базы данных.");
         }
@@ -432,7 +476,7 @@ function setupMobileSearch() {
             return;
         }
 
-        mDropdown.innerHTML = matches.map(m => {
+        const dropdownContent = matches.map(m => {
             let badge = `<span style="color:#52c41a;">● В работе</span>`;
             if (m.type === "hydrant") badge = `<span style="color:#ff4d4f;">🚒 ПГ</span>`;
             else if (m.status === "no_cheeks") badge = `<span style="color:#ff4d4f; font-weight:bold;">⚠️ Без щёк</span>`;
@@ -449,6 +493,7 @@ function setupMobileSearch() {
                 </div>
             `;
         }).join("");
+        mDropdown.innerHTML = dropdownContent;
         mDropdown.style.display = "block";
     });
 
@@ -479,16 +524,20 @@ function selectMobileSearchResult(nodeId) {
 
 function clearSearch() {
     const input = document.getElementById("search-input");
-    input.value = "";
-    document.getElementById("search-clear").style.display = "none";
-    document.getElementById("search-dropdown").style.display = "none";
+    if (input) input.value = "";
+    const clear = document.getElementById("search-clear");
+    if (clear) clear.style.display = "none";
+    const dropdown = document.getElementById("search-dropdown");
+    if (dropdown) dropdown.style.display = "none";
 }
 
 function clearMobileSearch() {
     const input = document.getElementById("mobile-search-input");
-    input.value = "";
-    document.getElementById("mobile-search-clear").style.display = "none";
-    document.getElementById("mobile-search-dropdown").style.display = "none";
+    if (input) input.value = "";
+    const clear = document.getElementById("mobile-search-clear");
+    if (clear) clear.style.display = "none";
+    const dropdown = document.getElementById("mobile-search-dropdown");
+    if (dropdown) dropdown.style.display = "none";
 }
 
 async function handleMapClick(e) {
@@ -505,15 +554,15 @@ async function handleMapClick(e) {
     let defaultType = (mode === "add_hydrant") ? "hydrant" : "valve";
 
     if (mode === "add_valve") {
-        defaultName = prompt("Номер задвижки (например, 157):", "");
+        defaultName = prompt("Номер задвижки / колодца (например, 78 или К 12):", "");
     } else if (mode === "add_hydrant") {
-        defaultName = prompt("Номер гидранта (например, ПГ 101):", "ПГ ");
+        defaultName = prompt("Номер гидранта (например, ПГ 28):", "ПГ ");
     }
 
     if (!defaultName) return;
 
     const newNode = {
-        id: "valve_" + Date.now(),
+        id: "node_" + Date.now(),
         name: defaultName,
         type: defaultType,
         status: "open",
@@ -523,7 +572,7 @@ async function handleMapClick(e) {
         y: y
     };
 
-    await fetch(`${API_URL}/node`, {
+    await fetch(`${API_URL}/${currentNetworkId}/node`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newNode)
