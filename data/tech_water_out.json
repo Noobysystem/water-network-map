@@ -1,5 +1,16 @@
 {
-  "nodes": [],
+  "nodes": [
+    {
+      "id": "node_1787522865110",
+      "name": "17 (Сады)",
+      "type": "valve",
+      "x": 1149.0,
+      "y": 1317.0,
+      "status": "open",
+      "description": "",
+      "diameter": 150
+    }
+  ],
   "dimensions": {
     "width": 7445,
     "height": 10528

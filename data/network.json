@@ -1,1 +1,1808 @@
-{"dimensions":{"width":14904,"height":10528},"nodes":[{"id":"node_20","name":"205","type":"valve","x":6352.0,"y":1562.0,"status":"open"},{"id":"node_21","name":"38","type":"hydrant","x":5706.0,"y":1565.0,"status":"open"},{"id":"node_22","name":"206","type":"valve","x":5724.0,"y":1614.0,"status":"open"},{"id":"node_33","name":"31","type":"valve","x":3238.0,"y":2730.0,"status":"open"},{"id":"node_34","name":"30","type":"valve","x":3319.0,"y":2783.0,"status":"open"},{"id":"node_35","name":"29","type":"valve","x":2933.0,"y":2972.0,"status":"open"},{"id":"node_48","name":"195","type":"valve","x":6951.0,"y":3530.0,"status":"open"},{"id":"node_55","name":"192","type":"valve","x":8960.0,"y":4131.0,"status":"open"},{"id":"node_56","name":"102","type":"hydrant","x":9394.0,"y":4131.0,"status":"open"},{"id":"node_57","name":"104","type":"hydrant","x":8914.0,"y":4131.0,"status":"open"},{"id":"node_67","name":"42","type":"valve","x":4962.0,"y":3858.0,"status":"open"},{"id":"node_68","name":"43","type":"valve","x":5205.0,"y":4052.0,"status":"open"},{"id":"node_70","name":"194","type":"valve","x":7286.0,"y":3631.0,"status":"open"},{"id":"node_71","name":"191","type":"valve","x":8498.0,"y":4068.0,"status":"open"},{"id":"node_72","name":"193","type":"valve","x":7454.0,"y":4135.0,"status":"open"},{"id":"node_73","name":"190","type":"valve","x":8241.0,"y":4224.0,"status":"open"},{"id":"node_75","name":"185","type":"valve","x":8063.0,"y":4449.0,"status":"open"},{"id":"node_76","name":"186","type":"valve","x":7881.0,"y":4447.0,"status":"open"},{"id":"node_77","name":"184","type":"valve","x":8136.0,"y":4475.0,"status":"open"},{"id":"node_78","name":"187","type":"valve","x":7811.0,"y":4492.0,"status":"open"},{"id":"node_81","name":"ПГ Стоянка","type":"hydrant","x":7470.0,"y":4582.0,"status":"open"},{"id":"node_97","name":"49","type":"valve","x":3945.0,"y":5426.0,"status":"open"},{"id":"node_98","name":"1","type":"valve","x":2435.0,"y":5482.0,"status":"open"},{"id":"node_103","name":"167","type":"valve","x":6377.0,"y":5889.0,"status":"open"},{"id":"node_104","name":"166","type":"valve","x":6084.0,"y":5889.0,"status":"open"},{"id":"node_105","name":"165","type":"valve","x":5694.0,"y":5889.0,"status":"open"},{"id":"node_106","name":"164","type":"valve","x":5388.0,"y":5898.0,"status":"open"},{"id":"node_107","name":"163","type":"valve","x":5206.0,"y":5898.0,"status":"open"},{"id":"node_108","name":"50","type":"valve","x":4490.0,"y":5717.0,"status":"open"},{"id":"node_109","name":"51","type":"valve","x":4455.0,"y":5832.0,"status":"open"},{"id":"node_111","name":"52","type":"valve","x":3676.0,"y":5805.0,"status":"open"},{"id":"node_112","name":"53","type":"valve","x":3414.0,"y":5971.0,"status":"open"},{"id":"node_116","name":"54","type":"valve","x":3304.0,"y":6105.0,"status":"open"},{"id":"node_118","name":"162","type":"valve","x":5072.0,"y":5953.0,"status":"open"},{"id":"node_119","name":"161","type":"valve","x":4985.0,"y":5993.0,"status":"open"},{"id":"node_120","name":"160","type":"valve","x":4877.0,"y":6247.0,"status":"open"},{"id":"node_121","name":"137","type":"valve","x":8839.0,"y":6189.0,"status":"open"},{"id":"node_124","name":"140","type":"valve","x":9680.0,"y":6424.0,"status":"open"},{"id":"node_125","name":"159","type":"valve","x":5102.0,"y":6281.0,"status":"open"},{"id":"node_126","name":"157","type":"valve","x":4974.0,"y":6345.0,"status":"open"},{"id":"node_127","name":"158","type":"valve","x":5102.0,"y":6379.0,"status":"open"},{"id":"node_129","name":"67","type":"valve","x":4095.0,"y":6441.0,"status":"open"},{"id":"node_138","name":"139","type":"valve","x":9712.0,"y":6615.0,"status":"open"},{"id":"node_139","name":"136","type":"valve","x":9206.0,"y":6482.0,"status":"open"},{"id":"node_140","name":"135","type":"valve","x":9256.0,"y":6615.0,"status":"closed"},{"id":"node_141","name":"138","type":"valve","x":9490.0,"y":6678.0,"status":"open"},{"id":"node_144","name":"133","type":"valve","x":9070.0,"y":6615.0,"status":"open"},{"id":"node_145","name":"134","type":"valve","x":9163.0,"y":6712.0,"status":"open"},{"id":"node_146","name":"132","type":"valve","x":8744.0,"y":6712.0,"status":"open"},{"id":"node_150","name":"156","type":"valve","x":4911.0,"y":6584.0,"status":"open"},{"id":"node_151","name":"125","type":"valve","x":5957.0,"y":6726.0,"status":"open"},{"id":"node_152","name":"124","type":"valve","x":4877.0,"y":6943.0,"status":"open"},{"id":"node_153","name":"183","type":"valve","x":8224.0,"y":4629.0,"status":"open"},{"id":"node_154","name":"182","type":"valve","x":7472.0,"y":5303.0,"status":"open"},{"id":"node_155","name":"178","type":"valve","x":8419.0,"y":5367.0,"status":"open"},{"id":"node_156","name":"179","type":"valve","x":8351.0,"y":5367.0,"status":"open"},{"id":"node_157","name":"181","type":"valve","x":8127.0,"y":5367.0,"status":"open"},{"id":"node_158","name":"177","type":"valve","x":8385.0,"y":5401.0,"status":"open"},{"id":"node_159","name":"180","type":"valve","x":8161.0,"y":5401.0,"status":"open"},{"id":"node_160","name":"175","type":"valve","x":7046.0,"y":5953.0,"status":"open"},{"id":"node_161","name":"176","type":"valve","x":8051.0,"y":5987.0,"status":"open"},{"id":"node_162","name":"130","type":"valve","x":8052.0,"y":6618.0,"status":"open"},{"id":"node_163","name":"126","type":"valve","x":6258.0,"y":6678.0,"status":"open"},{"id":"node_164","name":"129","type":"valve","x":8111.0,"y":6680.0,"status":"open"},{"id":"node_165","name":"127","type":"valve","x":8013.0,"y":6680.0,"status":"open"},{"id":"node_166","name":"131","type":"valve","x":8474.0,"y":6712.0,"status":"open"},{"id":"node_167","name":"128","type":"valve","x":8052.0,"y":6715.0,"status":"open"},{"id":"node_177","name":"112","type":"valve","x":8084.0,"y":7009.0,"status":"open"},{"id":"node_178","name":"72","type":"valve","x":4682.0,"y":7272.0,"status":"open"},{"id":"node_179","name":"70","type":"valve","x":4316.0,"y":7272.0,"status":"open"},{"id":"node_180","name":"62","type":"valve","x":3235.0,"y":7272.0,"status":"open"},{"id":"node_182","name":"111","type":"valve","x":8114.0,"y":7337.0,"status":"open"},{"id":"node_184","name":"71","type":"valve","x":4432.0,"y":7370.0,"status":"open"},{"id":"node_185","name":"65","type":"valve","x":4047.0,"y":6955.0,"status":"open"},{"id":"node_186","name":"64","type":"valve","x":3598.0,"y":7272.0,"status":"open"},{"id":"node_187","name":"68","type":"valve","x":3696.0,"y":7336.0,"status":"open"},{"id":"node_188","name":"63","type":"valve","x":3500.0,"y":7363.0,"status":"open"},{"id":"node_189","name":"69","type":"valve","x":4012.0,"y":7370.0,"status":"open"},{"id":"node_191","name":"113","type":"valve","x":8207.0,"y":7628.0,"status":"open"},{"id":"node_197","name":"114В","type":"valve","x":8378.0,"y":7723.0,"status":"closed"},{"id":"node_198","name":"118","type":"valve","x":9956.0,"y":7768.0,"status":"open"},{"id":"node_203","name":"117","type":"valve","x":9799.0,"y":7866.0,"status":"open"},{"id":"node_205","name":"116","type":"valve","x":9296.0,"y":7866.0,"status":"open"},{"id":"node_206","name":"99","type":"valve","x":6770.0,"y":7866.0,"status":"open"},{"id":"node_209","name":"79","type":"valve","x":4974.0,"y":8018.0,"status":"open"},{"id":"node_217","name":"147","type":"valve","x":10359.0,"y":5835.0,"status":"open"},{"id":"node_218","name":"141","type":"valve","x":9838.0,"y":6615.0,"status":"open"},{"id":"node_219","name":"146","type":"valve","x":10697.0,"y":6617.0,"status":"open"},{"id":"node_220","name":"145","type":"valve","x":10696.0,"y":6678.0,"status":"open"},{"id":"node_221","name":"143","type":"valve","x":10598.0,"y":6678.0,"status":"open"},{"id":"node_222","name":"142","type":"valve","x":10304.0,"y":6678.0,"status":"open"},{"id":"node_223","name":"151","type":"valve","x":11424.0,"y":6712.0,"status":"open"},{"id":"node_224","name":"144","type":"valve","x":10633.0,"y":6712.0,"status":"open"},{"id":"node_225","name":"122","type":"valve","x":10319.0,"y":7768.0,"status":"open"},{"id":"node_226","name":"121","type":"valve","x":10383.0,"y":7831.0,"status":"open"},{"id":"node_227","name":"118","type":"valve","x":10285.0,"y":7831.0,"status":"open"},{"id":"node_228","name":"120","type":"valve","x":10319.0,"y":7866.0,"status":"open"},{"id":"node_229","name":"123","type":"valve","x":10353.0,"y":8154.0,"status":"open"},{"id":"node_235","name":"88","type":"valve","x":7161.0,"y":8677.0,"status":"open"},{"id":"node_237","name":"95","type":"valve","x":8397.0,"y":8825.0,"status":"open"},{"id":"node_238","name":"96","type":"valve","x":8327.0,"y":8953.0,"status":"open"},{"id":"node_239","name":"109","type":"valve","x":8114.0,"y":8210.0,"status":"open"},{"id":"node_240","name":"97","type":"valve","x":8482.0,"y":8579.0,"status":"open"},{"id":"node_241","name":"93","type":"valve","x":8051.0,"y":8579.0,"status":"open"},{"id":"node_242","name":"92","type":"valve","x":8084.0,"y":8643.0,"status":"open"},{"id":"node_243","name":"91","type":"valve","x":8016.0,"y":8643.0,"status":"open"},{"id":"node_244","name":"94","type":"valve","x":8363.0,"y":8677.0,"status":"open"},{"id":"node_245","name":"90","type":"valve","x":7789.0,"y":8686.0,"status":"open"},{"id":"node_246","name":"89","type":"valve","x":7679.0,"y":8719.0,"status":"open"},{"id":"node_247","name":"ПВ на кислотку","type":"valve","x":8089.0,"y":8840.0,"status":"open"},{"id":"node_248","name":"ПВ на известку","type":"valve","x":8001.0,"y":8860.0,"status":"open"},{"id":"node_249","name":"211","type":"valve","x":5042.0,"y":797.0,"status":"open"},{"id":"node_250","name":"113","type":"hydrant","x":5157.0,"y":1178.0,"status":"open"},{"id":"node_251","name":"207","type":"valve","x":5273.0,"y":1650.0,"status":"open"},{"id":"node_252","name":"210","type":"valve","x":4616.0,"y":1656.0,"status":"open"},{"id":"node_253","name":"37","type":"hydrant","x":5279.0,"y":1712.0,"status":"open"},{"id":"node_254","name":"208","type":"valve","x":4847.0,"y":1807.0,"status":"open"},{"id":"node_256","name":"209","type":"valve","x":4826.0,"y":1869.0,"status":"open"},{"id":"node_257","name":"ПГ Лес","type":"hydrant","x":5114.0,"y":1986.0,"status":"open"},{"id":"node_258","name":"204","type":"valve","x":6059.0,"y":2192.0,"status":"open"},{"id":"node_259","name":"202","type":"valve","x":5902.0,"y":2352.0,"status":"open"},{"id":"node_260","name":"203","type":"valve","x":5823.0,"y":2361.0,"status":"open"},{"id":"node_261","name":"201","type":"valve","x":5910.0,"y":2447.0,"status":"open"},{"id":"node_262","name":"200","type":"valve","x":5837.0,"y":2449.0,"status":"open"},{"id":"node_264","name":"199","type":"valve","x":5992.0,"y":2806.0,"status":"open"},{"id":"node_265","name":"197","type":"valve","x":6249.0,"y":2835.0,"status":"open"},{"id":"node_266","name":"32","type":"valve","x":3577.0,"y":3209.0,"status":"open"},{"id":"node_267","name":"33","type":"valve","x":3630.0,"y":3248.0,"status":"open"},{"id":"node_268","name":"35","type":"valve","x":4066.0,"y":3269.0,"status":"open"},{"id":"node_269","name":"198","type":"valve","x":6136.0,"y":3271.0,"status":"open"},{"id":"node_270","name":"34","type":"valve","x":3994.0,"y":3292.0,"status":"open"},{"id":"node_271","name":"196","type":"valve","x":6902.0,"y":3330.0,"status":"open"},{"id":"node_272","name":"28","type":"valve","x":2715.0,"y":3346.0,"status":"open"},{"id":"node_273","name":"27","type":"valve","x":2705.0,"y":3418.0,"status":"open"},{"id":"node_274","name":"36","type":"valve","x":4138.0,"y":3440.0,"status":"open"},{"id":"node_275","name":"44","type":"valve","x":5076.0,"y":3495.0,"status":"open"},{"id":"node_276","name":"26","type":"valve","x":3136.0,"y":3653.0,"status":"open"},{"id":"node_277","name":"25","type":"valve","x":3047.0,"y":3666.0,"status":"open"},{"id":"node_278","name":"41","type":"valve","x":4793.0,"y":3695.0,"status":"open"},{"id":"node_279","name":"24","type":"valve","x":3126.0,"y":3723.0,"status":"open"},{"id":"node_280","name":"40","type":"valve","x":4874.0,"y":3757.0,"status":"open"},{"id":"node_281","name":"39","type":"valve","x":4823.0,"y":3763.0,"status":"open"},{"id":"node_282","name":"23","type":"valve","x":3008.0,"y":3773.0,"status":"open"},{"id":"node_284","name":"22","type":"valve","x":3640.0,"y":4142.0,"status":"open"},{"id":"node_285","name":"21","type":"valve","x":3303.0,"y":4189.0,"status":"open"},{"id":"node_286","name":"19","type":"valve","x":3907.0,"y":4213.0,"status":"open"},{"id":"node_287","name":"18","type":"valve","x":3815.0,"y":4225.0,"status":"open"},{"id":"node_288","name":"20","type":"valve","x":3280.0,"y":4323.0,"status":"open"},{"id":"node_289","name":"17","type":"valve","x":3714.0,"y":4454.0,"status":"open"},{"id":"node_290","name":"38","type":"valve","x":4226.0,"y":4530.0,"status":"open"},{"id":"node_291","name":"37","type":"valve","x":4141.0,"y":4535.0,"status":"open"},{"id":"node_292","name":"16","type":"valve","x":3431.0,"y":4623.0,"status":"open"},{"id":"node_293","name":"45","type":"valve","x":4218.0,"y":4684.0,"status":"open"},{"id":"node_294","name":"58","type":"valve","x":5201.0,"y":4807.0,"status":"open"},{"id":"node_295","name":"46","type":"valve","x":4391.0,"y":4841.0,"status":"open"},{"id":"node_296","name":"174","type":"valve","x":7370.0,"y":4876.0,"status":"open"},{"id":"node_297","name":"172","type":"valve","x":6718.0,"y":4942.0,"status":"open"},{"id":"node_298","name":"171","type":"valve","x":6650.0,"y":4942.0,"status":"open"},{"id":"node_299","name":"173","type":"valve","x":6997.0,"y":4968.0,"status":"open"},{"id":"node_300","name":"55","type":"valve","x":4378.0,"y":5214.0,"status":"open"},{"id":"node_301","name":"56","type":"valve","x":4933.0,"y":5252.0,"status":"open"},{"id":"node_302","name":"170","type":"valve","x":6325.0,"y":5266.0,"status":"open"},{"id":"node_303","name":"57","type":"valve","x":5223.0,"y":5277.0,"status":"open"},{"id":"node_304","name":"47","type":"valve","x":4244.0,"y":5295.0,"status":"open"},{"id":"node_305","name":"15","type":"valve","x":3270.0,"y":5310.0,"status":"open"},{"id":"node_306","name":"48","type":"valve","x":4224.0,"y":5371.0,"status":"open"},{"id":"node_307","name":"169","type":"valve","x":6352.0,"y":5394.0,"status":"open"},{"id":"node_308","name":"2","type":"valve","x":2357.0,"y":5487.0,"status":"open"},{"id":"node_309","name":"4","type":"valve","x":2469.0,"y":5628.0,"status":"open"},{"id":"node_310","name":"3","type":"valve","x":2410.0,"y":5701.0,"status":"open"},{"id":"node_311","name":"к_31114","type":"valve","x":3026.0,"y":5715.0,"status":"open"},{"id":"node_312","name":"13","type":"valve","x":2937.0,"y":5726.0,"status":"open"},{"id":"node_313","name":"168","type":"valve","x":6501.0,"y":5889.0,"status":"open"},{"id":"node_314","name":"6","type":"valve","x":2407.0,"y":5938.0,"status":"open"},{"id":"node_315","name":"7","type":"valve","x":2524.0,"y":5945.0,"status":"open"},{"id":"node_316","name":"12","type":"valve","x":2825.0,"y":6037.0,"status":"open"},{"id":"node_317","name":"11","type":"valve","x":2776.0,"y":6075.0,"status":"open"},{"id":"node_318","name":"5","type":"valve","x":2237.0,"y":6087.0,"status":"open"},{"id":"node_319","name":"10","type":"valve","x":2716.0,"y":6232.0,"status":"open"},{"id":"node_325","name":"8","type":"valve","x":2632.0,"y":6277.0,"status":"open"},{"id":"node_328","name":"9","type":"valve","x":2681.0,"y":6323.0,"status":"open"},{"id":"node_329","name":"105","type":"valve","x":7658.0,"y":7321.0,"status":"open"},{"id":"node_330","name":"75","type":"valve","x":4974.0,"y":7336.0,"status":"open"},{"id":"node_331","name":"73","type":"valve","x":4874.0,"y":7337.0,"status":"open"},{"id":"node_332","name":"59","type":"valve","x":2830.0,"y":7352.0,"status":"open"},{"id":"node_333","name":"74","type":"valve","x":4911.0,"y":7370.0,"status":"open"},{"id":"node_334","name":"61","type":"valve","x":2911.0,"y":7394.0,"status":"open"},{"id":"node_335","name":"60","type":"valve","x":2861.0,"y":7445.0,"status":"open"},{"id":"node_336","name":"110","type":"valve","x":8084.0,"y":7472.0,"status":"open"},{"id":"node_337","name":"76","type":"valve","x":4911.0,"y":7634.0,"status":"open"},{"id":"node_338","name":"78","type":"valve","x":4711.0,"y":7698.0,"status":"open"},{"id":"node_339","name":"77","type":"valve","x":4911.0,"y":7731.0,"status":"open"},{"id":"node_340","name":"108","type":"valve","x":8051.0,"y":7768.0,"status":"open"},{"id":"node_341","name":"98","type":"valve","x":6214.0,"y":7768.0,"status":"open"},{"id":"node_343","name":"107","type":"valve","x":8114.0,"y":7831.0,"status":"open"},{"id":"node_344","name":"101","type":"valve","x":7831.0,"y":7831.0,"status":"open"},{"id":"node_345","name":"100","type":"valve","x":7745.0,"y":7858.0,"status":"open"},{"id":"node_347","name":"115","type":"valve","x":8958.0,"y":7866.0,"status":"open"},{"id":"node_348","name":"106","type":"valve","x":8051.0,"y":7866.0,"status":"open"},{"id":"node_350","name":"102","type":"valve","x":7643.0,"y":7984.0,"status":"open"},{"id":"node_351","name":"103","type":"valve","x":7568.0,"y":8033.0,"status":"open"},{"id":"node_352","name":"104","type":"valve","x":7603.0,"y":8067.0,"status":"open"},{"id":"node_353","name":"80","type":"valve","x":4974.0,"y":8191.0,"status":"open"},{"id":"node_354","name":"81","type":"valve","x":4912.0,"y":8493.0,"status":"open"},{"id":"node_355","name":"83","type":"valve","x":4964.0,"y":8575.0,"status":"open"},{"id":"node_356","name":"82","type":"valve","x":4911.0,"y":8594.0,"status":"open"},{"id":"node_357","name":"85","type":"valve","x":5746.0,"y":8644.0,"status":"open"},{"id":"node_358","name":"86","type":"valve","x":6648.0,"y":8677.0,"status":"open"},{"id":"node_359","name":"84","type":"valve","x":5678.0,"y":8677.0,"status":"open"},{"id":"node_360","name":"87","type":"valve","x":6614.0,"y":8784.0,"status":"open"},{"id":"node_363","name":"150","type":"valve","x":13372.0,"y":4853.0,"status":"open"},{"id":"node_364","name":"ПГ 108","type":"hydrant","x":13399.0,"y":5190.0,"status":"open"},{"id":"node_365","name":"ПГ 107","type":"hydrant","x":12808.0,"y":5190.0,"status":"open"},{"id":"node_366","name":"149","type":"valve","x":12529.0,"y":5407.0,"status":"open"},{"id":"node_367","name":"148","type":"valve","x":10325.0,"y":5411.0,"status":"open"},{"id":"node_368","name":"153","type":"valve","x":12677.0,"y":5819.0,"status":"open"},{"id":"node_369","name":"ПГ 101","type":"hydrant","x":12585.0,"y":5820.0,"status":"open"},{"id":"node_370","name":"ПГ 100","type":"hydrant","x":12586.0,"y":5992.0,"status":"open"},{"id":"node_371","name":"152","type":"valve","x":11524.0,"y":6615.0,"status":"open"},{"id":"node_372","name":"155","type":"valve","x":12066.0,"y":6678.0,"status":"closed"},{"id":"node_373","name":"154","type":"valve","x":11860.0,"y":6680.0,"status":"closed"},{"id":"node_374","name":"к_374","type":"well","x":11690,"y":6684},{"id":"node_1787512800977","name":"188","type":"valve","x":8189.0,"y":4291.0,"status":"open"},{"id":"node_1787513203971","name":"66","type":"valve","x":3965.0,"y":6504.0,"status":"open"}],"pipes":[],"valves":[]}
+{
+  "dimensions": {
+    "width": 14904,
+    "height": 10528
+  },
+  "nodes": [
+    {
+      "id": "node_20",
+      "name": "205",
+      "type": "valve",
+      "x": 6352.0,
+      "y": 1562.0,
+      "status": "open"
+    },
+    {
+      "id": "node_21",
+      "name": "38",
+      "type": "hydrant",
+      "x": 5706.0,
+      "y": 1565.0,
+      "status": "open"
+    },
+    {
+      "id": "node_22",
+      "name": "206",
+      "type": "valve",
+      "x": 5724.0,
+      "y": 1614.0,
+      "status": "open"
+    },
+    {
+      "id": "node_33",
+      "name": "31",
+      "type": "valve",
+      "x": 3238.0,
+      "y": 2730.0,
+      "status": "open"
+    },
+    {
+      "id": "node_34",
+      "name": "30",
+      "type": "valve",
+      "x": 3319.0,
+      "y": 2783.0,
+      "status": "open"
+    },
+    {
+      "id": "node_35",
+      "name": "29",
+      "type": "valve",
+      "x": 2933.0,
+      "y": 2972.0,
+      "status": "open"
+    },
+    {
+      "id": "node_48",
+      "name": "195",
+      "type": "valve",
+      "x": 6951.0,
+      "y": 3530.0,
+      "status": "open"
+    },
+    {
+      "id": "node_55",
+      "name": "192",
+      "type": "valve",
+      "x": 8960.0,
+      "y": 4131.0,
+      "status": "open"
+    },
+    {
+      "id": "node_56",
+      "name": "102",
+      "type": "hydrant",
+      "x": 9394.0,
+      "y": 4131.0,
+      "status": "open"
+    },
+    {
+      "id": "node_57",
+      "name": "104",
+      "type": "hydrant",
+      "x": 8914.0,
+      "y": 4131.0,
+      "status": "open"
+    },
+    {
+      "id": "node_67",
+      "name": "42",
+      "type": "valve",
+      "x": 4962.0,
+      "y": 3858.0,
+      "status": "open"
+    },
+    {
+      "id": "node_68",
+      "name": "43",
+      "type": "valve",
+      "x": 5205.0,
+      "y": 4052.0,
+      "status": "open"
+    },
+    {
+      "id": "node_70",
+      "name": "194",
+      "type": "valve",
+      "x": 7286.0,
+      "y": 3631.0,
+      "status": "open"
+    },
+    {
+      "id": "node_71",
+      "name": "191",
+      "type": "valve",
+      "x": 8498.0,
+      "y": 4068.0,
+      "status": "open"
+    },
+    {
+      "id": "node_72",
+      "name": "193",
+      "type": "valve",
+      "x": 7454.0,
+      "y": 4135.0,
+      "status": "open"
+    },
+    {
+      "id": "node_73",
+      "name": "190",
+      "type": "valve",
+      "x": 8241.0,
+      "y": 4224.0,
+      "status": "open"
+    },
+    {
+      "id": "node_75",
+      "name": "185",
+      "type": "valve",
+      "x": 8063.0,
+      "y": 4449.0,
+      "status": "open"
+    },
+    {
+      "id": "node_76",
+      "name": "186",
+      "type": "valve",
+      "x": 7881.0,
+      "y": 4447.0,
+      "status": "open"
+    },
+    {
+      "id": "node_77",
+      "name": "184",
+      "type": "valve",
+      "x": 8136.0,
+      "y": 4475.0,
+      "status": "open"
+    },
+    {
+      "id": "node_78",
+      "name": "187",
+      "type": "valve",
+      "x": 7811.0,
+      "y": 4492.0,
+      "status": "open"
+    },
+    {
+      "id": "node_81",
+      "name": "ПГ Стоянка",
+      "type": "hydrant",
+      "x": 7470.0,
+      "y": 4582.0,
+      "status": "open"
+    },
+    {
+      "id": "node_97",
+      "name": "49",
+      "type": "valve",
+      "x": 3945.0,
+      "y": 5426.0,
+      "status": "open"
+    },
+    {
+      "id": "node_98",
+      "name": "1",
+      "type": "valve",
+      "x": 2435.0,
+      "y": 5482.0,
+      "status": "open"
+    },
+    {
+      "id": "node_103",
+      "name": "167",
+      "type": "valve",
+      "x": 6377.0,
+      "y": 5889.0,
+      "status": "open"
+    },
+    {
+      "id": "node_104",
+      "name": "166",
+      "type": "valve",
+      "x": 6084.0,
+      "y": 5889.0,
+      "status": "open"
+    },
+    {
+      "id": "node_105",
+      "name": "165",
+      "type": "valve",
+      "x": 5694.0,
+      "y": 5889.0,
+      "status": "open"
+    },
+    {
+      "id": "node_106",
+      "name": "164",
+      "type": "valve",
+      "x": 5388.0,
+      "y": 5898.0,
+      "status": "open"
+    },
+    {
+      "id": "node_107",
+      "name": "163",
+      "type": "valve",
+      "x": 5206.0,
+      "y": 5898.0,
+      "status": "open"
+    },
+    {
+      "id": "node_108",
+      "name": "50",
+      "type": "valve",
+      "x": 4490.0,
+      "y": 5717.0,
+      "status": "open"
+    },
+    {
+      "id": "node_109",
+      "name": "51",
+      "type": "valve",
+      "x": 4455.0,
+      "y": 5832.0,
+      "status": "open"
+    },
+    {
+      "id": "node_111",
+      "name": "52",
+      "type": "valve",
+      "x": 3676.0,
+      "y": 5805.0,
+      "status": "open"
+    },
+    {
+      "id": "node_112",
+      "name": "53",
+      "type": "valve",
+      "x": 3414.0,
+      "y": 5971.0,
+      "status": "open"
+    },
+    {
+      "id": "node_116",
+      "name": "54",
+      "type": "valve",
+      "x": 3304.0,
+      "y": 6105.0,
+      "status": "open"
+    },
+    {
+      "id": "node_118",
+      "name": "162",
+      "type": "valve",
+      "x": 5072.0,
+      "y": 5953.0,
+      "status": "open"
+    },
+    {
+      "id": "node_119",
+      "name": "161",
+      "type": "valve",
+      "x": 4985.0,
+      "y": 5993.0,
+      "status": "open"
+    },
+    {
+      "id": "node_120",
+      "name": "160",
+      "type": "valve",
+      "x": 4877.0,
+      "y": 6247.0,
+      "status": "open"
+    },
+    {
+      "id": "node_121",
+      "name": "137",
+      "type": "valve",
+      "x": 8839.0,
+      "y": 6189.0,
+      "status": "open"
+    },
+    {
+      "id": "node_124",
+      "name": "140",
+      "type": "valve",
+      "x": 9680.0,
+      "y": 6424.0,
+      "status": "open"
+    },
+    {
+      "id": "node_125",
+      "name": "159",
+      "type": "valve",
+      "x": 5102.0,
+      "y": 6281.0,
+      "status": "open"
+    },
+    {
+      "id": "node_126",
+      "name": "157",
+      "type": "valve",
+      "x": 4974.0,
+      "y": 6345.0,
+      "status": "open"
+    },
+    {
+      "id": "node_127",
+      "name": "158",
+      "type": "valve",
+      "x": 5102.0,
+      "y": 6379.0,
+      "status": "open"
+    },
+    {
+      "id": "node_129",
+      "name": "67",
+      "type": "valve",
+      "x": 4095.0,
+      "y": 6441.0,
+      "status": "open"
+    },
+    {
+      "id": "node_138",
+      "name": "139",
+      "type": "valve",
+      "x": 9712.0,
+      "y": 6615.0,
+      "status": "open"
+    },
+    {
+      "id": "node_139",
+      "name": "136",
+      "type": "valve",
+      "x": 9206.0,
+      "y": 6482.0,
+      "status": "open"
+    },
+    {
+      "id": "node_140",
+      "name": "135",
+      "type": "valve",
+      "x": 9256.0,
+      "y": 6615.0,
+      "status": "closed"
+    },
+    {
+      "id": "node_141",
+      "name": "138",
+      "type": "valve",
+      "x": 9490.0,
+      "y": 6678.0,
+      "status": "open"
+    },
+    {
+      "id": "node_144",
+      "name": "133",
+      "type": "valve",
+      "x": 9070.0,
+      "y": 6615.0,
+      "status": "open"
+    },
+    {
+      "id": "node_145",
+      "name": "134",
+      "type": "valve",
+      "x": 9163.0,
+      "y": 6712.0,
+      "status": "open"
+    },
+    {
+      "id": "node_146",
+      "name": "132",
+      "type": "valve",
+      "x": 8744.0,
+      "y": 6712.0,
+      "status": "open"
+    },
+    {
+      "id": "node_150",
+      "name": "156",
+      "type": "valve",
+      "x": 4911.0,
+      "y": 6584.0,
+      "status": "open"
+    },
+    {
+      "id": "node_151",
+      "name": "125",
+      "type": "valve",
+      "x": 5957.0,
+      "y": 6726.0,
+      "status": "open"
+    },
+    {
+      "id": "node_152",
+      "name": "124",
+      "type": "valve",
+      "x": 4877.0,
+      "y": 6943.0,
+      "status": "open"
+    },
+    {
+      "id": "node_153",
+      "name": "183",
+      "type": "valve",
+      "x": 8224.0,
+      "y": 4629.0,
+      "status": "open"
+    },
+    {
+      "id": "node_154",
+      "name": "182",
+      "type": "valve",
+      "x": 7472.0,
+      "y": 5303.0,
+      "status": "open"
+    },
+    {
+      "id": "node_155",
+      "name": "178",
+      "type": "valve",
+      "x": 8419.0,
+      "y": 5367.0,
+      "status": "open"
+    },
+    {
+      "id": "node_156",
+      "name": "179",
+      "type": "valve",
+      "x": 8351.0,
+      "y": 5367.0,
+      "status": "open"
+    },
+    {
+      "id": "node_157",
+      "name": "181",
+      "type": "valve",
+      "x": 8127.0,
+      "y": 5367.0,
+      "status": "open"
+    },
+    {
+      "id": "node_158",
+      "name": "177",
+      "type": "valve",
+      "x": 8385.0,
+      "y": 5401.0,
+      "status": "open"
+    },
+    {
+      "id": "node_159",
+      "name": "180",
+      "type": "valve",
+      "x": 8161.0,
+      "y": 5401.0,
+      "status": "open"
+    },
+    {
+      "id": "node_160",
+      "name": "175",
+      "type": "valve",
+      "x": 7046.0,
+      "y": 5953.0,
+      "status": "open"
+    },
+    {
+      "id": "node_161",
+      "name": "176",
+      "type": "valve",
+      "x": 8051.0,
+      "y": 5987.0,
+      "status": "open"
+    },
+    {
+      "id": "node_162",
+      "name": "130",
+      "type": "valve",
+      "x": 8052.0,
+      "y": 6618.0,
+      "status": "open"
+    },
+    {
+      "id": "node_163",
+      "name": "126",
+      "type": "valve",
+      "x": 6258.0,
+      "y": 6678.0,
+      "status": "open"
+    },
+    {
+      "id": "node_164",
+      "name": "129",
+      "type": "valve",
+      "x": 8111.0,
+      "y": 6680.0,
+      "status": "open"
+    },
+    {
+      "id": "node_165",
+      "name": "127",
+      "type": "valve",
+      "x": 8013.0,
+      "y": 6680.0,
+      "status": "open"
+    },
+    {
+      "id": "node_166",
+      "name": "131",
+      "type": "valve",
+      "x": 8474.0,
+      "y": 6712.0,
+      "status": "open"
+    },
+    {
+      "id": "node_167",
+      "name": "128",
+      "type": "valve",
+      "x": 8052.0,
+      "y": 6715.0,
+      "status": "open"
+    },
+    {
+      "id": "node_177",
+      "name": "112",
+      "type": "valve",
+      "x": 8084.0,
+      "y": 7009.0,
+      "status": "open"
+    },
+    {
+      "id": "node_178",
+      "name": "72",
+      "type": "valve",
+      "x": 4682.0,
+      "y": 7272.0,
+      "status": "open"
+    },
+    {
+      "id": "node_179",
+      "name": "70",
+      "type": "valve",
+      "x": 4316.0,
+      "y": 7272.0,
+      "status": "open"
+    },
+    {
+      "id": "node_180",
+      "name": "62",
+      "type": "valve",
+      "x": 3235.0,
+      "y": 7272.0,
+      "status": "open"
+    },
+    {
+      "id": "node_182",
+      "name": "111",
+      "type": "valve",
+      "x": 8114.0,
+      "y": 7337.0,
+      "status": "open"
+    },
+    {
+      "id": "node_184",
+      "name": "71",
+      "type": "valve",
+      "x": 4432.0,
+      "y": 7370.0,
+      "status": "open"
+    },
+    {
+      "id": "node_185",
+      "name": "65",
+      "type": "valve",
+      "x": 4047.0,
+      "y": 6955.0,
+      "status": "open"
+    },
+    {
+      "id": "node_186",
+      "name": "64",
+      "type": "valve",
+      "x": 3598.0,
+      "y": 7272.0,
+      "status": "open"
+    },
+    {
+      "id": "node_187",
+      "name": "68",
+      "type": "valve",
+      "x": 3696.0,
+      "y": 7336.0,
+      "status": "open"
+    },
+    {
+      "id": "node_188",
+      "name": "63",
+      "type": "valve",
+      "x": 3500.0,
+      "y": 7363.0,
+      "status": "open"
+    },
+    {
+      "id": "node_189",
+      "name": "69",
+      "type": "valve",
+      "x": 4012.0,
+      "y": 7370.0,
+      "status": "open"
+    },
+    {
+      "id": "node_191",
+      "name": "113",
+      "type": "valve",
+      "x": 8207.0,
+      "y": 7628.0,
+      "status": "open"
+    },
+    {
+      "id": "node_197",
+      "name": "114В",
+      "type": "valve",
+      "x": 8378.0,
+      "y": 7723.0,
+      "status": "closed"
+    },
+    {
+      "id": "node_198",
+      "name": "118",
+      "type": "valve",
+      "x": 9956.0,
+      "y": 7768.0,
+      "status": "open"
+    },
+    {
+      "id": "node_203",
+      "name": "117",
+      "type": "valve",
+      "x": 9799.0,
+      "y": 7866.0,
+      "status": "open"
+    },
+    {
+      "id": "node_205",
+      "name": "116",
+      "type": "valve",
+      "x": 9296.0,
+      "y": 7866.0,
+      "status": "open"
+    },
+    {
+      "id": "node_206",
+      "name": "99",
+      "type": "valve",
+      "x": 6770.0,
+      "y": 7866.0,
+      "status": "open"
+    },
+    {
+      "id": "node_209",
+      "name": "79",
+      "type": "valve",
+      "x": 4974.0,
+      "y": 8018.0,
+      "status": "open"
+    },
+    {
+      "id": "node_217",
+      "name": "147",
+      "type": "valve",
+      "x": 10359.0,
+      "y": 5835.0,
+      "status": "open"
+    },
+    {
+      "id": "node_218",
+      "name": "141",
+      "type": "valve",
+      "x": 9838.0,
+      "y": 6615.0,
+      "status": "open"
+    },
+    {
+      "id": "node_219",
+      "name": "146",
+      "type": "valve",
+      "x": 10697.0,
+      "y": 6617.0,
+      "status": "hard_turn",
+      "description": "Закрывается и открывается реверсивно",
+      "diameter": 150
+    },
+    {
+      "id": "node_220",
+      "name": "145",
+      "type": "valve",
+      "x": 10696.0,
+      "y": 6678.0,
+      "status": "open"
+    },
+    {
+      "id": "node_221",
+      "name": "143",
+      "type": "valve",
+      "x": 10598.0,
+      "y": 6678.0,
+      "status": "open"
+    },
+    {
+      "id": "node_222",
+      "name": "142",
+      "type": "valve",
+      "x": 10304.0,
+      "y": 6678.0,
+      "status": "open"
+    },
+    {
+      "id": "node_223",
+      "name": "151",
+      "type": "valve",
+      "x": 11424.0,
+      "y": 6712.0,
+      "status": "open"
+    },
+    {
+      "id": "node_224",
+      "name": "144",
+      "type": "valve",
+      "x": 10633.0,
+      "y": 6712.0,
+      "status": "open"
+    },
+    {
+      "id": "node_225",
+      "name": "122",
+      "type": "valve",
+      "x": 10319.0,
+      "y": 7768.0,
+      "status": "open"
+    },
+    {
+      "id": "node_226",
+      "name": "121",
+      "type": "valve",
+      "x": 10383.0,
+      "y": 7831.0,
+      "status": "open"
+    },
+    {
+      "id": "node_227",
+      "name": "118",
+      "type": "valve",
+      "x": 10285.0,
+      "y": 7831.0,
+      "status": "open"
+    },
+    {
+      "id": "node_228",
+      "name": "120",
+      "type": "valve",
+      "x": 10319.0,
+      "y": 7866.0,
+      "status": "open"
+    },
+    {
+      "id": "node_229",
+      "name": "123",
+      "type": "valve",
+      "x": 10353.0,
+      "y": 8154.0,
+      "status": "open"
+    },
+    {
+      "id": "node_235",
+      "name": "88",
+      "type": "valve",
+      "x": 7161.0,
+      "y": 8677.0,
+      "status": "open"
+    },
+    {
+      "id": "node_237",
+      "name": "95",
+      "type": "valve",
+      "x": 8397.0,
+      "y": 8825.0,
+      "status": "open"
+    },
+    {
+      "id": "node_238",
+      "name": "96",
+      "type": "valve",
+      "x": 8327.0,
+      "y": 8953.0,
+      "status": "open"
+    },
+    {
+      "id": "node_239",
+      "name": "109",
+      "type": "valve",
+      "x": 8114.0,
+      "y": 8210.0,
+      "status": "open"
+    },
+    {
+      "id": "node_240",
+      "name": "97",
+      "type": "valve",
+      "x": 8482.0,
+      "y": 8579.0,
+      "status": "open"
+    },
+    {
+      "id": "node_241",
+      "name": "93",
+      "type": "valve",
+      "x": 8051.0,
+      "y": 8579.0,
+      "status": "open"
+    },
+    {
+      "id": "node_242",
+      "name": "92",
+      "type": "valve",
+      "x": 8084.0,
+      "y": 8643.0,
+      "status": "no_cheeks",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_243",
+      "name": "91",
+      "type": "valve",
+      "x": 8016.0,
+      "y": 8643.0,
+      "status": "no_cheeks",
+      "description": "",
+      "diameter": 150
+    },
+    {
+      "id": "node_244",
+      "name": "94",
+      "type": "valve",
+      "x": 8363.0,
+      "y": 8677.0,
+      "status": "open"
+    },
+    {
+      "id": "node_245",
+      "name": "90",
+      "type": "valve",
+      "x": 7789.0,
+      "y": 8686.0,
+      "status": "open"
+    },
+    {
+      "id": "node_246",
+      "name": "89",
+      "type": "valve",
+      "x": 7679.0,
+      "y": 8719.0,
+      "status": "open"
+    },
+    {
+      "id": "node_247",
+      "name": "ПВ на кислотку",
+      "type": "valve",
+      "x": 8089.0,
+      "y": 8840.0,
+      "status": "open"
+    },
+    {
+      "id": "node_248",
+      "name": "ПВ на известку",
+      "type": "valve",
+      "x": 8001.0,
+      "y": 8860.0,
+      "status": "open"
+    },
+    {
+      "id": "node_249",
+      "name": "211",
+      "type": "valve",
+      "x": 5042.0,
+      "y": 797.0,
+      "status": "open"
+    },
+    {
+      "id": "node_250",
+      "name": "113",
+      "type": "hydrant",
+      "x": 5157.0,
+      "y": 1178.0,
+      "status": "open"
+    },
+    {
+      "id": "node_251",
+      "name": "207",
+      "type": "valve",
+      "x": 5273.0,
+      "y": 1650.0,
+      "status": "open"
+    },
+    {
+      "id": "node_252",
+      "name": "210",
+      "type": "valve",
+      "x": 4616.0,
+      "y": 1656.0,
+      "status": "open"
+    },
+    {
+      "id": "node_253",
+      "name": "37",
+      "type": "hydrant",
+      "x": 5279.0,
+      "y": 1712.0,
+      "status": "open"
+    },
+    {
+      "id": "node_254",
+      "name": "208",
+      "type": "valve",
+      "x": 4847.0,
+      "y": 1807.0,
+      "status": "open"
+    },
+    {
+      "id": "node_256",
+      "name": "209",
+      "type": "valve",
+      "x": 4826.0,
+      "y": 1869.0,
+      "status": "open"
+    },
+    {
+      "id": "node_257",
+      "name": "ПГ Лес",
+      "type": "hydrant",
+      "x": 5114.0,
+      "y": 1986.0,
+      "status": "open"
+    },
+    {
+      "id": "node_258",
+      "name": "204",
+      "type": "valve",
+      "x": 6059.0,
+      "y": 2192.0,
+      "status": "open"
+    },
+    {
+      "id": "node_259",
+      "name": "202",
+      "type": "valve",
+      "x": 5902.0,
+      "y": 2352.0,
+      "status": "open"
+    },
+    {
+      "id": "node_260",
+      "name": "203",
+      "type": "valve",
+      "x": 5823.0,
+      "y": 2361.0,
+      "status": "open"
+    },
+    {
+      "id": "node_261",
+      "name": "201",
+      "type": "valve",
+      "x": 5910.0,
+      "y": 2447.0,
+      "status": "open"
+    },
+    {
+      "id": "node_262",
+      "name": "200",
+      "type": "valve",
+      "x": 5837.0,
+      "y": 2449.0,
+      "status": "open"
+    },
+    {
+      "id": "node_264",
+      "name": "199",
+      "type": "valve",
+      "x": 5992.0,
+      "y": 2806.0,
+      "status": "open"
+    },
+    {
+      "id": "node_265",
+      "name": "197",
+      "type": "valve",
+      "x": 6249.0,
+      "y": 2835.0,
+      "status": "open"
+    },
+    {
+      "id": "node_266",
+      "name": "32",
+      "type": "valve",
+      "x": 3577.0,
+      "y": 3209.0,
+      "status": "open"
+    },
+    {
+      "id": "node_267",
+      "name": "33",
+      "type": "valve",
+      "x": 3630.0,
+      "y": 3248.0,
+      "status": "open"
+    },
+    {
+      "id": "node_268",
+      "name": "35",
+      "type": "valve",
+      "x": 4066.0,
+      "y": 3269.0,
+      "status": "open"
+    },
+    {
+      "id": "node_269",
+      "name": "198",
+      "type": "valve",
+      "x": 6136.0,
+      "y": 3271.0,
+      "status": "open"
+    },
+    {
+      "id": "node_270",
+      "name": "34",
+      "type": "valve",
+      "x": 3994.0,
+      "y": 3292.0,
+      "status": "open"
+    },
+    {
+      "id": "node_271",
+      "name": "196",
+      "type": "valve",
+      "x": 6902.0,
+      "y": 3330.0,
+      "status": "open"
+    },
+    {
+      "id": "node_272",
+      "name": "28",
+      "type": "valve",
+      "x": 2715.0,
+      "y": 3346.0,
+      "status": "open"
+    },
+    {
+      "id": "node_273",
+      "name": "27",
+      "type": "valve",
+      "x": 2705.0,
+      "y": 3418.0,
+      "status": "open"
+    },
+    {
+      "id": "node_274",
+      "name": "36",
+      "type": "valve",
+      "x": 4138.0,
+      "y": 3440.0,
+      "status": "open"
+    },
+    {
+      "id": "node_275",
+      "name": "44",
+      "type": "valve",
+      "x": 5076.0,
+      "y": 3495.0,
+      "status": "open"
+    },
+    {
+      "id": "node_276",
+      "name": "26",
+      "type": "valve",
+      "x": 3136.0,
+      "y": 3653.0,
+      "status": "open"
+    },
+    {
+      "id": "node_277",
+      "name": "25",
+      "type": "valve",
+      "x": 3047.0,
+      "y": 3666.0,
+      "status": "open"
+    },
+    {
+      "id": "node_278",
+      "name": "41",
+      "type": "valve",
+      "x": 4793.0,
+      "y": 3695.0,
+      "status": "open"
+    },
+    {
+      "id": "node_279",
+      "name": "24",
+      "type": "valve",
+      "x": 3126.0,
+      "y": 3723.0,
+      "status": "open"
+    },
+    {
+      "id": "node_280",
+      "name": "40",
+      "type": "valve",
+      "x": 4874.0,
+      "y": 3757.0,
+      "status": "open"
+    },
+    {
+      "id": "node_281",
+      "name": "39",
+      "type": "valve",
+      "x": 4823.0,
+      "y": 3763.0,
+      "status": "open"
+    },
+    {
+      "id": "node_282",
+      "name": "23",
+      "type": "valve",
+      "x": 3008.0,
+      "y": 3773.0,
+      "status": "open"
+    },
+    {
+      "id": "node_284",
+      "name": "22",
+      "type": "valve",
+      "x": 3640.0,
+      "y": 4142.0,
+      "status": "open"
+    },
+    {
+      "id": "node_285",
+      "name": "21",
+      "type": "valve",
+      "x": 3303.0,
+      "y": 4189.0,
+      "status": "open"
+    },
+    {
+      "id": "node_286",
+      "name": "19",
+      "type": "valve",
+      "x": 3907.0,
+      "y": 4213.0,
+      "status": "open"
+    },
+    {
+      "id": "node_287",
+      "name": "18",
+      "type": "valve",
+      "x": 3815.0,
+      "y": 4225.0,
+      "status": "open"
+    },
+    {
+      "id": "node_288",
+      "name": "20",
+      "type": "valve",
+      "x": 3280.0,
+      "y": 4323.0,
+      "status": "open"
+    },
+    {
+      "id": "node_289",
+      "name": "17",
+      "type": "valve",
+      "x": 3714.0,
+      "y": 4454.0,
+      "status": "open"
+    },
+    {
+      "id": "node_290",
+      "name": "38",
+      "type": "valve",
+      "x": 4226.0,
+      "y": 4530.0,
+      "status": "open"
+    },
+    {
+      "id": "node_291",
+      "name": "37",
+      "type": "valve",
+      "x": 4141.0,
+      "y": 4535.0,
+      "status": "open"
+    },
+    {
+      "id": "node_292",
+      "name": "16",
+      "type": "valve",
+      "x": 3431.0,
+      "y": 4623.0,
+      "status": "open"
+    },
+    {
+      "id": "node_293",
+      "name": "45",
+      "type": "valve",
+      "x": 4218.0,
+      "y": 4684.0,
+      "status": "open"
+    },
+    {
+      "id": "node_294",
+      "name": "58",
+      "type": "valve",
+      "x": 5201.0,
+      "y": 4807.0,
+      "status": "open"
+    },
+    {
+      "id": "node_295",
+      "name": "46",
+      "type": "valve",
+      "x": 4391.0,
+      "y": 4841.0,
+      "status": "open"
+    },
+    {
+      "id": "node_296",
+      "name": "174",
+      "type": "valve",
+      "x": 7370.0,
+      "y": 4876.0,
+      "status": "open"
+    },
+    {
+      "id": "node_297",
+      "name": "172",
+      "type": "valve",
+      "x": 6718.0,
+      "y": 4942.0,
+      "status": "open"
+    },
+    {
+      "id": "node_298",
+      "name": "171",
+      "type": "valve",
+      "x": 6650.0,
+      "y": 4942.0,
+      "status": "open"
+    },
+    {
+      "id": "node_299",
+      "name": "173",
+      "type": "valve",
+      "x": 6997.0,
+      "y": 4968.0,
+      "status": "open"
+    },
+    {
+      "id": "node_300",
+      "name": "55",
+      "type": "valve",
+      "x": 4378.0,
+      "y": 5214.0,
+      "status": "open"
+    },
+    {
+      "id": "node_301",
+      "name": "56",
+      "type": "valve",
+      "x": 4933.0,
+      "y": 5252.0,
+      "status": "open"
+    },
+    {
+      "id": "node_302",
+      "name": "170",
+      "type": "valve",
+      "x": 6325.0,
+      "y": 5266.0,
+      "status": "open"
+    },
+    {
+      "id": "node_303",
+      "name": "57",
+      "type": "valve",
+      "x": 5223.0,
+      "y": 5277.0,
+      "status": "open"
+    },
+    {
+      "id": "node_304",
+      "name": "47",
+      "type": "valve",
+      "x": 4244.0,
+      "y": 5295.0,
+      "status": "open"
+    },
+    {
+      "id": "node_305",
+      "name": "15",
+      "type": "valve",
+      "x": 3270.0,
+      "y": 5310.0,
+      "status": "open"
+    },
+    {
+      "id": "node_306",
+      "name": "48",
+      "type": "valve",
+      "x": 4224.0,
+      "y": 5371.0,
+      "status": "open"
+    },
+    {
+      "id": "node_307",
+      "name": "169",
+      "type": "valve",
+      "x": 6352.0,
+      "y": 5394.0,
+      "status": "open"
+    },
+    {
+      "id": "node_308",
+      "name": "2",
+      "type": "valve",
+      "x": 2357.0,
+      "y": 5487.0,
+      "status": "open"
+    },
+    {
+      "id": "node_309",
+      "name": "4",
+      "type": "valve",
+      "x": 2469.0,
+      "y": 5628.0,
+      "status": "open"
+    },
+    {
+      "id": "node_310",
+      "name": "3",
+      "type": "valve",
+      "x": 2410.0,
+      "y": 5701.0,
+      "status": "open"
+    },
+    {
+      "id": "node_311",
+      "name": "к_31114",
+      "type": "valve",
+      "x": 3026.0,
+      "y": 5715.0,
+      "status": "open"
+    },
+    {
+      "id": "node_312",
+      "name": "13",
+      "type": "valve",
+      "x": 2937.0,
+      "y": 5726.0,
+      "status": "open"
+    },
+    {
+      "id": "node_313",
+      "name": "168",
+      "type": "valve",
+      "x": 6501.0,
+      "y": 5889.0,
+      "status": "open"
+    },
+    {
+      "id": "node_314",
+      "name": "6",
+      "type": "valve",
+      "x": 2407.0,
+      "y": 5938.0,
+      "status": "open"
+    },
+    {
+      "id": "node_315",
+      "name": "7",
+      "type": "valve",
+      "x": 2524.0,
+      "y": 5945.0,
+      "status": "open"
+    },
+    {
+      "id": "node_316",
+      "name": "12",
+      "type": "valve",
+      "x": 2825.0,
+      "y": 6037.0,
+      "status": "open"
+    },
+    {
+      "id": "node_317",
+      "name": "11",
+      "type": "valve",
+      "x": 2776.0,
+      "y": 6075.0,
+      "status": "open"
+    },
+    {
+      "id": "node_318",
+      "name": "5",
+      "type": "valve",
+      "x": 2237.0,
+      "y": 6087.0,
+      "status": "open"
+    },
+    {
+      "id": "node_319",
+      "name": "10",
+      "type": "valve",
+      "x": 2716.0,
+      "y": 6232.0,
+      "status": "open"
+    },
+    {
+      "id": "node_325",
+      "name": "8",
+      "type": "valve",
+      "x": 2632.0,
+      "y": 6277.0,
+      "status": "open"
+    },
+    {
+      "id": "node_328",
+      "name": "9",
+      "type": "valve",
+      "x": 2681.0,
+      "y": 6323.0,
+      "status": "open"
+    },
+    {
+      "id": "node_329",
+      "name": "105",
+      "type": "valve",
+      "x": 7658.0,
+      "y": 7321.0,
+      "status": "open"
+    },
+    {
+      "id": "node_330",
+      "name": "75",
+      "type": "valve",
+      "x": 4974.0,
+      "y": 7336.0,
+      "status": "open"
+    },
+    {
+      "id": "node_331",
+      "name": "73",
+      "type": "valve",
+      "x": 4874.0,
+      "y": 7337.0,
+      "status": "open"
+    },
+    {
+      "id": "node_332",
+      "name": "59",
+      "type": "valve",
+      "x": 2830.0,
+      "y": 7352.0,
+      "status": "open"
+    },
+    {
+      "id": "node_333",
+      "name": "74",
+      "type": "valve",
+      "x": 4911.0,
+      "y": 7370.0,
+      "status": "open"
+    },
+    {
+      "id": "node_334",
+      "name": "61",
+      "type": "valve",
+      "x": 2911.0,
+      "y": 7394.0,
+      "status": "open"
+    },
+    {
+      "id": "node_335",
+      "name": "60",
+      "type": "valve",
+      "x": 2861.0,
+      "y": 7445.0,
+      "status": "open"
+    },
+    {
+      "id": "node_336",
+      "name": "110",
+      "type": "valve",
+      "x": 8084.0,
+      "y": 7472.0,
+      "status": "open"
+    },
+    {
+      "id": "node_337",
+      "name": "76",
+      "type": "valve",
+      "x": 4911.0,
+      "y": 7634.0,
+      "status": "open"
+    },
+    {
+      "id": "node_338",
+      "name": "78",
+      "type": "valve",
+      "x": 4711.0,
+      "y": 7698.0,
+      "status": "open"
+    },
+    {
+      "id": "node_339",
+      "name": "77",
+      "type": "valve",
+      "x": 4911.0,
+      "y": 7731.0,
+      "status": "open"
+    },
+    {
+      "id": "node_340",
+      "name": "108",
+      "type": "valve",
+      "x": 8051.0,
+      "y": 7768.0,
+      "status": "open"
+    },
+    {
+      "id": "node_341",
+      "name": "98",
+      "type": "valve",
+      "x": 6214.0,
+      "y": 7768.0,
+      "status": "open"
+    },
+    {
+      "id": "node_343",
+      "name": "107",
+      "type": "valve",
+      "x": 8114.0,
+      "y": 7831.0,
+      "status": "open"
+    },
+    {
+      "id": "node_344",
+      "name": "101",
+      "type": "valve",
+      "x": 7831.0,
+      "y": 7831.0,
+      "status": "open"
+    },
+    {
+      "id": "node_345",
+      "name": "100",
+      "type": "valve",
+      "x": 7745.0,
+      "y": 7858.0,
+      "status": "open"
+    },
+    {
+      "id": "node_347",
+      "name": "115",
+      "type": "valve",
+      "x": 8958.0,
+      "y": 7866.0,
+      "status": "open"
+    },
+    {
+      "id": "node_348",
+      "name": "106",
+      "type": "valve",
+      "x": 8051.0,
+      "y": 7866.0,
+      "status": "open"
+    },
+    {
+      "id": "node_350",
+      "name": "102",
+      "type": "valve",
+      "x": 7643.0,
+      "y": 7984.0,
+      "status": "open"
+    },
+    {
+      "id": "node_351",
+      "name": "103",
+      "type": "valve",
+      "x": 7568.0,
+      "y": 8033.0,
+      "status": "open"
+    },
+    {
+      "id": "node_352",
+      "name": "104",
+      "type": "valve",
+      "x": 7603.0,
+      "y": 8067.0,
+      "status": "open"
+    },
+    {
+      "id": "node_353",
+      "name": "80",
+      "type": "valve",
+      "x": 4974.0,
+      "y": 8191.0,
+      "status": "open"
+    },
+    {
+      "id": "node_354",
+      "name": "81",
+      "type": "valve",
+      "x": 4912.0,
+      "y": 8493.0,
+      "status": "open"
+    },
+    {
+      "id": "node_355",
+      "name": "83",
+      "type": "valve",
+      "x": 4964.0,
+      "y": 8575.0,
+      "status": "open"
+    },
+    {
+      "id": "node_356",
+      "name": "82",
+      "type": "valve",
+      "x": 4911.0,
+      "y": 8594.0,
+      "status": "open"
+    },
+    {
+      "id": "node_357",
+      "name": "85",
+      "type": "valve",
+      "x": 5746.0,
+      "y": 8644.0,
+      "status": "open"
+    },
+    {
+      "id": "node_358",
+      "name": "86",
+      "type": "valve",
+      "x": 6648.0,
+      "y": 8677.0,
+      "status": "open"
+    },
+    {
+      "id": "node_359",
+      "name": "84",
+      "type": "valve",
+      "x": 5678.0,
+      "y": 8677.0,
+      "status": "open"
+    },
+    {
+      "id": "node_360",
+      "name": "87",
+      "type": "valve",
+      "x": 6614.0,
+      "y": 8784.0,
+      "status": "open"
+    },
+    {
+      "id": "node_363",
+      "name": "150",
+      "type": "valve",
+      "x": 13372.0,
+      "y": 4853.0,
+      "status": "open"
+    },
+    {
+      "id": "node_364",
+      "name": "ПГ 108",
+      "type": "hydrant",
+      "x": 13399.0,
+      "y": 5190.0,
+      "status": "open"
+    },
+    {
+      "id": "node_365",
+      "name": "ПГ 107",
+      "type": "hydrant",
+      "x": 12808.0,
+      "y": 5190.0,
+      "status": "open"
+    },
+    {
+      "id": "node_366",
+      "name": "149",
+      "type": "valve",
+      "x": 12529.0,
+      "y": 5407.0,
+      "status": "open"
+    },
+    {
+      "id": "node_367",
+      "name": "148",
+      "type": "valve",
+      "x": 10325.0,
+      "y": 5411.0,
+      "status": "open"
+    },
+    {
+      "id": "node_368",
+      "name": "153",
+      "type": "valve",
+      "x": 12677.0,
+      "y": 5819.0,
+      "status": "open"
+    },
+    {
+      "id": "node_369",
+      "name": "ПГ 101",
+      "type": "hydrant",
+      "x": 12585.0,
+      "y": 5820.0,
+      "status": "open"
+    },
+    {
+      "id": "node_370",
+      "name": "ПГ 100",
+      "type": "hydrant",
+      "x": 12586.0,
+      "y": 5992.0,
+      "status": "open"
+    },
+    {
+      "id": "node_371",
+      "name": "152",
+      "type": "valve",
+      "x": 11524.0,
+      "y": 6615.0,
+      "status": "open"
+    },
+    {
+      "id": "node_372",
+      "name": "155",
+      "type": "valve",
+      "x": 12066.0,
+      "y": 6678.0,
+      "status": "closed"
+    },
+    {
+      "id": "node_373",
+      "name": "154",
+      "type": "valve",
+      "x": 11860.0,
+      "y": 6680.0,
+      "status": "closed"
+    },
+    {
+      "id": "node_374",
+      "name": "Майка",
+      "type": "valve",
+      "x": 11690.0,
+      "y": 6684.0,
+      "status": "closed"
+    },
+    {
+      "id": "node_1787512800977",
+      "name": "188",
+      "type": "valve",
+      "x": 8189.0,
+      "y": 4291.0,
+      "status": "open"
+    },
+    {
+      "id": "node_1787513203971",
+      "name": "66",
+      "type": "valve",
+      "x": 3965.0,
+      "y": 6504.0,
+      "status": "open"
+    }
+  ],
+  "pipes": [],
+  "valves": []
+}
