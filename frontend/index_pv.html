@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Схема ПВ</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #121318; color: #f0f0f5; font-family: system-ui, -apple-system, sans-serif; }
+        #app-container { display: flex; width: 100vw; height: 100vh; }
+        #map { flex-grow: 1; height: 100vh; background: #191a21; }
+
+        #sidebar { 
+            width: 380px; 
+            height: 100vh; 
+            background: #16171e; 
+            color: #f0f0f5; 
+            padding: 14px 16px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            z-index: 1000; 
+            box-shadow: 2px 0 16px rgba(0,0,0,0.6); 
+        }
+
+        .header-row { display: flex; align-items: center; justify-content: space-between; }
+        .header-title { font-size: 18px; font-weight: 700; color: #60a5fa; }
+        
+        .search-container { position: relative; width: 100%; }
+        .search-input { width: 100%; background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 8px 32px 8px 11px; border-radius: 7px; font-size: 13px; outline: none; }
+        .search-input:focus { border-color: #3b82f6; }
+        .search-clear { position: absolute; right: 8px; top: 7px; cursor: pointer; color: #8e929b; font-size: 15px; display: none; }
+        .search-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #1c1e28; border: 1px solid #3c404f; border-radius: 8px; max-height: 200px; overflow-y: auto; z-index: 2000; display: none; }
+        .search-item { padding: 8px 12px; cursor: pointer; display: flex; justify-content: space-between; border-bottom: 1px solid #282a38; font-size: 13px; }
+        .search-item:hover { background: #2b2e3e; }
+
+        .filter-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+        .chip { background: #181922; border: 1px solid #3c404f; color: #e2e4ea; padding: 5px 9px; border-radius: 6px; font-size: 11.5px; cursor: pointer; font-weight: 500; }
+        .chip.active { background: #2563eb; color: #ffffff; }
+        .chip.active-danger { background: #dc2626; color: #ffffff; }
+
+        .panel-box { background: #22242f; padding: 8px 12px; border-radius: 8px; border: 1px solid #2e3140; }
+        .mode-selector label { cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
+
+        #inspector { background: #22242f; padding: 12px 14px; border-radius: 8px; flex-grow: 1; display: flex; flex-direction: column; gap: 8px; border: 1px solid #2e3140; overflow-y: auto; }
+        .input-group { display: flex; flex-direction: column; gap: 3px; }
+        .input-group label { font-size: 10.5px; color: #a0a5b5; text-transform: uppercase; font-weight: 700; }
+        .input-group input, .input-group select, .input-group textarea { background: #16171e; border: 1px solid #3c404f; color: #ffffff; padding: 7px 10px; border-radius: 6px; font-size: 13px; outline: none; font-family: inherit; }
+        .input-group textarea { resize: vertical; min-height: 50px; }
+
+        .btn-group { display: flex; gap: 8px; margin-top: 4px; }
+        button { padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .btn-primary { background: #3b82f6; color: #ffffff; flex-grow: 1; }
+        .btn-danger { background: #ef4444; color: #ffffff; }
+
+        #stats { font-size: 11.5px; color: #a0a5b5; border-top: 1px solid #2e3140; padding-top: 6px; display: flex; justify-content: space-between; }
+        .custom-label { font-size: 11px; font-weight: bold; background: rgba(18,19,25,0.9); color: #00f0ff; border: 1px solid #00f0ff; border-radius: 4px; padding: 1px 5px; }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <div id="sidebar">
+            <div class="header-row">
+                <span class="header-title">💧 Схема ПВ</span>
+                <button onclick="fitMapBounds()" style="background:#22242f; color:#a0a5b5; font-size:11.5px; padding:5px 8px; border:1px solid #2e3140;">🗺️ Вся схема</button>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="🔍 Поиск арматуры (157, 78)..." autocomplete="off">
+                <span id="search-clear" class="search-clear" onclick="clearSearch()">✕</span>
+                <div id="search-dropdown" class="search-dropdown"></div>
+            </div>
+
+            <div class="filter-chips">
+                <button class="chip active" data-filter="all" onclick="setFilter('all', this)">Все</button>
+                <button class="chip" data-filter="no_cheeks" onclick="setFilter('no_cheeks', this)">🔴 Без щёк</button>
+                <button class="chip" data-filter="hard_turn" onclick="setFilter('hard_turn', this)">🟡 Дефект</button>
+                <button class="chip" data-filter="closed" onclick="setFilter('closed', this)">🔒 Закрытые</button>
+                <button class="chip" data-filter="hydrant" onclick="setFilter('hydrant', this)">🚒 Гидранты</button>
+            </div>
+
+            <div class="panel-box mode-selector">
+                <div style="display:flex; justify-content:space-between;">
+                    <label><input type="radio" name="mode" value="view" checked> 🔍 Просмотр</label>
+                    <label><input type="radio" name="mode" value="add_valve"> 🛑 + Задвижка</label>
+                    <label><input type="radio" name="mode" value="add_hydrant"> 🔴 + ПГ</label>
+                </div>
+            </div>
+
+            <div id="inspector">
+                <p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по объекту на схеме для редактирования.</p>
+            </div>
+
+            <div id="stats">
+                <span>Объектов: <b id="count-total" style="color:#fff;">0</b></span>
+                <span>Без щёк/дефекты: <b id="count-defects" style="color:#ff7875;">0</b></span>
+                <label style="font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 4px; color: #a0a5b5;">
+                    <input type="checkbox" id="toggle-labels" checked onchange="renderNetwork()"> Номера
+                </label>
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let map, imageOverlay, nodesLayer, pulseLayer;
+        let networkData = { nodes: [], dimensions: { width: 14904, height: 10528 } };
+        let bounds = [[0, 0], [10528, 14904]];
+        let selectedNode = null;
+        let currentFilter = "all";
+
+        window.addEventListener('pywebviewready', async () => {
+            map = L.map("map", { crs: L.CRS.Simple, minZoom: -3, maxZoom: 2.5, zoomSnap: 0.1 });
+            nodesLayer = L.layerGroup().addTo(map);
+            pulseLayer = L.layerGroup().addTo(map);
+            map.on("click", handleMapClick);
+            setupSearch();
+            await loadData();
+        });
+
+        async function loadData() {
+            networkData = await window.pywebview.api.get_data();
+            const width = networkData.dimensions?.width || 14904;
+            const height = networkData.dimensions?.height || 10528;
+            bounds = [[0, 0], [height, width]];
+
+            if (imageOverlay) map.removeLayer(imageOverlay);
+            imageOverlay = L.imageOverlay("scheme.jpg", bounds).addTo(map);
+            map.fitBounds(bounds);
+            renderNetwork();
+        }
+
+        function fitMapBounds() { if (bounds && map) map.flyToBounds(bounds, { duration: 0.8 }); }
+
+        function getNodeStyle(node) {
+            if (node.type === "hydrant") return { radius: 8, color: "#ff4d4f", fillColor: "#ff7875", fillOpacity: 0.9, weight: 2 };
+            if (node.status === "no_cheeks") return { radius: 7.5, color: "#ffffff", fillColor: "#ff4d4f", fillOpacity: 1.0, weight: 3 };
+            if (node.status === "hard_turn") return { radius: 6.5, color: "#d48806", fillColor: "#faad14", fillOpacity: 0.9, weight: 2.5 };
+            if (node.status === "closed") return { radius: 6.5, color: "#d46b08", fillColor: "#fa8c16", fillOpacity: 0.9, weight: 2.5 };
+            return { radius: 6, color: "#237804", fillColor: "#52c41a", fillOpacity: 0.85, weight: 2 };
+        }
+
+        function renderNetwork() {
+            if (!nodesLayer) return;
+            nodesLayer.clearLayers();
+            const showLabels = document.getElementById("toggle-labels")?.checked ?? true;
+            const nodes = networkData.nodes || [];
+            let filtered = nodes;
+            if (currentFilter === "hydrant") filtered = nodes.filter(n => n.type === "hydrant");
+            else if (currentFilter === "no_cheeks") filtered = nodes.filter(n => n.status === "no_cheeks");
+            else if (currentFilter === "hard_turn") filtered = nodes.filter(n => n.status === "hard_turn");
+            else if (currentFilter === "closed") filtered = nodes.filter(n => n.status === "closed");
+
+            let defects = nodes.filter(n => n.status === "no_cheeks" || n.status === "hard_turn").length;
+
+            filtered.forEach(node => {
+                const isSel = selectedNode && selectedNode.id === node.id;
+                const style = getNodeStyle(node);
+                const marker = L.circleMarker([node.y, node.x], {
+                    radius: isSel ? style.radius + 3 : style.radius,
+                    color: isSel ? "#00f0ff" : style.color,
+                    fillColor: style.fillColor,
+                    fillOpacity: isSel ? 1.0 : style.fillOpacity,
+                    weight: isSel ? 4 : style.weight
+                }).addTo(nodesLayer);
+
+                if (showLabels) {
+                    let label = node.name;
+                    if (node.status === "no_cheeks") label += " ⚠️";
+                    else if (node.status === "closed") label += " 🔒";
+                    marker.bindTooltip(label, { permanent: true, direction: "top", className: "custom-label" });
+                }
+                marker.on("click", (e) => { L.DomEvent.stopPropagation(e); focusOnNode(node); });
+            });
+
+            document.getElementById("count-total").innerText = nodes.length;
+            document.getElementById("count-defects").innerText = defects;
+        }
+
+        function focusOnNode(node) {
+            selectedNode = node;
+            renderNetwork();
+            showNodeEditor(node);
+            map.flyTo([node.y, node.x], Math.max(map.getZoom(), 0.5), { duration: 0.6 });
+        }
+
+        function showNodeEditor(node) {
+            document.getElementById("inspector").innerHTML = `
+                <div style="font-weight:700; font-size:14.5px; color:#fff;">${node.type === 'hydrant' ? '🚒 Пожарный гидрант' : '🛑 Запорная арматура'}</div>
+                <div class="input-group"><label>Номер</label><input type="text" id="edit-name" value="${node.name || ''}"></div>
+                <div class="input-group"><label>Состояние</label>
+                    <select id="edit-status">
+                        <option value="open" ${node.status === 'open' ? 'selected':''}>🟢 В работе (Открыта)</option>
+                        <option value="closed" ${node.status === 'closed' ? 'selected':''}>🟠 Закрыта</option>
+                        <option value="no_cheeks" ${node.status === 'no_cheeks' ? 'selected':''}>🔴 Нет щёк</option>
+                        <option value="hard_turn" ${node.status === 'hard_turn' ? 'selected':''}>🟡 Дефект / тугой ход</option>
+                    </select>
+                </div>
+                <div class="input-group"><label>Диаметр (Ду)</label><input type="number" id="edit-diameter" value="${node.diameter || 150}"></div>
+                <div class="input-group"><label>Примечания</label><textarea id="edit-desc">${node.description || ''}</textarea></div>
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="saveNode('${node.id}')">💾 Сохранить</button>
+                    <button class="btn-danger" onclick="deleteNode('${node.id}')">🗑</button>
+                </div>
+            `;
+            const nameInput = document.getElementById("edit-name");
+            nameInput.focus();
+            nameInput.addEventListener("keydown", (e) => { if (e.key === "Enter") saveNode(node.id); });
+        }
+
+        async function saveNode(nodeId) {
+            const node = networkData.nodes.find(n => n.id === nodeId);
+            if (!node) return;
+            node.name = document.getElementById("edit-name").value.trim();
+            node.status = document.getElementById("edit-status").value;
+            node.diameter = parseInt(document.getElementById("edit-diameter").value) || 150;
+            node.description = document.getElementById("edit-desc").value.trim();
+            await window.pywebview.api.save_node(node);
+            renderNetwork();
+            showNodeEditor(node);
+        }
+
+        async function deleteNode(nodeId) {
+            if (!confirm("Удалить объект?")) return;
+            await window.pywebview.api.delete_node(nodeId);
+            networkData.nodes = networkData.nodes.filter(n => n.id !== nodeId);
+            selectedNode = null;
+            document.getElementById("inspector").innerHTML = '<p style="color: #a0a5b5; margin:0; font-size:13px;">Объект удален.</p>';
+            renderNetwork();
+        }
+
+        async function handleMapClick(e) {
+            const mode = document.querySelector('input[name="mode"]:checked')?.value || "view";
+            if (mode === "view") return;
+            const name = prompt(mode === "add_hydrant" ? "Номер гидранта:" : "Номер задвижки:", mode === "add_hydrant" ? "ПГ " : "");
+            if (!name) return;
+            const newNode = {
+                id: "node_" + Date.now(),
+                name: name,
+                type: mode === "add_hydrant" ? "hydrant" : "valve",
+                status: "open",
+                description: "",
+                diameter: 150,
+                x: Math.round(e.latlng.lng),
+                y: Math.round(e.latlng.lat)
+            };
+            await window.pywebview.api.save_node(newNode);
+            networkData.nodes.push(newNode);
+            focusOnNode(newNode);
+        }
+
+        function setFilter(type, el) {
+            currentFilter = type;
+            document.querySelectorAll(".chip").forEach(c => c.classList.remove("active", "active-danger"));
+            if (type === "no_cheeks") el.classList.add("active-danger");
+            else el.classList.add("active");
+            renderNetwork();
+        }
+
+        function setupSearch() {
+            const input = document.getElementById("search-input");
+            const dropdown = document.getElementById("search-dropdown");
+            input.addEventListener("input", (e) => {
+                const q = e.target.value.trim().toLowerCase();
+                document.getElementById("search-clear").style.display = q ? "block" : "none";
+                if (!q) { dropdown.style.display = "none"; return; }
+                const matches = (networkData.nodes || []).filter(n => (n.name||"").toLowerCase().includes(q) || (n.description||"").toLowerCase().includes(q)).slice(0, 10);
+                if (!matches.length) { dropdown.style.display = "none"; return; }
+                dropdown.innerHTML = matches.map(m => `<div class="search-item" onclick="selectSearch('${m.id}')"><span>${m.name}</span><small style="color:#a0a5b5">${m.status}</small></div>`).join("");
+                dropdown.style.display = "block";
+            });
+        }
+        function selectSearch(id) {
+            const node = (networkData.nodes || []).find(n => n.id === id);
+            if (node) { document.getElementById("search-dropdown").style.display = "none"; focusOnNode(node); }
+        }
+        function clearSearch() { document.getElementById("search-input").value = ""; document.getElementById("search-dropdown").style.display = "none"; }
+    </script>
+</body>
+</html>
