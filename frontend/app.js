@@ -615,3 +615,37 @@ fetch('/api/drinking/network')
             });
         }
     });
+// Убедитесь, что в app.js удален вызов L.imageOverlay (если он был), 
+// и добавьте загрузку текстовых меток и труб:
+
+fetch('/api/drinking/network')
+    .then(response => response.json())
+    .then(data => {
+        // Отрисовка векторных труб
+        if (data.pipes) {
+            data.pipes.forEach(pipe => {
+                L.polyline(pipe.coordinates, {
+                    color: '#0088ff',
+                    weight: 2.5,
+                    opacity: 0.8
+                }).addTo(map);
+            });
+        }
+    });
+
+// Загружаем текстовые метки из DXF для идеальной четкости текста при любом зуме
+fetch('/data/dxf_all_labels.json')
+    .then(res => res.json())
+    .then(labels => {
+        labels.forEach(lbl => {
+            if (lbl.text && lbl.x && lbl.y) {
+                L.marker([lbl.y, lbl.x], {
+                    icon: L.divIcon({
+                        className: 'vector-text-label',
+                        html: `<span style="font-size: 10px; color: #333; font-weight: bold; background: rgba(255,255,255,0.7); padding: 1px 3px; border-radius: 2px;">${lbl.text}</span>`,
+                        iconSize: [null, null]
+                    })
+                }).addTo(map);
+            }
+        });
+    }).catch(e => console.log("Метки загружаются или путь проверяется"));
