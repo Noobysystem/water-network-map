@@ -126,7 +126,14 @@
             bounds = [[0, 0], [height, width]];
 
             if (imageOverlay) map.removeLayer(imageOverlay);
-            imageOverlay = L.imageOverlay("scheme.jpg", bounds).addTo(map);
+    
+            // Вместо растрового scheme.jpg подключаем векторный scheme.svg
+            // Leaflet автоматически превратит SVG в масштабируемый векторный слой
+            imageOverlay = L.svgOverlay("scheme.svg", bounds, {
+                opacity: 1.0,
+                interactive: false
+            }).addTo(map);
+
             map.fitBounds(bounds);
             renderNetwork();
         }
