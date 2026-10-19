@@ -14,7 +14,7 @@ let currentFilter = "all";
 const isMobile = () => window.innerWidth <= 768;
 
 const NETWORKS_DEF = {
-    drinking: { image: "scheme.jpg?v=1", width: 14904, height: 10528 },
+    drinking: { image: "scheme.svg", width: 14904, height: 10528 },
     tech_water: { image: "scheme_tv.jpg?v=1", width: 7445, height: 5266 },
     tech_water_out: { image: "scheme_tv_out.jpg?v=1", width: 7445, height: 10528 }
 };
@@ -649,3 +649,4 @@ fetch('/data/dxf_all_labels.json')
             }
         });
     }).catch(e => console.log("Метки загружаются или путь проверяется"));
+
