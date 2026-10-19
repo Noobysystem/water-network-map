@@ -650,3 +650,4 @@ fetch('/data/dxf_all_labels.json')
         });
     }).catch(e => console.log("Метки загружаются или путь проверяется"));
 
+
