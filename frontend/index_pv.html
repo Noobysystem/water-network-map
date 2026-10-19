@@ -105,8 +105,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         let map, imageOverlay, nodesLayer, pulseLayer;
-        let networkData = { nodes: [], dimensions: { width: 595.276, height: 841.89 } };
-        let bounds = [[0, 0], [841.89, 595.276]];
+        let networkData = { nodes: [], dimensions: { width: 14904, height: 10528 } };
+        let bounds = [[0, 0], [10528, 14904]];
         let selectedNode = null;
         let currentFilter = "all";
 
@@ -121,8 +121,8 @@
 
         async function loadData() {
             networkData = await window.pywebview.api.get_data();
-            const width = 595.276;
-            const height = 841.89;
+            const width = networkData.dimensions?.width || 14904;
+            const height = networkData.dimensions?.height || 10528;
             bounds = [[0, 0], [height, width]];
 
             if (imageOverlay) map.removeLayer(imageOverlay);
@@ -286,5 +286,3 @@
     </script>
 </body>
 </html>
-
-
