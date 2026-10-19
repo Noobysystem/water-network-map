@@ -599,3 +599,19 @@ async function handleMapClick(e) {
 }
 
 initApp();
+// Добавьте этот код в вашу функцию инициализации карты в app.js после создания карты (map):
+
+fetch('/api/drinking/network')
+    .then(response => response.json())
+    .then(data => {
+        // Отрисовка векторных труб из DXF
+        if (data.pipes) {
+            data.pipes.forEach(pipe => {
+                L.polyline(pipe.coordinates, {
+                    color: '#0088ff',
+                    weight: 3,
+                    smoothFactor: 1
+                }).addTo(map);
+            });
+        }
+    });
