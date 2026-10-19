@@ -1,0 +1,3808 @@
+{
+  "nodes": [
+    {
+      "id": "dxf_node_3",
+      "name": "66",
+      "type": "valve",
+      "x": 3886.8,
+      "y": 6604.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_4",
+      "name": "65",
+      "type": "valve",
+      "x": 3903.5,
+      "y": 6958.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_6",
+      "name": "64",
+      "type": "valve",
+      "x": 3564.1,
+      "y": 7248.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_7",
+      "name": "87",
+      "type": "valve",
+      "x": 6415.5,
+      "y": 8845.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_8",
+      "name": "71",
+      "type": "valve",
+      "x": 4286.9,
+      "y": 7479.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_9",
+      "name": "72",
+      "type": "valve",
+      "x": 4541.5,
+      "y": 7240.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_10",
+      "name": "73",
+      "type": "valve",
+      "x": 4683.8,
+      "y": 7405.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_12",
+      "name": "67",
+      "type": "valve",
+      "x": 4089.8,
+      "y": 6503.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_13",
+      "name": "70",
+      "type": "valve",
+      "x": 4174.5,
+      "y": 7241.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_16",
+      "name": "76",
+      "type": "valve",
+      "x": 4895.1,
+      "y": 7675.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_20",
+      "name": "68",
+      "type": "valve",
+      "x": 3685.1,
+      "y": 7394.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_21",
+      "name": "63",
+      "type": "valve",
+      "x": 3341.9,
+      "y": 7456.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_22",
+      "name": "61",
+      "type": "valve",
+      "x": 2919.7,
+      "y": 7444.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_23",
+      "name": "62",
+      "type": "valve",
+      "x": 3114.7,
+      "y": 7236.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_50",
+      "name": "60",
+      "type": "valve",
+      "x": 2721.3,
+      "y": 7526.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_51",
+      "name": "59",
+      "type": "valve",
+      "x": 2686.1,
+      "y": 7414.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_55",
+      "name": "99",
+      "type": "valve",
+      "x": 6600.9,
+      "y": 7967.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_60",
+      "name": "84",
+      "type": "valve",
+      "x": 5526.1,
+      "y": 8793.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_61",
+      "name": "85",
+      "type": "valve",
+      "x": 5724.7,
+      "y": 8639.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_62",
+      "name": "86",
+      "type": "valve",
+      "x": 6615.5,
+      "y": 8715.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_63",
+      "name": "78",
+      "type": "valve",
+      "x": 4595.8,
+      "y": 7801.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_64",
+      "name": "77",
+      "type": "valve",
+      "x": 4894.5,
+      "y": 7777.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_65",
+      "name": "88",
+      "type": "valve",
+      "x": 6973.7,
+      "y": 8769.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_66",
+      "name": "89",
+      "type": "valve",
+      "x": 7507.5,
+      "y": 8709.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_67",
+      "name": "90",
+      "type": "valve",
+      "x": 7720.3,
+      "y": 8731.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_68",
+      "name": "80",
+      "type": "valve",
+      "x": 4867.5,
+      "y": 8289.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_69",
+      "name": "79",
+      "type": "valve",
+      "x": 4876.1,
+      "y": 7973.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_70",
+      "name": "81",
+      "type": "valve",
+      "x": 4859.7,
+      "y": 8474.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_71",
+      "name": "83",
+      "type": "valve",
+      "x": 4929.9,
+      "y": 8674.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_72",
+      "name": "82",
+      "type": "valve",
+      "x": 4766.6,
+      "y": 8693.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_73",
+      "name": "16",
+      "type": "valve",
+      "x": 3423.3,
+      "y": 4614.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_74",
+      "name": "17",
+      "type": "valve",
+      "x": 3694.6,
+      "y": 4529.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_75",
+      "name": "18",
+      "type": "valve",
+      "x": 3682.9,
+      "y": 4289.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_77",
+      "name": "19",
+      "type": "valve",
+      "x": 3876.4,
+      "y": 4274.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_100",
+      "name": "20",
+      "type": "valve",
+      "x": 3303.6,
+      "y": 4382.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_101",
+      "name": "6",
+      "type": "valve",
+      "x": 2376.1,
+      "y": 6038.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_102",
+      "name": "7",
+      "type": "valve",
+      "x": 2517.8,
+      "y": 6003.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_103",
+      "name": "5",
+      "type": "valve",
+      "x": 2249.0,
+      "y": 6133.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_104",
+      "name": "8",
+      "type": "valve",
+      "x": 2562.6,
+      "y": 6349.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_105",
+      "name": "9",
+      "type": "valve",
+      "x": 2691.1,
+      "y": 6397.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_106",
+      "name": "10",
+      "type": "valve",
+      "x": 2720.4,
+      "y": 6302.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_107",
+      "name": "11",
+      "type": "valve",
+      "x": 2643.4,
+      "y": 6088.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_108",
+      "name": "12",
+      "type": "valve",
+      "x": 2846.3,
+      "y": 6088.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_109",
+      "name": "13",
+      "type": "valve",
+      "x": 2820.9,
+      "y": 5753.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_110",
+      "name": "14",
+      "type": "valve",
+      "x": 3008.4,
+      "y": 5742.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_111",
+      "name": "15",
+      "type": "valve",
+      "x": 3177.4,
+      "y": 5390.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_113",
+      "name": "21",
+      "type": "valve",
+      "x": 3153.6,
+      "y": 4216.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_114",
+      "name": "22",
+      "type": "valve",
+      "x": 3562.6,
+      "y": 4253.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_115",
+      "name": "24",
+      "type": "valve",
+      "x": 3154.6,
+      "y": 3791.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_116",
+      "name": "25",
+      "type": "valve",
+      "x": 2894.1,
+      "y": 3687.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_117",
+      "name": "26",
+      "type": "valve",
+      "x": 3132.4,
+      "y": 3670.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_118",
+      "name": "27",
+      "type": "valve",
+      "x": 2609.3,
+      "y": 3525.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_119",
+      "name": "28",
+      "type": "valve",
+      "x": 2726.3,
+      "y": 3346.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_120",
+      "name": "29",
+      "type": "valve",
+      "x": 2775.2,
+      "y": 2998.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_121",
+      "name": "30",
+      "type": "valve",
+      "x": 3295.0,
+      "y": 2901.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_122",
+      "name": "31",
+      "type": "valve",
+      "x": 3076.3,
+      "y": 2758.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_123",
+      "name": "32",
+      "type": "valve",
+      "x": 3455.3,
+      "y": 3192.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_124",
+      "name": "33",
+      "type": "valve",
+      "x": 3582.6,
+      "y": 3361.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_125",
+      "name": "34",
+      "type": "valve",
+      "x": 3893.1,
+      "y": 3400.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_126",
+      "name": "35",
+      "type": "valve",
+      "x": 4037.1,
+      "y": 3279.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_127",
+      "name": "36",
+      "type": "valve",
+      "x": 4053.4,
+      "y": 3544.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_128",
+      "name": "1",
+      "type": "valve",
+      "x": 2453.5,
+      "y": 5526.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_129",
+      "name": "2",
+      "type": "valve",
+      "x": 2273.2,
+      "y": 5573.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_130",
+      "name": "37",
+      "type": "valve",
+      "x": 4007.7,
+      "y": 4615.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_131",
+      "name": "38",
+      "type": "valve",
+      "x": 4214.2,
+      "y": 4541.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_132",
+      "name": "39",
+      "type": "valve",
+      "x": 4709.6,
+      "y": 3895.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_133",
+      "name": "40",
+      "type": "valve",
+      "x": 4840.3,
+      "y": 3749.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_134",
+      "name": "41",
+      "type": "valve",
+      "x": 4649.7,
+      "y": 3736.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_135",
+      "name": "42",
+      "type": "valve",
+      "x": 4903.4,
+      "y": 3949.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_136",
+      "name": "43",
+      "type": "valve",
+      "x": 5124.2,
+      "y": 4161.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_137",
+      "name": "45",
+      "type": "valve",
+      "x": 4149.1,
+      "y": 4808.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_138",
+      "name": "46",
+      "type": "valve",
+      "x": 4302.1,
+      "y": 4959.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_139",
+      "name": "47",
+      "type": "valve",
+      "x": 4101.1,
+      "y": 5279.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_140",
+      "name": "48",
+      "type": "valve",
+      "x": 4138.1,
+      "y": 5481.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_141",
+      "name": "49",
+      "type": "valve",
+      "x": 3819.8,
+      "y": 5402.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_142",
+      "name": "50",
+      "type": "valve",
+      "x": 4310.3,
+      "y": 5709.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_143",
+      "name": "51",
+      "type": "valve",
+      "x": 4472.2,
+      "y": 5865.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_144",
+      "name": "52",
+      "type": "valve",
+      "x": 3683.9,
+      "y": 5793.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_145",
+      "name": "53",
+      "type": "valve",
+      "x": 3429.0,
+      "y": 6067.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_146",
+      "name": "54",
+      "type": "valve",
+      "x": 3317.7,
+      "y": 6202.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_147",
+      "name": "56",
+      "type": "valve",
+      "x": 4846.0,
+      "y": 5354.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_149",
+      "name": "74",
+      "type": "valve",
+      "x": 4763.6,
+      "y": 7493.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_150",
+      "name": "75",
+      "type": "valve",
+      "x": 4941.9,
+      "y": 7394.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_151",
+      "name": "69",
+      "type": "valve",
+      "x": 3873.4,
+      "y": 7479.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_153",
+      "name": "91",
+      "type": "valve",
+      "x": 7875.0,
+      "y": 8721.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_154",
+      "name": "92",
+      "type": "valve",
+      "x": 7971.3,
+      "y": 8721.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_155",
+      "name": "93",
+      "type": "valve",
+      "x": 7868.5,
+      "y": 8603.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_156",
+      "name": "94",
+      "type": "valve",
+      "x": 8190.3,
+      "y": 8776.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_157",
+      "name": "96",
+      "type": "valve",
+      "x": 8157.3,
+      "y": 9051.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_158",
+      "name": "98",
+      "type": "valve",
+      "x": 6046.3,
+      "y": 7749.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_159",
+      "name": "97",
+      "type": "valve",
+      "x": 8404.7,
+      "y": 8586.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_160",
+      "name": "100",
+      "type": "valve",
+      "x": 7541.0,
+      "y": 7918.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_161",
+      "name": "101",
+      "type": "valve",
+      "x": 7746.6,
+      "y": 7831.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_162",
+      "name": "102",
+      "type": "valve",
+      "x": 7570.3,
+      "y": 8027.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_163",
+      "name": "103",
+      "type": "valve",
+      "x": 7338.6,
+      "y": 8113.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_164",
+      "name": "104",
+      "type": "valve",
+      "x": 7469.9,
+      "y": 8179.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_165",
+      "name": "106",
+      "type": "valve",
+      "x": 7876.3,
+      "y": 7976.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_166",
+      "name": "107",
+      "type": "valve",
+      "x": 8068.4,
+      "y": 7889.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_167",
+      "name": "108",
+      "type": "valve",
+      "x": 7972.7,
+      "y": 7792.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_168",
+      "name": "109",
+      "type": "valve",
+      "x": 8012.5,
+      "y": 8315.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_169",
+      "name": "105",
+      "type": "valve",
+      "x": 7508.4,
+      "y": 7436.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_170",
+      "name": "110",
+      "type": "valve",
+      "x": 8051.8,
+      "y": 7543.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_171",
+      "name": "111",
+      "type": "valve",
+      "x": 8056.5,
+      "y": 7406.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_172",
+      "name": "112",
+      "type": "valve",
+      "x": 8034.0,
+      "y": 7105.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_173",
+      "name": "113",
+      "type": "valve",
+      "x": 8082.7,
+      "y": 7759.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_174",
+      "name": "114в",
+      "type": "valve",
+      "x": 8345.2,
+      "y": 7754.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_175",
+      "name": "115",
+      "type": "valve",
+      "x": 8760.2,
+      "y": 7984.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_176",
+      "name": "116",
+      "type": "valve",
+      "x": 9057.1,
+      "y": 7949.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_177",
+      "name": "117",
+      "type": "valve",
+      "x": 9562.3,
+      "y": 7940.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_178",
+      "name": "119",
+      "type": "valve",
+      "x": 10011.0,
+      "y": 7895.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_179",
+      "name": "118",
+      "type": "valve",
+      "x": 9812.2,
+      "y": 7901.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_180",
+      "name": "120",
+      "type": "valve",
+      "x": 10105.7,
+      "y": 7988.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_181",
+      "name": "122",
+      "type": "valve",
+      "x": 10096.8,
+      "y": 7733.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_182",
+      "name": "121",
+      "type": "valve",
+      "x": 10292.1,
+      "y": 7895.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_183",
+      "name": "124",
+      "type": "valve",
+      "x": 4750.0,
+      "y": 7050.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_184",
+      "name": "125",
+      "type": "valve",
+      "x": 5792.4,
+      "y": 6840.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_185",
+      "name": "126",
+      "type": "valve",
+      "x": 6222.9,
+      "y": 6750.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_186",
+      "name": "127",
+      "type": "valve",
+      "x": 7763.1,
+      "y": 6742.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_187",
+      "name": "128",
+      "type": "valve",
+      "x": 7849.6,
+      "y": 6839.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_188",
+      "name": "129",
+      "type": "valve",
+      "x": 8056.9,
+      "y": 6743.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_189",
+      "name": "131",
+      "type": "valve",
+      "x": 8283.5,
+      "y": 6835.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_191",
+      "name": "132",
+      "type": "valve",
+      "x": 8555.3,
+      "y": 6835.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_192",
+      "name": "134",
+      "type": "valve",
+      "x": 8922.6,
+      "y": 6820.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_193",
+      "name": "135",
+      "type": "valve",
+      "x": 9051.6,
+      "y": 6591.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_194",
+      "name": "136",
+      "type": "valve",
+      "x": 9046.5,
+      "y": 6464.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_195",
+      "name": "137",
+      "type": "valve",
+      "x": 8631.9,
+      "y": 6154.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_196",
+      "name": "138",
+      "type": "valve",
+      "x": 9327.1,
+      "y": 6781.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_197",
+      "name": "139",
+      "type": "valve",
+      "x": 9538.1,
+      "y": 6747.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_198",
+      "name": "140",
+      "type": "valve",
+      "x": 9487.8,
+      "y": 6532.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_199",
+      "name": "141",
+      "type": "valve",
+      "x": 9683.2,
+      "y": 6748.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_200",
+      "name": "142",
+      "type": "valve",
+      "x": 10129.9,
+      "y": 6798.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_201",
+      "name": "143",
+      "type": "valve",
+      "x": 10321.7,
+      "y": 6743.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_202",
+      "name": "147",
+      "type": "valve",
+      "x": 10091.7,
+      "y": 5868.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_203",
+      "name": "148",
+      "type": "valve",
+      "x": 10109.0,
+      "y": 5516.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_204",
+      "name": "150",
+      "type": "valve",
+      "x": 13148.1,
+      "y": 4977.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_205",
+      "name": "176",
+      "type": "valve",
+      "x": 7830.4,
+      "y": 6094.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_206",
+      "name": "130",
+      "type": "valve",
+      "x": 7966.1,
+      "y": 6577.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_207",
+      "name": "144",
+      "type": "valve",
+      "x": 10403.4,
+      "y": 6839.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_208",
+      "name": "145",
+      "type": "valve",
+      "x": 10602.4,
+      "y": 6736.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_209",
+      "name": "146",
+      "type": "valve",
+      "x": 10531.4,
+      "y": 6585.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_210",
+      "name": "151",
+      "type": "valve",
+      "x": 11298.6,
+      "y": 6842.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_211",
+      "name": "152",
+      "type": "valve",
+      "x": 11395.3,
+      "y": 6609.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_212",
+      "name": "154",
+      "type": "valve",
+      "x": 11670.7,
+      "y": 6807.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_213",
+      "name": "155",
+      "type": "valve",
+      "x": 11871.5,
+      "y": 6807.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_214",
+      "name": "153",
+      "type": "valve",
+      "x": 12555.3,
+      "y": 5883.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_215",
+      "name": "156",
+      "type": "valve",
+      "x": 4894.9,
+      "y": 6643.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_216",
+      "name": "160",
+      "type": "valve",
+      "x": 4855.3,
+      "y": 6266.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_217",
+      "name": "157",
+      "type": "valve",
+      "x": 4860.6,
+      "y": 6447.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_218",
+      "name": "158",
+      "type": "valve",
+      "x": 5052.6,
+      "y": 6479.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_219",
+      "name": "159",
+      "type": "valve",
+      "x": 5069.0,
+      "y": 6280.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_220",
+      "name": "161",
+      "type": "valve",
+      "x": 4933.8,
+      "y": 6059.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_221",
+      "name": "162",
+      "type": "valve",
+      "x": 4930.3,
+      "y": 5934.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_222",
+      "name": "163",
+      "type": "valve",
+      "x": 5104.0,
+      "y": 6022.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_223",
+      "name": "164",
+      "type": "valve",
+      "x": 5281.7,
+      "y": 6022.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_224",
+      "name": "165",
+      "type": "valve",
+      "x": 5584.2,
+      "y": 6022.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_225",
+      "name": "166",
+      "type": "valve",
+      "x": 5970.5,
+      "y": 6022.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_226",
+      "name": "167",
+      "type": "valve",
+      "x": 6259.8,
+      "y": 6022.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_227",
+      "name": "168",
+      "type": "valve",
+      "x": 6382.2,
+      "y": 6022.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_228",
+      "name": "175",
+      "type": "valve",
+      "x": 6907.0,
+      "y": 6071.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_229",
+      "name": "169",
+      "type": "valve",
+      "x": 6222.0,
+      "y": 5499.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_230",
+      "name": "170",
+      "type": "valve",
+      "x": 6157.4,
+      "y": 5227.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_231",
+      "name": "182",
+      "type": "valve",
+      "x": 7387.7,
+      "y": 5299.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_232",
+      "name": "181",
+      "type": "valve",
+      "x": 7853.2,
+      "y": 5358.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_233",
+      "name": "180",
+      "type": "valve",
+      "x": 7955.5,
+      "y": 5537.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_234",
+      "name": "179",
+      "type": "valve",
+      "x": 8172.0,
+      "y": 5319.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_235",
+      "name": "177",
+      "type": "valve",
+      "x": 8179.8,
+      "y": 5520.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_236",
+      "name": "178",
+      "type": "valve",
+      "x": 8290.2,
+      "y": 5318.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_237",
+      "name": "198",
+      "type": "valve",
+      "x": 5979.8,
+      "y": 3369.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_238",
+      "name": "197",
+      "type": "valve",
+      "x": 6035.4,
+      "y": 2878.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_239",
+      "name": "199",
+      "type": "valve",
+      "x": 5759.1,
+      "y": 2863.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_240",
+      "name": "201",
+      "type": "valve",
+      "x": 5886.3,
+      "y": 2506.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_241",
+      "name": "200",
+      "type": "valve",
+      "x": 5605.1,
+      "y": 2526.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_242",
+      "name": "203",
+      "type": "valve",
+      "x": 5580.5,
+      "y": 2345.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_243",
+      "name": "202",
+      "type": "valve",
+      "x": 5892.1,
+      "y": 2378.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_244",
+      "name": "204",
+      "type": "valve",
+      "x": 5966.2,
+      "y": 2297.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_245",
+      "name": "205",
+      "type": "valve",
+      "x": 6127.5,
+      "y": 1636.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_246",
+      "name": "206",
+      "type": "valve",
+      "x": 5561.5,
+      "y": 1723.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_247",
+      "name": "207",
+      "type": "valve",
+      "x": 5256.4,
+      "y": 1666.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_248",
+      "name": "209",
+      "type": "valve",
+      "x": 4688.6,
+      "y": 1949.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_249",
+      "name": "208",
+      "type": "valve",
+      "x": 4830.0,
+      "y": 1855.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_250",
+      "name": "210",
+      "type": "valve",
+      "x": 4620.7,
+      "y": 1689.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_251",
+      "name": "211",
+      "type": "valve",
+      "x": 4877.0,
+      "y": 899.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_252",
+      "name": "44",
+      "type": "valve",
+      "x": 4954.3,
+      "y": 3590.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_255",
+      "name": "95",
+      "type": "valve",
+      "x": 8314.5,
+      "y": 8922.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_256",
+      "name": "133",
+      "type": "valve",
+      "x": 8856.2,
+      "y": 6591.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_257",
+      "name": "123",
+      "type": "valve",
+      "x": 10283.7,
+      "y": 8220.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_262",
+      "name": "ПГ 108",
+      "type": "hydrant",
+      "x": 13085.1,
+      "y": 5242.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_263",
+      "name": "ПГ 101",
+      "type": "hydrant",
+      "x": 12292.4,
+      "y": 5843.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_264",
+      "name": "ПГ 100",
+      "type": "hydrant",
+      "x": 12276.1,
+      "y": 6041.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_265",
+      "name": "ПГ 113",
+      "type": "hydrant",
+      "x": 4937.7,
+      "y": 1202.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_266",
+      "name": "ПГ 37",
+      "type": "hydrant",
+      "x": 5183.0,
+      "y": 1787.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_267",
+      "name": "ПГ 38",
+      "type": "hydrant",
+      "x": 5486.8,
+      "y": 1586.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_268",
+      "name": "3",
+      "type": "valve",
+      "x": 2337.7,
+      "y": 5819.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_269",
+      "name": "4",
+      "type": "valve",
+      "x": 2471.6,
+      "y": 5637.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_319",
+      "name": "58",
+      "type": "valve",
+      "x": 5020.4,
+      "y": 4854.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_335",
+      "name": "55",
+      "type": "valve",
+      "x": 4281.9,
+      "y": 5329.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_339",
+      "name": "149",
+      "type": "valve",
+      "x": 12355.0,
+      "y": 5516.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_341",
+      "name": "ПГ 107",
+      "type": "hydrant",
+      "x": 12503.9,
+      "y": 5242.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_347",
+      "name": "171",
+      "type": "valve",
+      "x": 6416.9,
+      "y": 4999.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_348",
+      "name": "172",
+      "type": "valve",
+      "x": 6696.5,
+      "y": 4999.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_349",
+      "name": "173",
+      "type": "valve",
+      "x": 6829.4,
+      "y": 5080.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_350",
+      "name": "174",
+      "type": "valve",
+      "x": 7163.9,
+      "y": 4945.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_352",
+      "name": "187",
+      "type": "valve",
+      "x": 7626.9,
+      "y": 4466.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_353",
+      "name": "186",
+      "type": "valve",
+      "x": 7787.3,
+      "y": 4439.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_354",
+      "name": "193",
+      "type": "valve",
+      "x": 7307.6,
+      "y": 4255.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_355",
+      "name": "191",
+      "type": "valve",
+      "x": 8353.1,
+      "y": 4205.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_356",
+      "name": "192",
+      "type": "valve",
+      "x": 8825.0,
+      "y": 4252.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_358",
+      "name": "185",
+      "type": "valve",
+      "x": 7859.3,
+      "y": 4543.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_359",
+      "name": "184",
+      "type": "valve",
+      "x": 8068.4,
+      "y": 4530.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_360",
+      "name": "ПГ 102",
+      "type": "hydrant",
+      "x": 9129.8,
+      "y": 4186.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_361",
+      "name": "ПГ 104",
+      "type": "hydrant",
+      "x": 8668.3,
+      "y": 4186.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_362",
+      "name": "183",
+      "type": "valve",
+      "x": 8145.2,
+      "y": 4698.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_364",
+      "name": "188",
+      "type": "valve",
+      "x": 8072.5,
+      "y": 4366.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_365",
+      "name": "190",
+      "type": "valve",
+      "x": 8157.9,
+      "y": 4254.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_366",
+      "name": "194",
+      "type": "valve",
+      "x": 7076.1,
+      "y": 3621.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_367",
+      "name": "195",
+      "type": "valve",
+      "x": 6703.2,
+      "y": 3621.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_368",
+      "name": "196",
+      "type": "valve",
+      "x": 6844.4,
+      "y": 3414.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_370",
+      "name": "57",
+      "type": "valve",
+      "x": 5101.7,
+      "y": 5347.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_371",
+      "name": "23",
+      "type": "valve",
+      "x": 2834.5,
+      "y": 3817.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_401",
+      "name": "к4",
+      "type": "valve",
+      "x": 2320.2,
+      "y": 5902.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_402",
+      "name": "к5",
+      "type": "valve",
+      "x": 2533.3,
+      "y": 6086.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_403",
+      "name": "к6",
+      "type": "valve",
+      "x": 2328.8,
+      "y": 6215.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_404",
+      "name": "к7",
+      "type": "valve",
+      "x": 2739.7,
+      "y": 6483.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_405",
+      "name": "к8",
+      "type": "valve",
+      "x": 2924.0,
+      "y": 5980.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_406",
+      "name": "к9",
+      "type": "valve",
+      "x": 2770.6,
+      "y": 5870.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_408",
+      "name": "к10",
+      "type": "valve",
+      "x": 3514.2,
+      "y": 4793.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_409",
+      "name": "к12",
+      "type": "valve",
+      "x": 3150.4,
+      "y": 4582.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_410",
+      "name": "к11",
+      "type": "valve",
+      "x": 3776.0,
+      "y": 4616.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_411",
+      "name": "к14",
+      "type": "valve",
+      "x": 3376.6,
+      "y": 4178.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_412",
+      "name": "к15",
+      "type": "valve",
+      "x": 3575.6,
+      "y": 4046.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_413",
+      "name": "к13",
+      "type": "valve",
+      "x": 3990.4,
+      "y": 4390.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_414",
+      "name": "к16",
+      "type": "valve",
+      "x": 3128.3,
+      "y": 3900.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_415",
+      "name": "к17",
+      "type": "valve",
+      "x": 2448.6,
+      "y": 3386.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_416",
+      "name": "к18",
+      "type": "valve",
+      "x": 3025.1,
+      "y": 3096.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_417",
+      "name": "к19",
+      "type": "valve",
+      "x": 3098.7,
+      "y": 2942.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_418",
+      "name": "к20",
+      "type": "valve",
+      "x": 3717.3,
+      "y": 3164.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_419",
+      "name": "к21",
+      "type": "valve",
+      "x": 3770.4,
+      "y": 3427.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_420",
+      "name": "к22",
+      "type": "valve",
+      "x": 4230.2,
+      "y": 3550.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_421",
+      "name": "к1",
+      "type": "valve",
+      "x": 2492.4,
+      "y": 5480.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_422",
+      "name": "к2",
+      "type": "valve",
+      "x": 2443.4,
+      "y": 5426.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_423",
+      "name": "к23",
+      "type": "valve",
+      "x": 4325.7,
+      "y": 4647.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_424",
+      "name": "к24",
+      "type": "valve",
+      "x": 4809.4,
+      "y": 3602.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_425",
+      "name": "к25",
+      "type": "valve",
+      "x": 4997.7,
+      "y": 3808.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_426",
+      "name": "к26",
+      "type": "valve",
+      "x": 5318.5,
+      "y": 4173.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_427",
+      "name": "к28",
+      "type": "valve",
+      "x": 3992.6,
+      "y": 4829.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_428",
+      "name": "к29",
+      "type": "valve",
+      "x": 4462.7,
+      "y": 4974.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_429",
+      "name": "к30",
+      "type": "valve",
+      "x": 4411.1,
+      "y": 5502.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_430",
+      "name": "к31",
+      "type": "valve",
+      "x": 3752.9,
+      "y": 5524.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_431",
+      "name": "к32",
+      "type": "valve",
+      "x": 4631.0,
+      "y": 5677.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_432",
+      "name": "к33",
+      "type": "valve",
+      "x": 4233.2,
+      "y": 5996.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_433",
+      "name": "к34",
+      "type": "valve",
+      "x": 3723.2,
+      "y": 6025.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_434",
+      "name": "к35",
+      "type": "valve",
+      "x": 3221.4,
+      "y": 5895.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_435",
+      "name": "к36",
+      "type": "valve",
+      "x": 3084.1,
+      "y": 6030.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_436",
+      "name": "к27",
+      "type": "valve",
+      "x": 5130.0,
+      "y": 3521.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_437",
+      "name": "к38",
+      "type": "valve",
+      "x": 5004.9,
+      "y": 5198.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_438",
+      "name": "к40",
+      "type": "valve",
+      "x": 2946.2,
+      "y": 7639.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_439",
+      "name": "к41",
+      "type": "valve",
+      "x": 2986.6,
+      "y": 7317.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_440",
+      "name": "к42",
+      "type": "valve",
+      "x": 3252.8,
+      "y": 7690.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_441",
+      "name": "к43",
+      "type": "valve",
+      "x": 3363.4,
+      "y": 7287.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_442",
+      "name": "к44",
+      "type": "valve",
+      "x": 3890.9,
+      "y": 7165.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_443",
+      "name": "к45",
+      "type": "valve",
+      "x": 3651.5,
+      "y": 6384.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_444",
+      "name": "к46",
+      "type": "valve",
+      "x": 4138.6,
+      "y": 6404.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_445",
+      "name": "к47",
+      "type": "valve",
+      "x": 3695.7,
+      "y": 7477.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_446",
+      "name": "к48",
+      "type": "valve",
+      "x": 3789.4,
+      "y": 7299.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_447",
+      "name": "к49",
+      "type": "valve",
+      "x": 4027.4,
+      "y": 7281.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_448",
+      "name": "к50",
+      "type": "valve",
+      "x": 4166.8,
+      "y": 7479.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_449",
+      "name": "к51",
+      "type": "valve",
+      "x": 4425.4,
+      "y": 7280.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_450",
+      "name": "к52",
+      "type": "valve",
+      "x": 4609.7,
+      "y": 7490.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_451",
+      "name": "к53",
+      "type": "valve",
+      "x": 5012.9,
+      "y": 7609.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_452",
+      "name": "к54",
+      "type": "valve",
+      "x": 4702.2,
+      "y": 7609.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_453",
+      "name": "к55",
+      "type": "valve",
+      "x": 4687.7,
+      "y": 8026.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_454",
+      "name": "к56",
+      "type": "valve",
+      "x": 4685.2,
+      "y": 8205.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_455",
+      "name": "к57",
+      "type": "valve",
+      "x": 4675.5,
+      "y": 8455.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_456",
+      "name": "к58",
+      "type": "valve",
+      "x": 5424.5,
+      "y": 8598.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_457",
+      "name": "к59",
+      "type": "valve",
+      "x": 6372.7,
+      "y": 8608.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_458",
+      "name": "к60",
+      "type": "valve",
+      "x": 6606.4,
+      "y": 8961.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_459",
+      "name": "к61",
+      "type": "valve",
+      "x": 6909.8,
+      "y": 8608.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_460",
+      "name": "к62",
+      "type": "valve",
+      "x": 7728.0,
+      "y": 8525.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_461",
+      "name": "к63",
+      "type": "valve",
+      "x": 8406.5,
+      "y": 8765.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_462",
+      "name": "к64",
+      "type": "valve",
+      "x": 8401.4,
+      "y": 9131.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_463",
+      "name": "к65",
+      "type": "valve",
+      "x": 8350.2,
+      "y": 9225.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_464",
+      "name": "к66",
+      "type": "valve",
+      "x": 8203.7,
+      "y": 8596.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_465",
+      "name": "к67",
+      "type": "valve",
+      "x": 5996.4,
+      "y": 7936.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_466",
+      "name": "к68",
+      "type": "valve",
+      "x": 6886.5,
+      "y": 7965.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_467",
+      "name": "к69",
+      "type": "valve",
+      "x": 7413.4,
+      "y": 7773.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_468",
+      "name": "к70",
+      "type": "valve",
+      "x": 7251.0,
+      "y": 7947.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_469",
+      "name": "к72",
+      "type": "valve",
+      "x": 8141.9,
+      "y": 7963.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_470",
+      "name": "к73",
+      "type": "valve",
+      "x": 7828.3,
+      "y": 8344.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_471",
+      "name": "к71",
+      "type": "valve",
+      "x": 7333.2,
+      "y": 7272.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_472",
+      "name": "к74",
+      "type": "valve",
+      "x": 7787.0,
+      "y": 7471.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_473",
+      "name": "к75",
+      "type": "valve",
+      "x": 7795.6,
+      "y": 7335.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_474",
+      "name": "к76",
+      "type": "valve",
+      "x": 7793.1,
+      "y": 7008.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_475",
+      "name": "к77",
+      "type": "valve",
+      "x": 8243.4,
+      "y": 7607.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_476",
+      "name": "к78",
+      "type": "valve",
+      "x": 8420.1,
+      "y": 7669.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_477",
+      "name": "к79",
+      "type": "valve",
+      "x": 8680.6,
+      "y": 7815.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_478",
+      "name": "к80",
+      "type": "valve",
+      "x": 9022.6,
+      "y": 7815.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_479",
+      "name": "к81",
+      "type": "valve",
+      "x": 9515.7,
+      "y": 7812.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_480",
+      "name": "к82",
+      "type": "valve",
+      "x": 9662.2,
+      "y": 7765.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_481",
+      "name": "к83",
+      "type": "valve",
+      "x": 10386.9,
+      "y": 8017.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_482",
+      "name": "к84",
+      "type": "valve",
+      "x": 10354.0,
+      "y": 8303.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_483",
+      "name": "к85",
+      "type": "valve",
+      "x": 4944.1,
+      "y": 7040.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_484",
+      "name": "к86",
+      "type": "valve",
+      "x": 5638.7,
+      "y": 6846.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_485",
+      "name": "к87",
+      "type": "valve",
+      "x": 5993.3,
+      "y": 6621.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_486",
+      "name": "к88",
+      "type": "valve",
+      "x": 7708.0,
+      "y": 6564.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_487",
+      "name": "к89",
+      "type": "valve",
+      "x": 8222.2,
+      "y": 6639.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_488",
+      "name": "к90",
+      "type": "valve",
+      "x": 8485.0,
+      "y": 6639.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_489",
+      "name": "к91",
+      "type": "valve",
+      "x": 8816.8,
+      "y": 6787.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_490",
+      "name": "к92",
+      "type": "valve",
+      "x": 8932.3,
+      "y": 6922.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_491",
+      "name": "к93",
+      "type": "valve",
+      "x": 9227.8,
+      "y": 6854.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_492",
+      "name": "к94",
+      "type": "valve",
+      "x": 8544.8,
+      "y": 6360.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_493",
+      "name": "к95",
+      "type": "valve",
+      "x": 9527.6,
+      "y": 6844.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_494",
+      "name": "к96",
+      "type": "valve",
+      "x": 9404.1,
+      "y": 6620.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_495",
+      "name": "к97",
+      "type": "valve",
+      "x": 9623.5,
+      "y": 6390.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_496",
+      "name": "к98",
+      "type": "valve",
+      "x": 9843.8,
+      "y": 6602.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_497",
+      "name": "к99",
+      "type": "valve",
+      "x": 9994.4,
+      "y": 6660.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_498",
+      "name": "к100",
+      "type": "valve",
+      "x": 10202.8,
+      "y": 6589.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_499",
+      "name": "к101",
+      "type": "valve",
+      "x": 10402.8,
+      "y": 5858.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_500",
+      "name": "к102",
+      "type": "valve",
+      "x": 10367.8,
+      "y": 5403.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_501",
+      "name": "к105",
+      "type": "valve",
+      "x": 13045.9,
+      "y": 5125.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_502",
+      "name": "к106",
+      "type": "valve",
+      "x": 13008.4,
+      "y": 4754.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_503",
+      "name": "к107",
+      "type": "valve",
+      "x": 11026.1,
+      "y": 6879.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_504",
+      "name": "к108",
+      "type": "valve",
+      "x": 11099.3,
+      "y": 6608.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_505",
+      "name": "к109",
+      "type": "valve",
+      "x": 12217.1,
+      "y": 5934.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_506",
+      "name": "к110",
+      "type": "valve",
+      "x": 12644.8,
+      "y": 5999.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_507",
+      "name": "к111",
+      "type": "valve",
+      "x": 11569.9,
+      "y": 6571.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_508",
+      "name": "к112",
+      "type": "valve",
+      "x": 12130.7,
+      "y": 6801.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_509",
+      "name": "к113",
+      "type": "valve",
+      "x": 4666.4,
+      "y": 6748.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_510",
+      "name": "к114",
+      "type": "valve",
+      "x": 4615.2,
+      "y": 6484.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_511",
+      "name": "к115",
+      "type": "valve",
+      "x": 5235.1,
+      "y": 6453.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_512",
+      "name": "к116",
+      "type": "valve",
+      "x": 4615.2,
+      "y": 6384.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_513",
+      "name": "к117",
+      "type": "valve",
+      "x": 4707.7,
+      "y": 5861.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_514",
+      "name": "к118",
+      "type": "valve",
+      "x": 4891.6,
+      "y": 5827.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_515",
+      "name": "к119",
+      "type": "valve",
+      "x": 5440.6,
+      "y": 5898.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_516",
+      "name": "к120",
+      "type": "valve",
+      "x": 5803.7,
+      "y": 6097.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_517",
+      "name": "к121",
+      "type": "valve",
+      "x": 6163.3,
+      "y": 6097.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_518",
+      "name": "к122",
+      "type": "valve",
+      "x": 6447.4,
+      "y": 6097.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_519",
+      "name": "к123",
+      "type": "valve",
+      "x": 6576.6,
+      "y": 5886.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_520",
+      "name": "к124",
+      "type": "valve",
+      "x": 5964.9,
+      "y": 5588.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_521",
+      "name": "к125",
+      "type": "valve",
+      "x": 5967.4,
+      "y": 5263.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_522",
+      "name": "к129",
+      "type": "valve",
+      "x": 7146.1,
+      "y": 5864.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_523",
+      "name": "к130",
+      "type": "valve",
+      "x": 8088.9,
+      "y": 5910.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_524",
+      "name": "к132",
+      "type": "valve",
+      "x": 7750.8,
+      "y": 5559.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_525",
+      "name": "к133",
+      "type": "valve",
+      "x": 7183.7,
+      "y": 5475.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_526",
+      "name": "к142",
+      "type": "valve",
+      "x": 7086.6,
+      "y": 4287.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_527",
+      "name": "к146",
+      "type": "valve",
+      "x": 6198.2,
+      "y": 2764.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_528",
+      "name": "к147",
+      "type": "valve",
+      "x": 5816.2,
+      "y": 3241.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_529",
+      "name": "к148",
+      "type": "valve",
+      "x": 5659.4,
+      "y": 2773.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_530",
+      "name": "к149",
+      "type": "valve",
+      "x": 6074.8,
+      "y": 2501.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_531",
+      "name": "к150",
+      "type": "valve",
+      "x": 6130.2,
+      "y": 2128.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_532",
+      "name": "к131",
+      "type": "valve",
+      "x": 8474.4,
+      "y": 5592.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_533",
+      "name": "к151",
+      "type": "valve",
+      "x": 6433.1,
+      "y": 1657.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_534",
+      "name": "к152",
+      "type": "valve",
+      "x": 5807.7,
+      "y": 1668.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_535",
+      "name": "к153",
+      "type": "valve",
+      "x": 5356.1,
+      "y": 1780.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_536",
+      "name": "к154",
+      "type": "valve",
+      "x": 4895.6,
+      "y": 1936.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_537",
+      "name": "к155",
+      "type": "valve",
+      "x": 5166.1,
+      "y": 1954.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_538",
+      "name": "к156",
+      "type": "valve",
+      "x": 4379.3,
+      "y": 1704.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_539",
+      "name": "к157",
+      "type": "valve",
+      "x": 5248.5,
+      "y": 1275.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_540",
+      "name": "к158",
+      "type": "valve",
+      "x": 5085.3,
+      "y": 773.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_541",
+      "name": "к3",
+      "type": "valve",
+      "x": 2515.8,
+      "y": 5791.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_542",
+      "name": "к39",
+      "type": "valve",
+      "x": 5319.9,
+      "y": 4817.2,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_543",
+      "name": "к37",
+      "type": "valve",
+      "x": 4455.5,
+      "y": 5157.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_544",
+      "name": "к103",
+      "type": "valve",
+      "x": 12548.2,
+      "y": 5539.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_545",
+      "name": "к104",
+      "type": "valve",
+      "x": 12808.6,
+      "y": 5316.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_546",
+      "name": "к126",
+      "type": "valve",
+      "x": 6387.1,
+      "y": 5121.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_547",
+      "name": "к127",
+      "type": "valve",
+      "x": 7017.2,
+      "y": 5171.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_548",
+      "name": "к128",
+      "type": "valve",
+      "x": 7435.4,
+      "y": 4981.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_549",
+      "name": "к135",
+      "type": "valve",
+      "x": 8204.7,
+      "y": 4430.3,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_550",
+      "name": "к139",
+      "type": "valve",
+      "x": 8159.4,
+      "y": 4093.4,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_551",
+      "name": "к140",
+      "type": "valve",
+      "x": 8659.3,
+      "y": 4077.7,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_552",
+      "name": "к141",
+      "type": "valve",
+      "x": 9419.1,
+      "y": 4260.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_553",
+      "name": "к136",
+      "type": "valve",
+      "x": 7858.5,
+      "y": 4635.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_554",
+      "name": "к137",
+      "type": "valve",
+      "x": 7562.1,
+      "y": 4719.6,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_555",
+      "name": "к134",
+      "type": "valve",
+      "x": 8198.6,
+      "y": 4788.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_556",
+      "name": "к138",
+      "type": "valve",
+      "x": 8277.9,
+      "y": 4361.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_557",
+      "name": "к143",
+      "type": "valve",
+      "x": 7330.4,
+      "y": 3747.9,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_558",
+      "name": "к144",
+      "type": "valve",
+      "x": 6657.3,
+      "y": 3508.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_559",
+      "name": "к145",
+      "type": "valve",
+      "x": 7004.2,
+      "y": 3325.0,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_560",
+      "name": "к38а",
+      "type": "valve",
+      "x": 5295.8,
+      "y": 5417.1,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_561",
+      "name": "к16а",
+      "type": "valve",
+      "x": 3026.2,
+      "y": 3958.8,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    },
+    {
+      "id": "dxf_node_562",
+      "name": "Условные обозначения выпуск воздуха слив жидкости затвор задвижка кран шаровый водомерный узел пожарный гидрант 152 номер запорной арматуры номер колодца (камеры) к109 ПГ 101 номер пожарного гидранта Ду диаметр трубопровода ст стальной трубопровод пэ полиэтиленовый трубопровод чуг чугунный трубопровод",
+      "type": "hydrant",
+      "x": 12842.4,
+      "y": 3679.5,
+      "status": "open",
+      "diameter": 150,
+      "description": "Извлечено из чертежа КОМПАС"
+    }
+  ],
+  "dimensions": {
+    "width": 14904,
+    "height": 10528
+  }
+}

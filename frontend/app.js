@@ -4,6 +4,7 @@ let currentNetworkId = "drinking";
 let map = null;
 let imageOverlay = null;
 let networkData = { nodes: [], dimensions: { width: 14904, height: 10528 } };
+let landmarksData = [];
 let bounds = [[0, 0], [10528, 14904]];
 let nodesLayer = null;
 let pulseLayer = null;
@@ -32,6 +33,11 @@ async function initApp() {
 
     map.on("click", handleMapClick);
 
+    try {
+        const lmRes = await fetch("landmarks_pv.json");
+        if (lmRes.ok) landmarksData = await lmRes.json();
+    } catch (e) {}
+
     setupSearch();
     setupMobileSearch();
 
@@ -44,7 +50,6 @@ async function loadNetwork(netId) {
     clearSearch();
     clearMobileSearch();
 
-    // Обновляем состояние табов
     document.querySelectorAll(".net-tab").forEach(t => t.classList.remove("active"));
     const tabDesktop = document.getElementById(`tab-${netId}`);
     const tabMobile = document.getElementById(`m-tab-${netId}`);
@@ -74,7 +79,6 @@ async function loadNetwork(netId) {
         map.removeLayer(imageOverlay);
     }
 
-    // Загружаем правильный чертеж сети
     imageOverlay = L.imageOverlay(cfg.image, bounds).addTo(map);
     map.fitBounds(bounds);
 
@@ -223,6 +227,19 @@ function focusOnNode(node) {
     });
     const pulseMarker = L.marker([node.y, node.x], { icon: pulseIcon }).addTo(pulseLayer);
     setTimeout(() => pulseLayer.removeLayer(pulseMarker), 3500);
+}
+
+function focusOnLandmark(x, y, name) {
+    map.flyTo([y, x], Math.max(map.getZoom(), 0.4), { duration: 0.7 });
+    pulseLayer.clearLayers();
+    const pulseIcon = L.divIcon({
+        className: 'search-target-pulse',
+        iconSize: [54, 54],
+        iconAnchor: [27, 27]
+    });
+    const pulseMarker = L.marker([y, x], { icon: pulseIcon }).addTo(pulseLayer);
+    pulseMarker.bindTooltip(`🏢 ${name}`, { permanent: true, direction: "top", className: "custom-label" }).openTooltip();
+    setTimeout(() => pulseLayer.removeLayer(pulseMarker), 4500);
 }
 
 function generateEditorHTML(node, prefix = "") {
@@ -390,12 +407,60 @@ async function uploadBackup(event) {
     event.target.value = "";
 }
 
+function buildSearchResultsHTML(query, isMob = false) {
+    const nodeMatches = (networkData.nodes || []).filter(n => {
+        const nameMatch = (n.name || "").toLowerCase().includes(query);
+        const descMatch = (n.description || "").toLowerCase().includes(query);
+        return nameMatch || descMatch;
+    }).slice(0, 12);
+
+    const lmMatches = (currentNetworkId === "drinking" ? landmarksData : []).filter(l =>
+        (l.name || "").toLowerCase().includes(query)
+    ).slice(0, 6);
+
+    if (nodeMatches.length === 0 && lmMatches.length === 0) {
+        return '<div style="padding: 10px; color: #8e929b; font-size: 12px; text-align: center;">Ничего не найдено</div>';
+    }
+
+    const nodeHTML = nodeMatches.map(m => {
+        let badge = `<span style="color:#52c41a;">● В работе</span>`;
+        if (m.type === "hydrant") badge = `<span style="color:#ff4d4f;">🚒 ПГ</span>`;
+        else if (m.status === "no_cheeks") badge = `<span style="color:#ff4d4f; font-weight:bold;">⚠️ Без щёк</span>`;
+        else if (m.status === "closed") badge = `<span style="color:#fa8c16;">🔒 Закрыта</span>`;
+        else if (m.status === "hard_turn") badge = `<span style="color:#faad14;">🟡 Дефект</span>`;
+
+        const fn = isMob ? `selectMobileSearchResult('${m.id}')` : `selectSearchResult('${m.id}')`;
+        return `
+            <div class="search-item" onclick="${fn}">
+                <div>
+                    <b>${m.name}</b>
+                    ${m.description ? `<div style="font-size:11px; color:#8e929b;">${m.description}</div>` : ''}
+                </div>
+                <div style="font-size: 11.5px;">${badge}</div>
+            </div>
+        `;
+    }).join("");
+
+    const lmHTML = lmMatches.map(l => {
+        const safeName = l.name.replace(/'/g, "\\'");
+        return `
+            <div class="search-item" onclick="selectLandmarkResult(${l.x}, ${l.y}, '${safeName}', ${isMob})">
+                <div><b>${l.name}</b></div>
+                <div style="font-size: 11.5px; color:#60a5fa;">🏢 Цех / Объект</div>
+            </div>
+        `;
+    }).join("");
+
+    return nodeHTML + lmHTML;
+}
+
 function setupSearch() {
     const searchInput = document.getElementById("search-input");
     const searchClear = document.getElementById("search-clear");
     const dropdown = document.getElementById("search-dropdown");
 
     if (!searchInput) return;
+    searchInput.placeholder = "🔍 Задвижка, ПГ или цех (Кислородный, Т-1)...";
 
     searchInput.addEventListener("input", (e) => {
         const query = e.target.value.trim().toLowerCase();
@@ -406,35 +471,7 @@ function setupSearch() {
             return;
         }
 
-        const matches = (networkData.nodes || []).filter(n => {
-            const nameMatch = (n.name || "").toLowerCase().includes(query);
-            const descMatch = (n.description || "").toLowerCase().includes(query);
-            return nameMatch || descMatch;
-        }).slice(0, 15);
-
-        if (matches.length === 0) {
-            dropdown.innerHTML = '<div style="padding: 10px; color: #8e929b; font-size: 12px; text-align: center;">Ничего не найдено</div>';
-            dropdown.style.display = "block";
-            return;
-        }
-
-        dropdown.innerHTML = matches.map(m => {
-            let badge = `<span style="color:#52c41a;">● В работе</span>`;
-            if (m.type === "hydrant") badge = `<span style="color:#ff4d4f;">🚒 ПГ</span>`;
-            else if (m.status === "no_cheeks") badge = `<span style="color:#ff4d4f; font-weight:bold;">⚠️ Без щёк</span>`;
-            else if (m.status === "closed") badge = `<span style="color:#fa8c16;">🔒 Закрыта</span>`;
-            else if (m.status === "hard_turn") badge = `<span style="color:#faad14;">🟡 Дефект</span>`;
-
-            return `
-                <div class="search-item" onclick="selectSearchResult('${m.id}')">
-                    <div>
-                        <b>${m.name}</b>
-                        ${m.description ? `<div style="font-size:11px; color:#8e929b;">${m.description}</div>` : ''}
-                    </div>
-                    <div style="font-size: 11.5px;">${badge}</div>
-                </div>
-            `;
-        }).join("");
+        dropdown.innerHTML = buildSearchResultsHTML(query, false);
         dropdown.style.display = "block";
     });
 
@@ -459,42 +496,26 @@ function setupMobileSearch() {
             return;
         }
 
-        const matches = (networkData.nodes || []).filter(n => {
-            const nameMatch = (n.name || "").toLowerCase().includes(query);
-            const descMatch = (n.description || "").toLowerCase().includes(query);
-            return nameMatch || descMatch;
-        }).slice(0, 15);
-
-        if (matches.length === 0) {
-            mDropdown.innerHTML = '<div style="padding: 10px; color: #8e929b; font-size: 12px; text-align: center;">Ничего не найдено</div>';
-            mDropdown.style.display = "block";
-            return;
-        }
-
-        const dropdownContent = matches.map(m => {
-            let badge = `<span style="color:#52c41a;">● В работе</span>`;
-            if (m.type === "hydrant") badge = `<span style="color:#ff4d4f;">🚒 ПГ</span>`;
-            else if (m.status === "no_cheeks") badge = `<span style="color:#ff4d4f; font-weight:bold;">⚠️ Без щёк</span>`;
-            else if (m.status === "closed") badge = `<span style="color:#fa8c16;">🔒 Закрыта</span>`;
-            else if (m.status === "hard_turn") badge = `<span style="color:#faad14;">🟡 Дефект</span>`;
-
-            return `
-                <div class="search-item" onclick="selectMobileSearchResult('${m.id}')">
-                    <div>
-                        <b>${m.name}</b>
-                        ${m.description ? `<div style="font-size:11px; color:#8e929b;">${m.description}</div>` : ''}
-                    </div>
-                    <div style="font-size: 11.5px;">${badge}</div>
-                </div>
-            `;
-        }).join("");
-        mDropdown.innerHTML = dropdownContent;
+        mDropdown.innerHTML = buildSearchResultsHTML(query, true);
         mDropdown.style.display = "block";
     });
 
     document.addEventListener("click", (e) => {
         if (!e.target.closest(".mobile-top-bar")) mDropdown.style.display = "none";
     });
+}
+
+function selectLandmarkResult(x, y, name, isMob) {
+    if (isMob) {
+        document.getElementById("mobile-search-dropdown").style.display = "none";
+        document.getElementById("mobile-search-input").value = name;
+        document.getElementById("mobile-search-clear").style.display = "block";
+    } else {
+        document.getElementById("search-dropdown").style.display = "none";
+        document.getElementById("search-input").value = name;
+        document.getElementById("search-clear").style.display = "block";
+    }
+    focusOnLandmark(x, y, name);
 }
 
 function selectSearchResult(nodeId) {
