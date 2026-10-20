@@ -605,7 +605,7 @@ fetch('/data/dxf_all_labels.json')
 
 
 // === УПРАВЛЕНИЕ СХЕМАМИ (ЗАГРУЗКА, ПЕРЕКЛЮЧЕНИЕ, УДАЛЕНИЕ) ===
-NETWORKS_DEF = {};
+let NETWORKS_DEF = {};
 
 async function syncNetworksRegistry() {
     try {
@@ -638,10 +638,15 @@ function renderAllTabs(list) {
     if (desktopContainer) desktopContainer.innerHTML = '';
     if (mobileContainer) mobileContainer.innerHTML = '';
 
+    const defaultIds = ['drinking', 'tech_water', 'tech_water_out'];
+
     list.forEach(net => {
         const createTab = (isM) => {
+            const isDef = defaultIds.includes(net.id) || !!net.is_default;
+            const titleText = net.title || (net.id === 'drinking' ? '💧 ПВ' : net.id === 'tech_water' ? '⚙️ ТВ пром' : '⚙️ ТВ внепром');
+
             const btnWrap = document.createElement('div');
-            btnWrap.style.cssText = 'display:inline-flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:6px; overflow:hidden; margin-right:4px; margin-bottom:4px;';
+            btnWrap.style.cssText = 'display:inline-flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:6px; margin-right:4px; margin-bottom:4px;';
             if (currentNetworkId === net.id) {
                 btnWrap.style.background = '#2563eb';
                 btnWrap.style.borderColor = '#60a5fa';
@@ -649,22 +654,22 @@ function renderAllTabs(list) {
 
             const btn = document.createElement('button');
             btn.className = `net-tab ${currentNetworkId === net.id ? 'active' : ''} ${isM ? 'm-net-tab' : ''}`;
-            btn.textContent = net.title;
-            btn.style.cssText = 'border:none; background:transparent; color:#fff; padding:6px 12px; cursor:pointer; font-size:12px; font-weight:500;';
+            btn.innerHTML = titleText;
+            btn.style.cssText = 'border:none; background:transparent; color:#fff; padding:6px 10px; cursor:pointer; font-size:12px; font-weight:500; white-space:nowrap;';
             btn.onclick = (e) => {
                 e.preventDefault();
                 switchNetwork(net.id);
             };
             btnWrap.appendChild(btn);
 
-            if (!net.is_default) {
+            if (!isDef) {
                 const delBtn = document.createElement('span');
                 delBtn.innerHTML = '&times;';
                 delBtn.title = 'Удалить схему';
-                delBtn.style.cssText = 'color:#f87171; cursor:pointer; font-size:14px; padding:0 8px; font-weight:bold; line-height:1; display:flex; align-items:center;';
+                delBtn.style.cssText = 'color:#f87171; cursor:pointer; font-size:15px; padding:0 8px 0 2px; font-weight:bold; line-height:1; display:flex; align-items:center;';
                 delBtn.onclick = async (e) => {
                     e.stopPropagation();
-                    if (confirm(`Удалить схему "${net.title}" и все её узлы?`)) {
+                    if (confirm(`Удалить схему "${titleText}"?`)) {
                         await deleteSchemeById(net.id);
                     }
                 };
@@ -738,7 +743,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // === УПРАВЛЕНИЕ СХЕМАМИ (ЗАГРУЗКА, ПЕРЕКЛЮЧЕНИЕ, УДАЛЕНИЕ) ===
-NETWORKS_DEF = {};
+let NETWORKS_DEF = {};
 
 async function syncNetworksRegistry() {
     try {
@@ -771,10 +776,15 @@ function renderAllTabs(list) {
     if (desktopContainer) desktopContainer.innerHTML = '';
     if (mobileContainer) mobileContainer.innerHTML = '';
 
+    const defaultIds = ['drinking', 'tech_water', 'tech_water_out'];
+
     list.forEach(net => {
         const createTab = (isM) => {
+            const isDef = defaultIds.includes(net.id) || !!net.is_default;
+            const titleText = net.title || (net.id === 'drinking' ? '💧 ПВ' : net.id === 'tech_water' ? '⚙️ ТВ пром' : '⚙️ ТВ внепром');
+
             const btnWrap = document.createElement('div');
-            btnWrap.style.cssText = 'display:inline-flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:6px; overflow:hidden; margin-right:4px; margin-bottom:4px;';
+            btnWrap.style.cssText = 'display:inline-flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:6px; margin-right:4px; margin-bottom:4px;';
             if (currentNetworkId === net.id) {
                 btnWrap.style.background = '#2563eb';
                 btnWrap.style.borderColor = '#60a5fa';
@@ -782,22 +792,22 @@ function renderAllTabs(list) {
 
             const btn = document.createElement('button');
             btn.className = `net-tab ${currentNetworkId === net.id ? 'active' : ''} ${isM ? 'm-net-tab' : ''}`;
-            btn.textContent = net.title;
-            btn.style.cssText = 'border:none; background:transparent; color:#fff; padding:6px 12px; cursor:pointer; font-size:12px; font-weight:500;';
+            btn.innerHTML = titleText;
+            btn.style.cssText = 'border:none; background:transparent; color:#fff; padding:6px 10px; cursor:pointer; font-size:12px; font-weight:500; white-space:nowrap;';
             btn.onclick = (e) => {
                 e.preventDefault();
                 switchNetwork(net.id);
             };
             btnWrap.appendChild(btn);
 
-            if (!net.is_default) {
+            if (!isDef) {
                 const delBtn = document.createElement('span');
                 delBtn.innerHTML = '&times;';
                 delBtn.title = 'Удалить схему';
-                delBtn.style.cssText = 'color:#f87171; cursor:pointer; font-size:14px; padding:0 8px; font-weight:bold; line-height:1; display:flex; align-items:center;';
+                delBtn.style.cssText = 'color:#f87171; cursor:pointer; font-size:15px; padding:0 8px 0 2px; font-weight:bold; line-height:1; display:flex; align-items:center;';
                 delBtn.onclick = async (e) => {
                     e.stopPropagation();
-                    if (confirm(`Удалить схему "${net.title}" и все её узлы?`)) {
+                    if (confirm(`Удалить схему "${titleText}"?`)) {
                         await deleteSchemeById(net.id);
                     }
                 };
