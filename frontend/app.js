@@ -41,6 +41,7 @@ async function initApp() {
     setupSearch();
     setupMobileSearch();
 
+    await syncNetworksRegistry();
     await loadNetwork("drinking");
 }
 
@@ -64,22 +65,28 @@ async function loadNetwork(netId) {
         if (res.ok) {
             networkData = await res.json();
         } else {
-            networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] };
+            networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] || { width: 10000, height: 10000 } };
         }
     } catch (e) {
-        networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] };
+        networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] || { width: 10000, height: 10000 } };
     }
 
-    const cfg = NETWORKS_DEF[netId] || NETWORKS_DEF.drinking;
-    const width = networkData.dimensions?.width || cfg.width;
-    const height = networkData.dimensions?.height || cfg.height;
+    const cfg = NETWORKS_DEF[netId] || {
+        image: "scheme.jpg?v=1",
+        width: 10000,
+        height: 10000
+    };
+
+    const width = Number(networkData.dimensions?.width || cfg.width || 10000);
+    const height = Number(networkData.dimensions?.height || cfg.height || 10000);
     bounds = [[0, 0], [height, width]];
 
     if (imageOverlay) {
         map.removeLayer(imageOverlay);
     }
 
-    imageOverlay = L.imageOverlay(cfg.image, bounds).addTo(map);
+    const imgSrc = cfg.image.startsWith('/') ? cfg.image : ('/' + cfg.image);
+    imageOverlay = L.imageOverlay(imgSrc, bounds).addTo(map);
     map.fitBounds(bounds);
 
     setTimeout(() => {
@@ -755,4 +762,5 @@ window.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
+
 
