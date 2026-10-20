@@ -161,11 +161,9 @@
             </div>
 
             <!-- Вкладки 3-х сетей -->
-            <div class="network-tabs">
-                <button id="open-add-scheme-btn" onclick="document.getElementById('upload-modal').style.display='flex';" title="Добавить новую схему" style="background:#10b981; color:#fff; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold; margin-right:4px;">+ Схема</button>
-<button class="net-tab active" id="tab-drinking" onclick="switchNetwork('drinking')">💧 ПВ</button>
-                <button class="net-tab" id="tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ ТВ пром</button>
-                <button class="net-tab" id="tab-tech_water_out" onclick="switchNetwork('tech_water_out')">⚙️ ТВ внепром</button>
+                        <div class="network-tabs" style="display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                <button id="open-add-scheme-btn" onclick="document.getElementById('upload-modal').style.display='flex';" title="Добавить новую схему" style="background:#10b981; color:#fff; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">+ Схема</button>
+                <div id="network-tabs-list" style="display:flex; flex-wrap:wrap; gap:4px;"></div>
             </div>
             
             <div class="search-container">
@@ -238,11 +236,8 @@
                 </div>
 
                 <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold;">Выбор схемы:</div>
-                <div class="network-tabs">
-                    <button id="open-add-scheme-btn" onclick="document.getElementById('upload-modal').style.display='flex';" title="Добавить новую схему" style="background:#10b981; color:#fff; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold; margin-right:4px;">+ Схема</button>
-<button class="net-tab active m-net-tab" id="m-tab-drinking" onclick="switchNetwork('drinking')">💧 ПВ</button>
-                    <button class="net-tab m-net-tab" id="m-tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ ТВ пром</button>
-                    <button class="net-tab m-net-tab" id="m-tab-tech_water_out" onclick="switchNetwork('tech_water_out')">⚙️ ТВ внепром</button>
+                                <div class="network-tabs" style="display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                    <div id="m-network-tabs-list" style="display:flex; flex-wrap:wrap; gap:4px;"></div>
                 </div>
                 
                 <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold; margin-top: 4px;">Фильтры:</div>
@@ -291,6 +286,7 @@
 </div>
 </body>
 </html>
+
 
 
 

@@ -764,3 +764,66 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+
+// === ДИНАМИЧЕСКИЙ РЕНДЕРИНГ ВКЛАДОК СХЕМ ===
+async function syncNetworksRegistry() {
+    try {
+        const res = await fetch('/api/networks');
+        if (!res.ok) return;
+        const list = await res.json();
+        
+        NETWORKS_DEF = {};
+        list.forEach(item => {
+            const w = item.dimensions?.width || item.width || 10000;
+            const h = item.dimensions?.height || item.height || 10000;
+            NETWORKS_DEF[item.id] = {
+                id: item.id,
+                title: item.title,
+                image: item.image,
+                width: w,
+                height: h
+            };
+        });
+
+        renderAllTabs(list);
+    } catch (e) {
+        console.error("Ошибка синхронизации схем:", e);
+    }
+}
+
+function renderAllTabs(list) {
+    const desktopContainer = document.getElementById('network-tabs-list');
+    const mobileContainer = document.getElementById('m-network-tabs-list');
+
+    if (desktopContainer) desktopContainer.innerHTML = '';
+    if (mobileContainer) mobileContainer.innerHTML = '';
+
+    list.forEach(net => {
+        // Десктопная кнопка
+        if (desktopContainer) {
+            const btn = document.createElement('button');
+            btn.id = `tab-${net.id}`;
+            btn.className = `net-tab ${currentNetworkId === net.id ? 'active' : ''}`;
+            btn.textContent = net.title;
+            btn.onclick = (e) => {
+                e.preventDefault();
+                switchNetwork(net.id);
+            };
+            desktopContainer.appendChild(btn);
+        }
+
+        // Мобильная кнопка
+        if (mobileContainer) {
+            const mBtn = document.createElement('button');
+            mBtn.id = `m-tab-${net.id}`;
+            mBtn.className = `net-tab m-net-tab ${currentNetworkId === net.id ? 'active' : ''}`;
+            mBtn.textContent = net.title;
+            mBtn.onclick = (e) => {
+                e.preventDefault();
+                switchNetwork(net.id);
+            };
+            mobileContainer.appendChild(mBtn);
+        }
+    });
+}
