@@ -926,3 +926,22 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 });
+
+window.addEventListener("DOMContentLoaded", async () => {
+    try {
+        if (typeof syncNetworksRegistry === "function") {
+            await syncNetworksRegistry();
+        }
+    } catch (e) {
+        console.error("Ошибка первичной загрузки схем:", e);
+    }
+    
+    setTimeout(() => {
+        const tabs = document.querySelectorAll(".net-tab");
+        if (tabs.length === 0 || !window.imageOverlay) {
+            if (typeof loadNetwork === "function") {
+                loadNetwork("drinking");
+            }
+        }
+    }, 300);
+});
