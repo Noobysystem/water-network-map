@@ -605,7 +605,7 @@ fetch('/data/dxf_all_labels.json')
 
 
 // === УПРАВЛЕНИЕ СХЕМАМИ (ЗАГРУЗКА, ПЕРЕКЛЮЧЕНИЕ, УДАЛЕНИЕ) ===
-let NETWORKS_DEF = {};
+NETWORKS_DEF = {};
 
 async function syncNetworksRegistry() {
     try {
@@ -738,7 +738,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // === УПРАВЛЕНИЕ СХЕМАМИ (ЗАГРУЗКА, ПЕРЕКЛЮЧЕНИЕ, УДАЛЕНИЕ) ===
-let NETWORKS_DEF = {};
+NETWORKS_DEF = {};
 
 async function syncNetworksRegistry() {
     try {
