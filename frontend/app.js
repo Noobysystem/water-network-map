@@ -649,3 +649,97 @@ fetch('/data/dxf_all_labels.json')
             }
         });
     }).catch(e => console.log("Метки загружаются или путь проверяется"));
+
+// === ДИНАМИЧЕСКИЙ МЕНЕДЖЕР СХЕМ ===
+let currentSchemeId = null;
+
+async function loadSchemeList() {
+    try {
+        const res = await fetch('/api/schemes');
+        const schemes = await res.json();
+        
+        let container = document.getElementById('schemes-nav-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'schemes-nav-container';
+            container.style.cssText = 'display:flex; gap:6px; flex-wrap:wrap; padding:8px 0; border-bottom:1px solid #334155; margin-bottom:10px;';
+            const sidebar = document.querySelector('aside') || document.querySelector('.sidebar') || document.body;
+            sidebar.insertBefore(container, sidebar.firstChild);
+        }
+        
+        container.innerHTML = '';
+        schemes.forEach(sch => {
+            const btn = document.createElement('button');
+            btn.textContent = sch.title;
+            btn.style.cssText = 'padding:6px 12px; background:#1e293b; color:#fff; border:1px solid #475569; border-radius:4px; cursor:pointer; font-size:12px;';
+            if (currentSchemeId === sch.id) btn.style.background = '#2563eb';
+            btn.onclick = () => switchScheme(sch);
+            container.appendChild(btn);
+        });
+
+        let addBtn = document.getElementById('open-add-scheme-btn');
+        if (!addBtn) {
+            addBtn = document.createElement('button');
+            addBtn.id = 'open-add-scheme-btn';
+            addBtn.textContent = '+ Добавить схему';
+            addBtn.style.cssText = 'padding:6px 10px; background:#10b981; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:12px; font-weight:bold;';
+            addBtn.onclick = () => { document.getElementById('upload-modal').style.display = 'flex'; };
+            container.appendChild(addBtn);
+        }
+    } catch (e) {
+        console.error("Ошибка загрузки схем:", e);
+    }
+}
+
+function switchScheme(scheme) {
+    currentSchemeId = scheme.id;
+    if (window.currentOverlay) map.removeLayer(window.currentOverlay);
+    
+    const bounds = [[0, 0], [scheme.height, scheme.width]];
+    map.setMaxBounds(bounds);
+    window.currentOverlay = L.imageOverlay(scheme.image, bounds).addTo(map);
+    map.fitBounds(bounds);
+    
+    loadSchemeList();
+}
+
+// Привязка обработчиков формы загрузки
+window.addEventListener('DOMContentLoaded', () => {
+    loadSchemeList();
+    
+    const closeBtn = document.getElementById('close-upload-modal-btn');
+    if (closeBtn) closeBtn.onclick = () => { document.getElementById('upload-modal').style.display = 'none'; };
+
+    const form = document.getElementById('upload-scheme-form');
+    if (form) {
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('scheme-title-input').value.trim();
+            const file = document.getElementById('scheme-file-input').files[0];
+            if (!title || !file) return;
+
+            const fd = new FormData();
+            fd.append('title', title);
+            fd.append('file', file);
+
+            const submitBtn = document.getElementById('submit-upload-btn');
+            submitBtn.textContent = 'Загрузка...';
+            submitBtn.disabled = true;
+
+            try {
+                const res = await fetch('/api/schemes/upload', { method: 'POST', body: fd });
+                if (!res.ok) throw new Error('Ошибка сервера при загрузке');
+                const newScheme = await res.json();
+                document.getElementById('upload-modal').style.display = 'none';
+                form.reset();
+                await loadSchemeList();
+                switchScheme(newScheme);
+            } catch (err) {
+                alert('Ошибка: ' + err.message);
+            } finally {
+                submitBtn.textContent = 'Загрузить';
+                submitBtn.disabled = false;
+            }
+        };
+    }
+});

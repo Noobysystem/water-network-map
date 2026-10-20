@@ -1,0 +1,10 @@
+﻿[
+  {
+    "id": "pv",
+    "title": "ПВ",
+    "image": "/data/schemes/pv/background.jpg",
+    "width": 14904,
+    "height": 10528,
+    "dataFile": "/api/schemes/pv/nodes"
+  }
+]
