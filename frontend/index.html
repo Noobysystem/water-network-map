@@ -125,6 +125,24 @@
             .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         }
     </style>
+<style>
+  html, body {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
+    margin: 0;
+    padding: 0;
+  }
+  .sidebar, aside, #sidebar, [class*="sidebar"] {
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    box-sizing: border-box;
+    padding-bottom: 24px !important;
+  }
+  #map {
+    height: 100vh !important;
+  }
+</style>
 </head>
 <body>
     <div id="app-container">
@@ -144,7 +162,8 @@
 
             <!-- Вкладки 3-х сетей -->
             <div class="network-tabs">
-                <button class="net-tab active" id="tab-drinking" onclick="switchNetwork('drinking')">💧 ПВ</button>
+                <button id="open-add-scheme-btn" title="Добавить новую схему" style="background:#10b981; color:#fff; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold; margin-right:4px;">+ Схема</button>
+<button class="net-tab active" id="tab-drinking" onclick="switchNetwork('drinking')">💧 ПВ</button>
                 <button class="net-tab" id="tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ ТВ пром</button>
                 <button class="net-tab" id="tab-tech_water_out" onclick="switchNetwork('tech_water_out')">⚙️ ТВ внепром</button>
             </div>
@@ -220,7 +239,8 @@
 
                 <div style="font-size: 11px; color: #9aa0a6; text-transform: uppercase; font-weight: bold;">Выбор схемы:</div>
                 <div class="network-tabs">
-                    <button class="net-tab active m-net-tab" id="m-tab-drinking" onclick="switchNetwork('drinking')">💧 ПВ</button>
+                    <button id="open-add-scheme-btn" title="Добавить новую схему" style="background:#10b981; color:#fff; border:none; padding:4px 10px; border-radius:6px; cursor:pointer; font-weight:bold; margin-right:4px;">+ Схема</button>
+<button class="net-tab active m-net-tab" id="m-tab-drinking" onclick="switchNetwork('drinking')">💧 ПВ</button>
                     <button class="net-tab m-net-tab" id="m-tab-tech_water" onclick="switchNetwork('tech_water')">⚙️ ТВ пром</button>
                     <button class="net-tab m-net-tab" id="m-tab-tech_water_out" onclick="switchNetwork('tech_water_out')">⚙️ ТВ внепром</button>
                 </div>
@@ -271,4 +291,5 @@
 </div>
 </body>
 </html>
+
 
