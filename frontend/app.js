@@ -693,12 +693,24 @@ async function loadSchemeList() {
 
 function switchScheme(scheme) {
     currentSchemeId = scheme.id;
-    if (window.currentOverlay) map.removeLayer(window.currentOverlay);
+    if (window.currentOverlay) {
+        map.removeLayer(window.currentOverlay);
+    }
     
-    const bounds = [[0, 0], [scheme.height, scheme.width]];
+    // Поддерживаем как scheme.dimensions, так и прямые поля scheme.height/width
+    const w = scheme.dimensions ? scheme.dimensions.width : (scheme.width || 10000);
+    const h = scheme.dimensions ? scheme.dimensions.height : (scheme.height || 10000);
+    const imgSrc = scheme.image.startsWith('/') ? scheme.image : ('/' + scheme.image);
+
+    const bounds = [[0, 0], [h, w]];
     map.setMaxBounds(bounds);
-    window.currentOverlay = L.imageOverlay(scheme.image, bounds).addTo(map);
+    window.currentOverlay = L.imageOverlay(imgSrc, bounds).addTo(map);
     map.fitBounds(bounds);
+    
+    // Если в приложении уже есть штатная функция переключения сети (например, switchNetwork)
+    if (typeof switchNetwork === 'function') {
+        switchNetwork(scheme.id);
+    }
     
     loadSchemeList();
 }
@@ -743,3 +755,4 @@ window.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
+
