@@ -1,4 +1,4 @@
-﻿from fastapi import FastAPI, HTTPException, UploadFile, File
+﻿from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -7,6 +7,8 @@ from typing import List, Optional
 import json
 import os
 import shutil
+import re
+from PIL import Image
 
 app = FastAPI(title="Схемы ЭНЦ")
 
@@ -20,8 +22,10 @@ app.add_middleware(
 
 STORAGE_DIR = "storage"
 DATA_DIR = "data"
+FRONTEND_DIR = "../frontend" if os.path.exists("../frontend") else "frontend"
+CONFIG_NETWORKS_FILE = os.path.join(DATA_DIR, "networks_registry.json")
 
-NETWORKS = {
+DEFAULT_NETWORKS = {
     "drinking": {
         "id": "drinking",
         "title": "💧 ПВ",
@@ -44,6 +48,22 @@ NETWORKS = {
         "file": "tech_water_out.json"
     }
 }
+
+def load_networks():
+    if os.path.exists(CONFIG_NETWORKS_FILE):
+        try:
+            with open(CONFIG_NETWORKS_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return DEFAULT_NETWORKS.copy()
+
+def save_networks(networks_dict):
+    os.makedirs(DATA_DIR, exist_ok=True)
+    with open(CONFIG_NETWORKS_FILE, "w", encoding="utf-8") as f:
+        json.dump(networks_dict, f, ensure_ascii=False, indent=2)
+
+NETWORKS = load_networks()
 
 def init_storage():
     os.makedirs(STORAGE_DIR, exist_ok=True)
@@ -79,13 +99,10 @@ def write_data(net_id: str, data: dict):
     backup = path.replace(".json", ".backup.json")
     if os.path.exists(path):
         shutil.copyfile(path, backup)
-        
-    # Сохраняем в активное хранилище storage/
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    # Автоматически дублируем в папку data/ проекта
-    os.makedirs(DATA_DIR, exist_ok=True)
     data_path = os.path.join(DATA_DIR, NETWORKS[net_id]["file"])
     with open(data_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
@@ -100,9 +117,53 @@ class ValveNode(BaseModel):
     description: Optional[str] = ""
     diameter: Optional[int] = 150
 
+# Совместимость с двумя форматами API
 @app.get("/api/networks")
+@app.get("/api/schemes")
 def get_networks():
     return list(NETWORKS.values())
+
+@app.post("/api/schemes/upload")
+async def upload_scheme(title: str = Form(...), file: UploadFile = File(...)):
+    # Генерируем идентификатор
+    raw_id = re.sub(r"[^\w\-]", "", title.lower().replace(" ", "_"), flags=re.UNICODE)
+    scheme_id = raw_id if raw_id else f"scheme_{len(NETWORKS) + 1}"
+
+    ext = os.path.splitext(file.filename)[1].lower() or ".png"
+    img_filename = f"scheme_{scheme_id}{ext}"
+    target_img_path = os.path.join(FRONTEND_DIR, img_filename)
+
+    # Сохраняем картинку подложки во frontend
+    content = await file.read()
+    with open(target_img_path, "wb") as f:
+        f.write(content)
+
+    # Измеряем точные размеры через Pillow
+    try:
+        with Image.open(target_img_path) as img:
+            w, h = img.size
+    except Exception:
+        if os.path.exists(target_img_path):
+            os.remove(target_img_path)
+        raise HTTPException(status_code=400, detail="Неверный формат изображения")
+
+    json_filename = f"{scheme_id}.json"
+    NETWORKS[scheme_id] = {
+        "id": scheme_id,
+        "title": title,
+        "image": img_filename,
+        "dimensions": {"width": w, "height": h},
+        "file": json_filename
+    }
+
+    # Инициализируем хранилище для новой схемы
+    storage_path = os.path.join(STORAGE_DIR, json_filename)
+    if not os.path.exists(storage_path):
+        with open(storage_path, "w", encoding="utf-8") as f:
+            json.dump({"nodes": [], "dimensions": {"width": w, "height": h}}, f, ensure_ascii=False, indent=2)
+
+    save_networks(NETWORKS)
+    return NETWORKS[scheme_id]
 
 @app.get("/api/{net_id}/network")
 def get_network(net_id: str):
@@ -144,7 +205,5 @@ async def import_database(net_id: str, file: UploadFile = File(...)):
     write_data(net_id, data)
     return {"status": "ok", "count": len(data.get("nodes", []))}
 
-if os.path.exists("../frontend"):
-    app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
-elif os.path.exists("frontend"):
-    app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+if os.path.exists(FRONTEND_DIR):
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
