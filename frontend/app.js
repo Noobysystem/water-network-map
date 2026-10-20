@@ -45,62 +45,7 @@ async function initApp() {
     await loadNetwork("drinking");
 }
 
-async function loadNetwork(netId) {
-    currentNetworkId = netId;
-    selectedNode = null;
-    clearSearch();
-    clearMobileSearch();
 
-    document.querySelectorAll(".net-tab").forEach(t => t.classList.remove("active"));
-    const tabDesktop = document.getElementById(`tab-${netId}`);
-    const tabMobile = document.getElementById(`m-tab-${netId}`);
-    if (tabDesktop) tabDesktop.classList.add("active");
-    if (tabMobile) tabMobile.classList.add("active");
-
-    const inspector = document.getElementById("inspector");
-    if (inspector) inspector.innerHTML = '<p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по задвижке на схеме для редактирования параметров.</p>';
-
-    try {
-        const res = await fetch(`${API_URL}/${netId}/network`);
-        if (res.ok) {
-            networkData = await res.json();
-        } else {
-            networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] || { width: 10000, height: 10000 } };
-        }
-    } catch (e) {
-        networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] || { width: 10000, height: 10000 } };
-    }
-
-    const cfg = NETWORKS_DEF[netId] || {
-        image: "scheme.jpg?v=1",
-        width: 10000,
-        height: 10000
-    };
-
-    const width = Number(networkData.dimensions?.width || cfg.width || 10000);
-    const height = Number(networkData.dimensions?.height || cfg.height || 10000);
-    bounds = [[0, 0], [height, width]];
-
-    if (imageOverlay) {
-        map.removeLayer(imageOverlay);
-    }
-
-    const imgSrc = cfg.image.startsWith('/') ? cfg.image : ('/' + cfg.image);
-    imageOverlay = L.imageOverlay(imgSrc, bounds).addTo(map);
-    map.fitBounds(bounds);
-
-    setTimeout(() => {
-        map.invalidateSize();
-        map.fitBounds(bounds);
-    }, 150);
-
-    renderNetwork();
-}
-
-function switchNetwork(netId) {
-    loadNetwork(netId);
-    if (isMobile()) closeMobileMenu();
-}
 
 function fitMapBounds() {
     if (bounds && map) {
@@ -657,116 +602,11 @@ fetch('/data/dxf_all_labels.json')
         });
     }).catch(e => console.log("Метки загружаются или путь проверяется"));
 
-// === ДИНАМИЧЕСКИЙ МЕНЕДЖЕР СХЕМ ===
-let currentSchemeId = null;
-
-async function loadSchemeList() {
-    try {
-        const res = await fetch('/api/schemes');
-        const schemes = await res.json();
-        
-        let container = document.getElementById('schemes-nav-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'schemes-nav-container';
-            container.style.cssText = 'display:flex; gap:6px; flex-wrap:wrap; padding:8px 0; border-bottom:1px solid #334155; margin-bottom:10px;';
-            const sidebar = document.querySelector('aside') || document.querySelector('.sidebar') || document.body;
-            sidebar.insertBefore(container, sidebar.firstChild);
-        }
-        
-        container.innerHTML = '';
-        schemes.forEach(sch => {
-            const btn = document.createElement('button');
-            btn.textContent = sch.title;
-            btn.style.cssText = 'padding:6px 12px; background:#1e293b; color:#fff; border:1px solid #475569; border-radius:4px; cursor:pointer; font-size:12px;';
-            if (currentSchemeId === sch.id) btn.style.background = '#2563eb';
-            btn.onclick = () => switchScheme(sch);
-            container.appendChild(btn);
-        });
-
-        let addBtn = document.getElementById('open-add-scheme-btn');
-        if (!addBtn) {
-            addBtn = document.createElement('button');
-            addBtn.id = 'open-add-scheme-btn';
-            addBtn.textContent = '+ Добавить схему';
-            addBtn.style.cssText = 'padding:6px 10px; background:#10b981; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:12px; font-weight:bold;';
-            addBtn.onclick = () => { document.getElementById('upload-modal').style.display = 'flex'; };
-            container.appendChild(addBtn);
-        }
-    } catch (e) {
-        console.error("Ошибка загрузки схем:", e);
-    }
-}
-
-function switchScheme(scheme) {
-    currentSchemeId = scheme.id;
-    if (window.currentOverlay) {
-        map.removeLayer(window.currentOverlay);
-    }
-    
-    // Поддерживаем как scheme.dimensions, так и прямые поля scheme.height/width
-    const w = scheme.dimensions ? scheme.dimensions.width : (scheme.width || 10000);
-    const h = scheme.dimensions ? scheme.dimensions.height : (scheme.height || 10000);
-    const imgSrc = scheme.image.startsWith('/') ? scheme.image : ('/' + scheme.image);
-
-    const bounds = [[0, 0], [h, w]];
-    map.setMaxBounds(bounds);
-    window.currentOverlay = L.imageOverlay(imgSrc, bounds).addTo(map);
-    map.fitBounds(bounds);
-    
-    // Если в приложении уже есть штатная функция переключения сети (например, switchNetwork)
-    if (typeof switchNetwork === 'function') {
-        switchNetwork(scheme.id);
-    }
-    
-    loadSchemeList();
-}
-
-// Привязка обработчиков формы загрузки
-window.addEventListener('DOMContentLoaded', () => {
-    loadSchemeList();
-    
-    const closeBtn = document.getElementById('close-upload-modal-btn');
-    if (closeBtn) closeBtn.onclick = () => { document.getElementById('upload-modal').style.display = 'none'; };
-
-    const form = document.getElementById('upload-scheme-form');
-    if (form) {
-        form.onsubmit = async (e) => {
-            e.preventDefault();
-            const title = document.getElementById('scheme-title-input').value.trim();
-            const file = document.getElementById('scheme-file-input').files[0];
-            if (!title || !file) return;
-
-            const fd = new FormData();
-            fd.append('title', title);
-            fd.append('file', file);
-
-            const submitBtn = document.getElementById('submit-upload-btn');
-            submitBtn.textContent = 'Загрузка...';
-            submitBtn.disabled = true;
-
-            try {
-                const res = await fetch('/api/schemes/upload', { method: 'POST', body: fd });
-                if (!res.ok) throw new Error('Ошибка сервера при загрузке');
-                const newScheme = await res.json();
-                document.getElementById('upload-modal').style.display = 'none';
-                form.reset();
-                await loadSchemeList();
-                switchScheme(newScheme);
-            } catch (err) {
-                alert('Ошибка: ' + err.message);
-            } finally {
-                submitBtn.textContent = 'Загрузить';
-                submitBtn.disabled = false;
-            }
-        };
-    }
-});
 
 
+// === УПРАВЛЕНИЕ СХЕМАМИ (ЗАГРУЗКА, ПЕРЕКЛЮЧЕНИЕ, УДАЛЕНИЕ) ===
+let NETWORKS_DEF = {};
 
-
-// === ДИНАМИЧЕСКИЙ РЕНДЕРИНГ ВКЛАДОК СХЕМ ===
 async function syncNetworksRegistry() {
     try {
         const res = await fetch('/api/networks');
@@ -775,14 +615,13 @@ async function syncNetworksRegistry() {
         
         NETWORKS_DEF = {};
         list.forEach(item => {
-            const w = item.dimensions?.width || item.width || 10000;
-            const h = item.dimensions?.height || item.height || 10000;
             NETWORKS_DEF[item.id] = {
                 id: item.id,
                 title: item.title,
                 image: item.image,
-                width: w,
-                height: h
+                width: item.dimensions?.width || 10000,
+                height: item.dimensions?.height || 10000,
+                is_default: !!item.is_default
             };
         });
 
@@ -800,30 +639,290 @@ function renderAllTabs(list) {
     if (mobileContainer) mobileContainer.innerHTML = '';
 
     list.forEach(net => {
-        // Десктопная кнопка
-        if (desktopContainer) {
+        const createTab = (isM) => {
+            const btnWrap = document.createElement('div');
+            btnWrap.style.cssText = 'display:inline-flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:6px; overflow:hidden; margin-right:4px; margin-bottom:4px;';
+            if (currentNetworkId === net.id) {
+                btnWrap.style.background = '#2563eb';
+                btnWrap.style.borderColor = '#60a5fa';
+            }
+
             const btn = document.createElement('button');
-            btn.id = `tab-${net.id}`;
-            btn.className = `net-tab ${currentNetworkId === net.id ? 'active' : ''}`;
+            btn.className = `net-tab ${currentNetworkId === net.id ? 'active' : ''} ${isM ? 'm-net-tab' : ''}`;
             btn.textContent = net.title;
+            btn.style.cssText = 'border:none; background:transparent; color:#fff; padding:6px 12px; cursor:pointer; font-size:12px; font-weight:500;';
             btn.onclick = (e) => {
                 e.preventDefault();
                 switchNetwork(net.id);
             };
-            desktopContainer.appendChild(btn);
-        }
+            btnWrap.appendChild(btn);
 
-        // Мобильная кнопка
-        if (mobileContainer) {
-            const mBtn = document.createElement('button');
-            mBtn.id = `m-tab-${net.id}`;
-            mBtn.className = `net-tab m-net-tab ${currentNetworkId === net.id ? 'active' : ''}`;
-            mBtn.textContent = net.title;
-            mBtn.onclick = (e) => {
+            if (!net.is_default) {
+                const delBtn = document.createElement('span');
+                delBtn.innerHTML = '&times;';
+                delBtn.title = 'Удалить схему';
+                delBtn.style.cssText = 'color:#f87171; cursor:pointer; font-size:14px; padding:0 8px; font-weight:bold; line-height:1; display:flex; align-items:center;';
+                delBtn.onclick = async (e) => {
+                    e.stopPropagation();
+                    if (confirm(`Удалить схему "${net.title}" и все её узлы?`)) {
+                        await deleteSchemeById(net.id);
+                    }
+                };
+                btnWrap.appendChild(delBtn);
+            }
+            return btnWrap;
+        };
+
+        if (desktopContainer) desktopContainer.appendChild(createTab(false));
+        if (mobileContainer) mobileContainer.appendChild(createTab(true));
+    });
+}
+
+async function deleteSchemeById(schemeId) {
+    try {
+        const res = await fetch(`/api/schemes/${schemeId}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Ошибка удаления');
+        await syncNetworksRegistry();
+        if (currentNetworkId === schemeId) {
+            switchNetwork('drinking');
+        }
+    } catch (e) {
+        alert('Не удалось удалить схему: ' + e.message);
+    }
+}
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("upload-scheme-form");
+    if (form) {
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const iconSelect = document.getElementById("scheme-icon-select");
+            const titleInput = document.getElementById("scheme-title-input");
+            const fileInput = document.getElementById("scheme-file-input");
+            const submitBtn = document.getElementById("submit-upload-btn");
+            const modal = document.getElementById("upload-modal");
+
+            if (!titleInput.value.trim() || !fileInput.files[0]) return;
+
+            const fd = new FormData();
+            fd.append("icon", iconSelect.value);
+            fd.append("title", titleInput.value.trim());
+            fd.append("file", fileInput.files[0]);
+
+            submitBtn.textContent = "Загрузка...";
+            submitBtn.disabled = true;
+
+            try {
+                const res = await fetch("/api/schemes/upload", { method: "POST", body: fd });
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.detail || "Ошибка сервера при загрузке");
+                }
+                const newScheme = await res.json();
+                
+                modal.style.display = "none";
+                form.reset();
+
+                await syncNetworksRegistry();
+                await loadNetwork(newScheme.id);
+            } catch (err) {
+                alert("Ошибка: " + err.message);
+            } finally {
+                submitBtn.textContent = "Загрузить";
+                submitBtn.disabled = false;
+            }
+        };
+    }
+});
+
+// === УПРАВЛЕНИЕ СХЕМАМИ (ЗАГРУЗКА, ПЕРЕКЛЮЧЕНИЕ, УДАЛЕНИЕ) ===
+let NETWORKS_DEF = {};
+
+async function syncNetworksRegistry() {
+    try {
+        const res = await fetch('/api/networks');
+        if (!res.ok) return;
+        const list = await res.json();
+        
+        NETWORKS_DEF = {};
+        list.forEach(item => {
+            NETWORKS_DEF[item.id] = {
+                id: item.id,
+                title: item.title,
+                image: item.image,
+                width: item.dimensions?.width || 10000,
+                height: item.dimensions?.height || 10000,
+                is_default: !!item.is_default
+            };
+        });
+
+        renderAllTabs(list);
+    } catch (e) {
+        console.error("Ошибка синхронизации схем:", e);
+    }
+}
+
+function renderAllTabs(list) {
+    const desktopContainer = document.getElementById('network-tabs-list');
+    const mobileContainer = document.getElementById('m-network-tabs-list');
+
+    if (desktopContainer) desktopContainer.innerHTML = '';
+    if (mobileContainer) mobileContainer.innerHTML = '';
+
+    list.forEach(net => {
+        const createTab = (isM) => {
+            const btnWrap = document.createElement('div');
+            btnWrap.style.cssText = 'display:inline-flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:6px; overflow:hidden; margin-right:4px; margin-bottom:4px;';
+            if (currentNetworkId === net.id) {
+                btnWrap.style.background = '#2563eb';
+                btnWrap.style.borderColor = '#60a5fa';
+            }
+
+            const btn = document.createElement('button');
+            btn.className = `net-tab ${currentNetworkId === net.id ? 'active' : ''} ${isM ? 'm-net-tab' : ''}`;
+            btn.textContent = net.title;
+            btn.style.cssText = 'border:none; background:transparent; color:#fff; padding:6px 12px; cursor:pointer; font-size:12px; font-weight:500;';
+            btn.onclick = (e) => {
                 e.preventDefault();
                 switchNetwork(net.id);
             };
-            mobileContainer.appendChild(mBtn);
-        }
+            btnWrap.appendChild(btn);
+
+            if (!net.is_default) {
+                const delBtn = document.createElement('span');
+                delBtn.innerHTML = '&times;';
+                delBtn.title = 'Удалить схему';
+                delBtn.style.cssText = 'color:#f87171; cursor:pointer; font-size:14px; padding:0 8px; font-weight:bold; line-height:1; display:flex; align-items:center;';
+                delBtn.onclick = async (e) => {
+                    e.stopPropagation();
+                    if (confirm(`Удалить схему "${net.title}" и все её узлы?`)) {
+                        await deleteSchemeById(net.id);
+                    }
+                };
+                btnWrap.appendChild(delBtn);
+            }
+            return btnWrap;
+        };
+
+        if (desktopContainer) desktopContainer.appendChild(createTab(false));
+        if (mobileContainer) mobileContainer.appendChild(createTab(true));
     });
 }
+
+async function deleteSchemeById(schemeId) {
+    try {
+        const res = await fetch(`/api/schemes/${schemeId}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Ошибка удаления');
+        await syncNetworksRegistry();
+        if (currentNetworkId === schemeId) {
+            switchNetwork('drinking');
+        }
+    } catch (e) {
+        alert('Не удалось удалить схему: ' + e.message);
+    }
+}
+
+async function loadNetwork(netId) {
+    currentNetworkId = netId;
+    selectedNode = null;
+    clearSearch();
+    clearMobileSearch();
+
+    const inspector = document.getElementById("inspector");
+    if (inspector) inspector.innerHTML = '<p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по задвижке на схеме для редактирования параметров.</p>';
+
+    if (!NETWORKS_DEF[netId]) {
+        await syncNetworksRegistry();
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/${netId}/network`);
+        if (res.ok) {
+            networkData = await res.json();
+        } else {
+            networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] || { width: 10000, height: 10000 } };
+        }
+    } catch (e) {
+        networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] || { width: 10000, height: 10000 } };
+    }
+
+    const cfg = NETWORKS_DEF[netId] || {
+        image: "scheme.jpg",
+        width: 14904,
+        height: 10528
+    };
+
+    const width = Number(networkData.dimensions?.width || cfg.width || 10000);
+    const height = Number(networkData.dimensions?.height || cfg.height || 10000);
+    bounds = [[0, 0], [height, width]];
+
+    if (imageOverlay) {
+        map.removeLayer(imageOverlay);
+    }
+
+    const cleanImg = cfg.image.split('?')[0];
+    const imgSrc = (cleanImg.startsWith('/') ? cleanImg : ('/' + cleanImg)) + '?t=' + Date.now();
+
+    imageOverlay = L.imageOverlay(imgSrc, bounds).addTo(map);
+    map.setMaxBounds(bounds);
+    map.fitBounds(bounds);
+
+    setTimeout(() => {
+        map.invalidateSize();
+        map.fitBounds(bounds);
+    }, 150);
+
+    renderAllTabs(Object.values(NETWORKS_DEF));
+    renderNetwork();
+}
+
+function switchNetwork(netId) {
+    loadNetwork(netId);
+    if (isMobile()) closeMobileMenu();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("upload-scheme-form");
+    if (form) {
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const iconSelect = document.getElementById("scheme-icon-select");
+            const titleInput = document.getElementById("scheme-title-input");
+            const fileInput = document.getElementById("scheme-file-input");
+            const submitBtn = document.getElementById("submit-upload-btn");
+            const modal = document.getElementById("upload-modal");
+
+            if (!titleInput.value.trim() || !fileInput.files[0]) return;
+
+            const fd = new FormData();
+            fd.append("icon", iconSelect.value);
+            fd.append("title", titleInput.value.trim());
+            fd.append("file", fileInput.files[0]);
+
+            submitBtn.textContent = "Загрузка...";
+            submitBtn.disabled = true;
+
+            try {
+                const res = await fetch("/api/schemes/upload", { method: "POST", body: fd });
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.detail || "Ошибка сервера при загрузке");
+                }
+                const newScheme = await res.json();
+                
+                modal.style.display = "none";
+                form.reset();
+
+                await syncNetworksRegistry();
+                await loadNetwork(newScheme.id);
+            } catch (err) {
+                alert("Ошибка: " + err.message);
+            } finally {
+                submitBtn.textContent = "Загрузить";
+                submitBtn.disabled = false;
+            }
+        };
+    }
+});

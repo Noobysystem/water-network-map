@@ -8,6 +8,7 @@ import json
 import os
 import shutil
 import re
+import hashlib
 from PIL import Image
 
 app = FastAPI(title="Схемы ЭНЦ")
@@ -29,23 +30,29 @@ DEFAULT_NETWORKS = {
     "drinking": {
         "id": "drinking",
         "title": "💧 ПВ",
+        "icon": "💧",
         "image": "scheme.jpg",
         "dimensions": {"width": 14904, "height": 10528},
-        "file": "drinking.json"
+        "file": "drinking.json",
+        "is_default": True
     },
     "tech_water": {
         "id": "tech_water",
         "title": "⚙️ ТВ пром",
+        "icon": "⚙️",
         "image": "scheme_tv.jpg",
         "dimensions": {"width": 7445, "height": 5266},
-        "file": "tech_water.json"
+        "file": "tech_water.json",
+        "is_default": True
     },
     "tech_water_out": {
         "id": "tech_water_out",
         "title": "⚙️ ТВ внепром",
+        "icon": "⚙️",
         "image": "scheme_tv_out.jpg",
         "dimensions": {"width": 7445, "height": 10528},
-        "file": "tech_water_out.json"
+        "file": "tech_water_out.json",
+        "is_default": True
     }
 }
 
@@ -53,7 +60,9 @@ def load_networks():
     if os.path.exists(CONFIG_NETWORKS_FILE):
         try:
             with open(CONFIG_NETWORKS_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                data = json.load(f)
+                if isinstance(data, dict) and data:
+                    return data
         except Exception:
             pass
     return DEFAULT_NETWORKS.copy()
@@ -117,28 +126,33 @@ class ValveNode(BaseModel):
     description: Optional[str] = ""
     diameter: Optional[int] = 150
 
-# Совместимость с двумя форматами API
 @app.get("/api/networks")
 @app.get("/api/schemes")
 def get_networks():
     return list(NETWORKS.values())
 
 @app.post("/api/schemes/upload")
-async def upload_scheme(title: str = Form(...), file: UploadFile = File(...)):
-    # Генерируем идентификатор
-    raw_id = re.sub(r"[^\w\-]", "", title.lower().replace(" ", "_"), flags=re.UNICODE)
-    scheme_id = raw_id if raw_id else f"scheme_{len(NETWORKS) + 1}"
+async def upload_scheme(
+    title: str = Form(...),
+    icon: str = Form("💧"),
+    file: UploadFile = File(...)
+):
+    # Генерируем уникальный английский ключ идентификатора
+    hash_suffix = hashlib.md5(title.encode('utf-8')).hexdigest()[:6]
+    ascii_clean = re.sub(r'[^a-zA-Z0-9_]', '', title.lower().replace(" ", "_"))
+    scheme_id = f"sch_{ascii_clean}_{hash_suffix}" if ascii_clean else f"sch_{hash_suffix}"
 
     ext = os.path.splitext(file.filename)[1].lower() or ".png"
-    img_filename = f"scheme_{scheme_id}{ext}"
+    img_filename = f"{scheme_id}{ext}"
+    
+    # Сохраняем картинку непосредственно в директорию frontend
     target_img_path = os.path.join(FRONTEND_DIR, img_filename)
 
-    # Сохраняем картинку подложки во frontend
     content = await file.read()
     with open(target_img_path, "wb") as f:
         f.write(content)
 
-    # Измеряем точные размеры через Pillow
+    # Замеряем физические пиксели
     try:
         with Image.open(target_img_path) as img:
             w, h = img.size
@@ -148,22 +162,54 @@ async def upload_scheme(title: str = Form(...), file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Неверный формат изображения")
 
     json_filename = f"{scheme_id}.json"
-    NETWORKS[scheme_id] = {
+    full_title = f"{icon} {title}".strip()
+
+    entry = {
         "id": scheme_id,
-        "title": title,
+        "title": full_title,
+        "raw_title": title,
+        "icon": icon,
         "image": img_filename,
         "dimensions": {"width": w, "height": h},
-        "file": json_filename
+        "file": json_filename,
+        "is_default": False
     }
 
-    # Инициализируем хранилище для новой схемы
+    NETWORKS[scheme_id] = entry
+
+    # Инициализируем файл для узлов
     storage_path = os.path.join(STORAGE_DIR, json_filename)
     if not os.path.exists(storage_path):
         with open(storage_path, "w", encoding="utf-8") as f:
             json.dump({"nodes": [], "dimensions": {"width": w, "height": h}}, f, ensure_ascii=False, indent=2)
 
     save_networks(NETWORKS)
-    return NETWORKS[scheme_id]
+    return entry
+
+@app.delete("/api/schemes/{scheme_id}")
+def delete_scheme(scheme_id: str):
+    if scheme_id not in NETWORKS:
+        raise HTTPException(status_code=404, detail="Схема не найдена")
+    if NETWORKS[scheme_id].get("is_default"):
+        raise HTTPException(status_code=400, detail="Базовые схемы удалять нельзя")
+
+    cfg = NETWORKS.pop(scheme_id)
+    save_networks(NETWORKS)
+
+    # Удаляем картинку
+    img_path = os.path.join(FRONTEND_DIR, cfg.get("image", ""))
+    if os.path.exists(img_path):
+        try: os.remove(img_path)
+        except Exception: pass
+
+    # Удаляем файлы узлов
+    for folder in [STORAGE_DIR, DATA_DIR]:
+        f_path = os.path.join(folder, cfg.get("file", ""))
+        if os.path.exists(f_path):
+            try: os.remove(f_path)
+            except Exception: pass
+
+    return {"status": "ok", "deleted": scheme_id}
 
 @app.get("/api/{net_id}/network")
 def get_network(net_id: str):
