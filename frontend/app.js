@@ -35,61 +35,9 @@ async function initApp() {
     setupSearch();
     setupMobileSearch();
 
-    await loadNetwork("drinking");
+    await syncNetworksRegistry().then(() => loadNetwork("drinking"));
 }
 
-async function loadNetwork(netId) {
-    currentNetworkId = netId;
-    selectedNode = null;
-    clearSearch();
-    clearMobileSearch();
-
-    // Обновляем состояние табов
-    document.querySelectorAll(".net-tab").forEach(t => t.classList.remove("active"));
-    const tabDesktop = document.getElementById(`tab-${netId}`);
-    const tabMobile = document.getElementById(`m-tab-${netId}`);
-    if (tabDesktop) tabDesktop.classList.add("active");
-    if (tabMobile) tabMobile.classList.add("active");
-
-    const inspector = document.getElementById("inspector");
-    if (inspector) inspector.innerHTML = '<p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по задвижке на схеме для редактирования параметров.</p>';
-
-    try {
-        const res = await fetch(`${API_URL}/${netId}/network`);
-        if (res.ok) {
-            networkData = await res.json();
-        } else {
-            networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] };
-        }
-    } catch (e) {
-        networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] };
-    }
-
-    const cfg = NETWORKS_DEF[netId] || NETWORKS_DEF.drinking;
-    const width = networkData.dimensions?.width || cfg.width;
-    const height = networkData.dimensions?.height || cfg.height;
-    bounds = [[0, 0], [height, width]];
-
-    if (imageOverlay) {
-        map.removeLayer(imageOverlay);
-    }
-
-    // Загружаем правильный чертеж сети
-    imageOverlay = L.imageOverlay(cfg.image, bounds).addTo(map);
-    map.fitBounds(bounds);
-
-    setTimeout(() => {
-        map.invalidateSize();
-        map.fitBounds(bounds);
-    }, 150);
-
-    renderNetwork();
-}
-
-function switchNetwork(netId) {
-    loadNetwork(netId);
-    if (isMobile()) closeMobileMenu();
-}
 
 function fitMapBounds() {
     if (bounds && map) {

@@ -249,5 +249,35 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="app.js?v=7.0"></script>
+<div id="upload-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.75); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#1e293b; border:1px solid #334155; border-radius:8px; padding:20px; width:340px; color:#fff; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+        <h3 style="margin-top:0; margin-bottom:15px; font-size:16px;">Добавление схемы</h3>
+        <form id="upload-scheme-form">
+            <div style="margin-bottom:12px;">
+                <label style="display:block; font-size:12px; margin-bottom:5px; color:#94a3b8;">Иконка схемы:</label>
+                <select id="scheme-icon-select" style="width:100%; padding:6px 10px; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:4px; font-size:14px;">
+                    <option value="🧪">🧪 Фильтрованная (ФВ)</option>
+                    <option value="💧">💧 Вода (ПВ)</option>
+                    <option value="⚙️">⚙️ Тех. вода (ТВ)</option>
+                    <option value="🏭">🏭 Промплощадка</option>
+                    <option value="🔥">🔥 Пожарная</option>
+                    <option value="⚡">⚡ Энерго</option>
+                </select>
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="display:block; font-size:12px; margin-bottom:5px; color:#94a3b8;">Название схемы:</label>
+                <input id="scheme-title-input" type="text" placeholder="Например: ФВ" required style="width:100%; box-sizing:border-box; padding:8px; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:4px; font-size:14px;">
+            </div>
+            <div style="margin-bottom:16px;">
+                <label style="display:block; font-size:12px; margin-bottom:5px; color:#94a3b8;">Файл подложки (JPG, PNG):</label>
+                <input id="scheme-file-input" type="file" accept="image/png, image/jpeg" required style="width:100%; font-size:12px; color:#cbd5e1;">
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px;">
+                <button type="button" onclick="document.getElementById('upload-modal').style.display='none';" style="padding:6px 14px; background:#475569; color:#fff; border:none; border-radius:4px; cursor:pointer;">Отмена</button>
+                <button type="submit" id="submit-upload-btn" style="padding:6px 16px; background:#2563eb; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Загрузить</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
