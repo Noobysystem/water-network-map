@@ -12,7 +12,7 @@ let currentFilter = "all";
 
 const isMobile = () => window.innerWidth <= 768;
 
-const NETWORKS_DEF = {
+let NETWORKS_DEF = {
     drinking: { image: "scheme.jpg?v=1", width: 14904, height: 10528 },
     tech_water: { image: "scheme_tv.jpg?v=1", width: 7445, height: 5266 },
     tech_water_out: { image: "scheme_tv_out.jpg?v=1", width: 7445, height: 10528 }
@@ -578,3 +578,200 @@ async function handleMapClick(e) {
 }
 
 initApp();
+
+// === УПРАВЛЕНИЕ СХЕМАМИ (ЗАГРУЗКА, ПЕРЕКЛЮЧЕНИЕ, УДАЛЕНИЕ) ===
+async function syncNetworksRegistry() {
+    try {
+        const res = await fetch('/api/networks');
+        if (!res.ok) return;
+        const list = await res.json();
+        
+        NETWORKS_DEF = {};
+        list.forEach(item => {
+            NETWORKS_DEF[item.id] = {
+                id: item.id,
+                title: item.title,
+                image: item.image,
+                width: (item.dimensions && item.dimensions.width) ? item.dimensions.width : 10000,
+                height: (item.dimensions && item.dimensions.height) ? item.dimensions.height : 10000,
+                is_default: !!item.is_default
+            };
+        });
+
+        renderAllTabs(list);
+    } catch (e) {
+        console.error("Ошибка синхронизации схем:", e);
+    }
+}
+
+function renderAllTabs(list) {
+    const desktopContainer = document.getElementById('network-tabs-list');
+    const mobileContainer = document.getElementById('m-network-tabs-list');
+
+    if (desktopContainer) desktopContainer.innerHTML = '';
+    if (mobileContainer) mobileContainer.innerHTML = '';
+
+    const defaultIds = ['drinking', 'tech_water', 'tech_water_out'];
+
+    list.forEach(net => {
+        const createTab = (isM) => {
+            const isDef = defaultIds.includes(net.id) || !!net.is_default;
+            const titleText = net.title || (net.id === 'drinking' ? '💧 ПВ' : net.id === 'tech_water' ? '⚙️ ТВ пром' : '⚙️ ТВ внепром');
+
+            const btnWrap = document.createElement('div');
+            btnWrap.style.cssText = 'display:inline-flex; align-items:center; background:#1e293b; border:1px solid #334155; border-radius:6px; margin-right:4px; margin-bottom:4px;';
+            if (currentNetworkId === net.id) {
+                btnWrap.style.background = '#2563eb';
+                btnWrap.style.borderColor = '#60a5fa';
+            }
+
+            const btn = document.createElement('button');
+            btn.className = `net-tab ${currentNetworkId === net.id ? 'active' : ''} ${isM ? 'm-net-tab' : ''}`;
+            btn.textContent = titleText;
+            btn.style.cssText = 'border:none; background:transparent; color:#fff; padding:6px 10px; cursor:pointer; font-size:12px; font-weight:500; white-space:nowrap;';
+            btn.onclick = (e) => {
+                e.preventDefault();
+                switchNetwork(net.id);
+            };
+            btnWrap.appendChild(btn);
+
+            if (!isDef) {
+                const delBtn = document.createElement('span');
+                delBtn.innerHTML = '&times;';
+                delBtn.title = 'Удалить схему';
+                delBtn.style.cssText = 'color:#f87171; cursor:pointer; font-size:15px; padding:0 8px 0 2px; font-weight:bold; line-height:1; display:flex; align-items:center;';
+                delBtn.onclick = async (e) => {
+                    e.stopPropagation();
+                    if (confirm(`Удалить схему "${titleText}"?`)) {
+                        await deleteSchemeById(net.id);
+                    }
+                };
+                btnWrap.appendChild(delBtn);
+            }
+            return btnWrap;
+        };
+
+        if (desktopContainer) desktopContainer.appendChild(createTab(false));
+        if (mobileContainer) mobileContainer.appendChild(createTab(true));
+    });
+}
+
+async function deleteSchemeById(schemeId) {
+    try {
+        const res = await fetch(`/api/schemes/${schemeId}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Ошибка удаления');
+        await syncNetworksRegistry();
+        if (currentNetworkId === schemeId) {
+            switchNetwork('drinking');
+        }
+    } catch (e) {
+        alert('Не удалось удалить схему: ' + e.message);
+    }
+}
+
+async function loadNetwork(netId) {
+    currentNetworkId = netId;
+    selectedNode = null;
+    if (typeof clearSearch === 'function') clearSearch();
+    if (typeof clearMobileSearch === 'function') clearMobileSearch();
+
+    const inspector = document.getElementById("inspector");
+    if (inspector) inspector.innerHTML = '<p style="color: #a0a5b5; margin: 0; font-size: 13px;">Кликните по задвижке на схеме для редактирования параметров.</p>';
+
+    if (!NETWORKS_DEF[netId]) {
+        await syncNetworksRegistry();
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/${netId}/network`);
+        if (res.ok) {
+            networkData = await res.json();
+        } else {
+            networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] || { width: 10000, height: 10000 } };
+        }
+    } catch (e) {
+        networkData = { nodes: [], dimensions: NETWORKS_DEF[netId] || { width: 10000, height: 10000 } };
+    }
+
+    const cfg = NETWORKS_DEF[netId] || {
+        image: "scheme.jpg",
+        width: 14904,
+        height: 10528
+    };
+
+    const width = Number((networkData.dimensions && networkData.dimensions.width) || cfg.width || 10000);
+    const height = Number((networkData.dimensions && networkData.dimensions.height) || cfg.height || 10000);
+    bounds = [[0, 0], [height, width]];
+
+    if (imageOverlay) {
+        map.removeLayer(imageOverlay);
+    }
+
+    const cleanImg = cfg.image.split('?')[0];
+    const imgSrc = (cleanImg.startsWith('/') ? cleanImg : ('/' + cleanImg)) + '?t=' + Date.now();
+
+    imageOverlay = L.imageOverlay(imgSrc, bounds).addTo(map);
+    map.setMaxBounds(bounds);
+    map.fitBounds(bounds);
+
+    setTimeout(() => {
+        map.invalidateSize();
+        map.fitBounds(bounds);
+    }, 150);
+
+    renderAllTabs(Object.values(NETWORKS_DEF));
+    renderNetwork();
+}
+
+function switchNetwork(netId) {
+    loadNetwork(netId);
+    if (typeof isMobile === 'function' && isMobile() && typeof closeMobileMenu === 'function') {
+        closeMobileMenu();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    syncNetworksRegistry();
+
+    const form = document.getElementById("upload-scheme-form");
+    if (form) {
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const iconSelect = document.getElementById("scheme-icon-select");
+            const titleInput = document.getElementById("scheme-title-input");
+            const fileInput = document.getElementById("scheme-file-input");
+            const submitBtn = document.getElementById("submit-upload-btn");
+            const modal = document.getElementById("upload-modal");
+
+            if (!titleInput.value.trim() || !fileInput.files[0]) return;
+
+            const fd = new FormData();
+            fd.append("icon", iconSelect ? iconSelect.value : "💧");
+            fd.append("title", titleInput.value.trim());
+            fd.append("file", fileInput.files[0]);
+
+            submitBtn.textContent = "Загрузка...";
+            submitBtn.disabled = true;
+
+            try {
+                const res = await fetch("/api/schemes/upload", { method: "POST", body: fd });
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.detail || "Ошибка сервера при загрузке");
+                }
+                const newScheme = await res.json();
+                
+                if (modal) modal.style.display = "none";
+                form.reset();
+
+                await syncNetworksRegistry();
+                await loadNetwork(newScheme.id);
+            } catch (err) {
+                alert("Ошибка: " + err.message);
+            } finally {
+                submitBtn.textContent = "Загрузить";
+                submitBtn.disabled = false;
+            }
+        };
+    }
+});
