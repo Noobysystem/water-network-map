@@ -148,3 +148,70 @@ if os.path.exists("../frontend"):
     app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
 elif os.path.exists("frontend"):
     app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+
+
+import uuid
+import shutil
+from fastapi import UploadFile, File, Form
+from PIL import Image
+
+@app.post("/api/schemes/upload")
+async def upload_scheme(
+    icon: str = Form("💧"),
+    title: str = Form(...),
+    file: UploadFile = File(...)
+):
+    scheme_id = f"custom_{uuid.uuid4().hex[:8]}"
+    ext = os.path.splitext(file.filename)[1].lower() or ".png"
+    if ext not in [".png", ".jpg", ".jpeg"]:
+        raise HTTPException(status_code=400, detail="Допустимы только PNG и JPG")
+
+    img_filename = f"{scheme_id}{ext}"
+    img_path = os.path.join("frontend", img_filename)
+
+    with open(img_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    with Image.open(img_path) as im:
+        width, height = im.size
+
+    registry = load_registry()
+    full_title = f"{icon} {title}".strip()
+    new_entry = {
+        "id": scheme_id,
+        "title": full_title,
+        "icon": icon,
+        "image": img_filename,
+        "dimensions": {"width": width, "height": height},
+        "file": f"{scheme_id}.json",
+        "is_default": False
+    }
+    registry[scheme_id] = new_entry
+    save_registry(registry)
+
+    net_file = os.path.join("storage", f"{scheme_id}.json")
+    with open(net_file, "w", encoding="utf-8") as nf:
+        json.dump({"nodes": [], "dimensions": {"width": width, "height": height}}, nf, ensure_ascii=False, indent=2)
+
+    return new_entry
+
+@app.delete("/api/schemes/{scheme_id}")
+def delete_scheme(scheme_id: str):
+    registry = load_registry()
+    if scheme_id not in registry:
+        raise HTTPException(status_code=404, detail="Схема не найдена")
+    if registry[scheme_id].get("is_default"):
+        raise HTTPException(status_code=400, detail="Нельзя удалить базовую схему")
+
+    entry = registry.pop(scheme_id)
+    save_registry(registry)
+
+    img_path = os.path.join("frontend", entry.get("image", ""))
+    if os.path.exists(img_path):
+        os.remove(img_path)
+
+    net_file = os.path.join("storage", entry.get("file", ""))
+    if os.path.exists(net_file):
+        os.remove(net_file)
+
+    return {"status": "deleted", "id": scheme_id}
