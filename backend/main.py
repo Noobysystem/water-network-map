@@ -102,7 +102,17 @@ class ValveNode(BaseModel):
 
 @app.get("/api/networks")
 def get_networks():
-    return list(NETWORKS.values())
+    base = [
+        {"id": "drinking", "title": "💧 ПВ", "icon": "💧", "image": "scheme.jpg", "dimensions": {"width": 14033, "height": 9922}, "is_default": True},
+        {"id": "tech_water", "title": "⚙️ ТВ пром", "icon": "⚙️", "image": "scheme_tv.jpg", "dimensions": {"width": 14033, "height": 9922}, "is_default": True},
+        {"id": "tech_water_out", "title": "⚙️ ТВ внепром", "icon": "⚙️", "image": "scheme_tv_out.jpg", "dimensions": {"width": 14033, "height": 9922}, "is_default": True}
+    ]
+    reg = load_registry()
+    for sid, item in reg.items():
+        if sid not in ["drinking", "tech_water", "tech_water_out"]:
+            base.append(item)
+    return base
+
 
 @app.get("/api/{net_id}/network")
 def get_network(net_id: str):
@@ -144,16 +154,26 @@ async def import_database(net_id: str, file: UploadFile = File(...)):
     write_data(net_id, data)
     return {"status": "ok", "count": len(data.get("nodes", []))}
 
-if os.path.exists("../frontend"):
-    app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
-elif os.path.exists("frontend"):
-    app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
-
 
 import uuid
 import shutil
 from fastapi import UploadFile, File, Form
 from PIL import Image
+Image.MAX_IMAGE_PIXELS = None
+
+REGISTRY_PATH = os.path.join("storage", "networks_registry.json")
+
+def load_registry():
+    if os.path.exists(REGISTRY_PATH):
+        with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+def save_registry(data):
+    os.makedirs("storage", exist_ok=True)
+    with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
 
 @app.post("/api/schemes/upload")
 async def upload_scheme(
@@ -215,3 +235,8 @@ def delete_scheme(scheme_id: str):
         os.remove(net_file)
 
     return {"status": "deleted", "id": scheme_id}
+
+if os.path.exists("../frontend"):
+    app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
+elif os.path.exists("frontend"):
+    app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
